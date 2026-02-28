@@ -5,6 +5,11 @@ on:
     branches-ignore:
       - $default-branch
       - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ci:
     name: CI
