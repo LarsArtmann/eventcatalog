@@ -27,9 +27,9 @@ version: 0.0.1
 summary: |
   Tells us when the user has signed up
 consumers:
-    - Email Platform
+  - Email Platform
 producers:
-    - User Service
+  - User Service
 ---
 
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id
@@ -39,7 +39,6 @@ neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <Mermaid />
-
 ```
 
 Once done, navigate to your new event [localhost:3000/events/UserSignedUp](http://localhost:3000/events/UserSignedUp)
@@ -66,7 +65,7 @@ Documenting `Producers` and `Consumers` are a great way to help your team unders
 
 :::info
 
-Keeping information up to date can be the main problem with documentation. EventCatalog allows you to generate documentation with your exisiting solutions using our generators and plugin systems. 
+Keeping information up to date can be the main problem with documentation. EventCatalog allows you to generate documentation with your exisiting solutions using our generators and plugin systems.
 
 :::
 
@@ -93,11 +92,13 @@ module.exports = {
   // ...
   users: [
     {
-      id: 'dboyne',
-      name: 'David Boyne',
-      avatarUrl: 'https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png',
-      role: 'Developer',
-      summary: 'Maintainer of EventCatalog and loves building tools for Event Architectures.'
+      id: "dboyne",
+      name: "David Boyne",
+      avatarUrl:
+        "https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png",
+      role: "Developer",
+      summary:
+        "Maintainer of EventCatalog and loves building tools for Event Architectures.",
     },
   ],
 };
@@ -120,11 +121,11 @@ version: 0.0.1
 summary: |
   Tells us when the user has signed up
 consumers:
-    - Email Platform
+  - Email Platform
 producers:
-    - User Service
+  - User Service
 owners:
-    - dboyne    
+  - dboyne
 ---
 
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id
@@ -134,7 +135,6 @@ neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <Mermaid />
-
 ```
 
 ### Linking Events to Services

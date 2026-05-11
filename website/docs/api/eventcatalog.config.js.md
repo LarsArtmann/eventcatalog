@@ -21,7 +21,7 @@ Title for your website.
 
 ```js title="eventcatalog.config.js"
 module.exports = {
-  title: 'EventCatalog',
+  title: "EventCatalog",
 };
 ```
 
@@ -33,7 +33,7 @@ Your organization name.
 
 ```js title="eventcatalog.config.js"
 module.exports = {
-  organizationName: 'Your Company',
+  organizationName: "Your Company",
 };
 ```
 
@@ -47,7 +47,7 @@ URL used when people want to edit the documentation. For example your GitHub rep
 
 ```js title="eventcatalog.config.js"
 module.exports = {
-  editUrl: 'https://github.com/boyney123/eventcatalog-demo/edit/master',
+  editUrl: "https://github.com/boyney123/eventcatalog-demo/edit/master",
 };
 ```
 
@@ -57,7 +57,7 @@ Tagline that is shown on your homepage.
 
 ```js title="eventcatalog.config.js"
 module.exports = {
-  tagline: 'Discover, Explore and Document your Event Driven Architectures',
+  tagline: "Discover, Explore and Document your Event Driven Architectures",
 };
 ```
 
@@ -72,8 +72,8 @@ _EventCatalog will look inside the public directory, no need to put this into yo
 ```js title="eventcatalog.config.js"
 module.exports = {
   logo: {
-    src: '/logo.png',
-    alt: 'My Company Logo',
+    src: "/logo.png",
+    alt: "My Company Logo",
   },
 };
 ```
@@ -86,7 +86,7 @@ URL used when people want to link the logo & title in the top navigation to the 
 
 ```js title="eventcatalog.config.js"
 module.exports = {
-  homepageLink: 'https://eventcatalog.dev',
+  homepageLink: "https://eventcatalog.dev",
 };
 ```
 
@@ -94,16 +94,16 @@ module.exports = {
 
 - Type: `Link`
 
-The primary call to action seen on the homescreen of EventCatalog. You can override the default by passing in the `primaryCTA` into your config file. 
+The primary call to action seen on the homescreen of EventCatalog. You can override the default by passing in the `primaryCTA` into your config file.
 
 It will always default to `Explore Events` if you do not specify the primaryCTA.
 
 ```js title="eventcatalog.config.js"
 module.exports = {
   primaryCTA: {
-    'href': "/events",
-    'label': "Explore Events"
-  }
+    href: "/events",
+    label: "Explore Events",
+  },
 };
 ```
 
@@ -118,9 +118,9 @@ If you do not pass in the `secondaryCTA` value, then no button will be shown.
 ```js title="eventcatalog.config.js"
 module.exports = {
   secondaryCTA: {
-    'href': "/services",
-    'label': "Explore Services"
-  }
+    href: "/services",
+    label: "Explore Services",
+  },
 };
 ```
 
@@ -132,11 +132,12 @@ Add user information here. You can reference these inside your Event and Service
 module.exports = {
   users: [
     {
-      id: 'dboyne',
-      name: 'David Boyne',
-      avatarUrl: 'https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png',
-      role: 'Developer',
-      summary: 'Currently building tools for Event Architectures.',
+      id: "dboyne",
+      name: "David Boyne",
+      avatarUrl:
+        "https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png",
+      role: "Developer",
+      summary: "Currently building tools for Event Architectures.",
     },
   ],
 };
@@ -163,11 +164,11 @@ module.exports = {
 ```js title="eventcatalog.config.js"
 module.exports = {
   headerLinks: [
-    { label: 'Events', href: '/events' },
-    { label: 'Services', href: '/services' },
-    { label: 'Domains', href: '/domains' },
-    { label: 'Visualiser', href: '/visualiser' },
-    { label: '3D Node Graph', href: '/overview' },
+    { label: "Events", href: "/events" },
+    { label: "Services", href: "/services" },
+    { label: "Domains", href: "/domains" },
+    { label: "Visualiser", href: "/visualiser" },
+    { label: "3D Node Graph", href: "/overview" },
   ],
 };
 ```
@@ -187,10 +188,13 @@ Using the `headerLinks` configuration you can add or remove any links you like i
 ```js title="eventcatalog.config.js"
 module.exports = {
   footerLinks: [
-    { label: 'Events', href: '/events' },
-    { label: 'Services', href: '/services' },
-    { label: '3D Node Graph', href: '/overview' },
-    { label: 'GitHub', href: 'https://github.com/boyney123/eventcatalog-demo/edit/master' },
+    { label: "Events", href: "/events" },
+    { label: "Services", href: "/services" },
+    { label: "3D Node Graph", href: "/overview" },
+    {
+      label: "GitHub",
+      href: "https://github.com/boyney123/eventcatalog-demo/edit/master",
+    },
   ],
 };
 ```
@@ -201,7 +205,7 @@ module.exports = {
 
 ```js title="eventcatalog.config.js"
 module.exports = {
-  analytics: { googleAnalyticsTrackingId: 'GA-XXXXX-X' },
+  analytics: { googleAnalyticsTrackingId: "GA-XXXXX-X" },
 };
 ```
 
@@ -211,7 +215,7 @@ Set the `basePath` in order to be able to deploy the eventcatalog under a sub-pa
 
 ```js title="eventcatalog.config.js"
 module.exports = {
-  basePath: '/my-catalog',
+  basePath: "/my-catalog",
 };
 ```
 
@@ -238,10 +242,12 @@ Manage the Open Graph tags that are used for social media sharing.
 ```js title="eventcatalog.config.js"
 module.exports = {
   openGraph: {
-    ogTitle: 'EventCatalog | Discover, Explore and Document your Event Driven Architectures.',
-    ogDescription: 'An open source tool powered by markdown to document your Event Driven Architecture.',
-    ogUrl: 'https://eventcatalog.dev/',
-    ogImage: 'https://eventcatalog.dev/img/opengraph.png',
+    ogTitle:
+      "EventCatalog | Discover, Explore and Document your Event Driven Architectures.",
+    ogDescription:
+      "An open source tool powered by markdown to document your Event Driven Architecture.",
+    ogUrl: "https://eventcatalog.dev/",
+    ogImage: "https://eventcatalog.dev/img/opengraph.png",
   },
 };
 ```

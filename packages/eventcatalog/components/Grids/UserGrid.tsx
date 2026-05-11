@@ -1,9 +1,9 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
-import { User } from '@eventcatalog/types';
+import { User } from "@eventcatalog/types";
 
-import getBackgroundColor from '@/utils/random-bg';
+import getBackgroundColor from "@/utils/random-bg";
 
 interface UserGridProps {
   users: User[];
@@ -31,14 +31,25 @@ function UserGrid({ users = [] }: UserGridProps) {
                       <div className="font-medium text-gray-500">
                         <div className="flex-shrink-0">
                           <div className="relative">
-                            <img className="h-16 w-16 rounded-full max-w-none" src={user.avatarUrl} alt="" />
-                            <span className="absolute inset-0 shadow-inner rounded-full" aria-hidden="true" />
+                            <img
+                              className="h-16 w-16 rounded-full max-w-none"
+                              src={user.avatarUrl}
+                              alt=""
+                            />
+                            <span
+                              className="absolute inset-0 shadow-inner rounded-full"
+                              aria-hidden="true"
+                            />
                           </div>
                         </div>
                       </div>
                       <div className="font-medium text-gray-500">
-                        <span className="text-gray-900 font-bold">{user.name}</span>
-                        <div className="text-gray-500 text-xs font-normal mt-2 line-clamp-3">{user.summary}</div>
+                        <span className="text-gray-900 font-bold">
+                          {user.name}
+                        </span>
+                        <div className="text-gray-500 text-xs font-normal mt-2 line-clamp-3">
+                          {user.summary}
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -1,27 +1,34 @@
-import path from 'path';
-import fs from 'fs-extra';
-import matter from 'gray-matter';
-import { Event } from '@eventcatalog/types';
-import merge from 'deepmerge';
-import buildMarkdownFile from './markdown-builder';
+import path from "path";
+import fs from "fs-extra";
+import matter from "gray-matter";
+import { Event } from "@eventcatalog/types";
+import merge from "deepmerge";
+import buildMarkdownFile from "./markdown-builder";
 
 import {
   FunctionInitInterface,
   GetEventFromCatalogOptions,
   WriteEventToCatalogOptions,
   WriteEventToCatalogResponse,
-} from './types';
+} from "./types";
 
-import { existsInCatalog } from './index';
+import { existsInCatalog } from "./index";
 
 const parseEventFrontMatterIntoEvent = (eventFrontMatter: any): Event => {
-  const { name, version, summary, producers = [], consumers = [], owners = [] } = eventFrontMatter;
+  const {
+    name,
+    version,
+    summary,
+    producers = [],
+    consumers = [],
+    owners = [],
+  } = eventFrontMatter;
   return { name, version, summary, producers, consumers, owners };
 };
 
 const readMarkdownFile = (pathToFile: string) => {
   const file = fs.readFileSync(pathToFile, {
-    encoding: 'utf-8',
+    encoding: "utf-8",
   });
   return {
     parsed: matter(file),
@@ -34,13 +41,24 @@ export const getEventFromCatalog =
   (eventName: string, options?: GetEventFromCatalogOptions) => {
     const { version } = options || {};
 
-    if (!existsInCatalog({ catalogDirectory })(eventName, { type: 'event', version })) {
+    if (
+      !existsInCatalog({ catalogDirectory })(eventName, {
+        type: "event",
+        version,
+      })
+    ) {
       return null;
     }
 
     // Read the directory to get the stuff we need.
     const { parsed: parsedEvent, raw } = readMarkdownFile(
-      path.join(catalogDirectory, 'events', eventName, version ? path.join('versioned', version) : '', 'index.md')
+      path.join(
+        catalogDirectory,
+        "events",
+        eventName,
+        version ? path.join("versioned", version) : "",
+        "index.md",
+      ),
     );
 
     return {
@@ -53,18 +71,28 @@ export const getEventFromCatalog =
 export const getAllEventsFromCatalog =
   ({ catalogDirectory }: FunctionInitInterface) =>
   () => {
-    const eventsDir = path.join(catalogDirectory, 'events');
+    const eventsDir = path.join(catalogDirectory, "events");
     const folders = fs.readdirSync(eventsDir);
-    const events = folders.map((folder) => getEventFromCatalog({ catalogDirectory })(folder));
+    const events = folders.map((folder) =>
+      getEventFromCatalog({ catalogDirectory })(folder),
+    );
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return events.filter((event) => event !== null).map(({ raw, ...event }: any) => event);
+    return events
+      .filter((event) => event !== null)
+      .map(({ raw, ...event }: any) => event);
   };
 
 export const buildEventMarkdownForCatalog =
   () =>
   (
     event: Event,
-    { markdownContent, includeSchemaComponent, renderMermaidDiagram, renderNodeGraph, defaultFrontMatter = {} }: any = {}
+    {
+      markdownContent,
+      includeSchemaComponent,
+      renderMermaidDiagram,
+      renderNodeGraph,
+      defaultFrontMatter = {},
+    }: any = {},
   ) => {
     const frontMatter = merge(event, defaultFrontMatter);
     return buildMarkdownFile({
@@ -79,34 +107,58 @@ export const buildEventMarkdownForCatalog =
 export const versionEvent =
   ({ catalogDirectory }: FunctionInitInterface) =>
   (eventName: string, { removeOnVersion = true } = {}) => {
-    const eventPath = path.join(catalogDirectory, 'events', eventName);
-    const versionedPath = path.join(catalogDirectory, 'events', eventName, 'versioned');
+    const eventPath = path.join(catalogDirectory, "events", eventName);
+    const versionedPath = path.join(
+      catalogDirectory,
+      "events",
+      eventName,
+      "versioned",
+    );
 
-    if (!fs.existsSync(eventPath)) throw new Error(`Cannot find event "${eventName}" to version`);
+    if (!fs.existsSync(eventPath))
+      throw new Error(`Cannot find event "${eventName}" to version`);
 
-    const { parsed: parsedEvent, raw } = readMarkdownFile(path.join(eventPath, 'index.md'));
+    const { parsed: parsedEvent, raw } = readMarkdownFile(
+      path.join(eventPath, "index.md"),
+    );
 
     const { data: { version } = {} } = parsedEvent;
 
-    if (!version) throw new Error(`Trying to version "${eventName}" but no 'version' value found on the event`);
+    if (!version)
+      throw new Error(
+        `Trying to version "${eventName}" but no 'version' value found on the event`,
+      );
 
-    fs.copySync(eventPath, path.join(eventPath, '../tmp', eventName));
+    fs.copySync(eventPath, path.join(eventPath, "../tmp", eventName));
 
-    if (fs.existsSync(path.join(eventPath, '../tmp', eventName, 'versioned'))) {
-      fs.rmdirSync(path.join(eventPath, '../tmp', eventName, 'versioned'), { recursive: true });
+    if (fs.existsSync(path.join(eventPath, "../tmp", eventName, "versioned"))) {
+      fs.rmdirSync(path.join(eventPath, "../tmp", eventName, "versioned"), {
+        recursive: true,
+      });
     }
 
-    fs.moveSync(path.join(eventPath, '../tmp', eventName), path.join(versionedPath, version), {
-      overwrite: true,
-    });
+    fs.moveSync(
+      path.join(eventPath, "../tmp", eventName),
+      path.join(versionedPath, version),
+      {
+        overwrite: true,
+      },
+    );
 
-    fs.rmdirSync(path.join(eventPath, '../tmp'), { recursive: true });
+    fs.rmdirSync(path.join(eventPath, "../tmp"), { recursive: true });
 
     if (removeOnVersion) {
-      fs.copySync(path.join(eventPath, 'versioned'), path.join(eventPath, '../tmp', eventName, 'versioned'));
+      fs.copySync(
+        path.join(eventPath, "versioned"),
+        path.join(eventPath, "../tmp", eventName, "versioned"),
+      );
       fs.rmdirSync(path.join(eventPath), { recursive: true });
-      fs.moveSync(path.join(eventPath, '../tmp', eventName, 'versioned'), path.join(eventPath, 'versioned'), { overwrite: true });
-      fs.rmdirSync(path.join(eventPath, '../tmp'), { recursive: true });
+      fs.moveSync(
+        path.join(eventPath, "../tmp", eventName, "versioned"),
+        path.join(eventPath, "versioned"),
+        { overwrite: true },
+      );
+      fs.rmdirSync(path.join(eventPath, "../tmp"), { recursive: true });
     }
 
     return {
@@ -119,7 +171,10 @@ export const versionEvent =
 
 export const writeEventToCatalog =
   ({ catalogDirectory }: FunctionInitInterface) =>
-  (event: Event, options?: WriteEventToCatalogOptions): WriteEventToCatalogResponse => {
+  (
+    event: Event,
+    options?: WriteEventToCatalogOptions,
+  ): WriteEventToCatalogResponse => {
     const { name: eventName, version } = event;
     const {
       useMarkdownContentFromExistingEvent = true,
@@ -134,19 +189,29 @@ export const writeEventToCatalog =
     } = options || {};
     let markdownContent = setMarkdownContent;
 
-    if (!eventName) throw new Error('No `name` found for given event');
+    if (!eventName) throw new Error("No `name` found for given event");
 
-    if (!isLatestVersion && !version) throw new Error('No `version` found for given event');
+    if (!isLatestVersion && !version)
+      throw new Error("No `version` found for given event");
 
-    const eventAlreadyInCatalog = existsInCatalog({ catalogDirectory })(eventName, {
-      type: 'event',
-      version: !isLatestVersion ? version : undefined,
-    });
+    const eventAlreadyInCatalog = existsInCatalog({ catalogDirectory })(
+      eventName,
+      {
+        type: "event",
+        version: !isLatestVersion ? version : undefined,
+      },
+    );
 
-    if (!markdownContent && useMarkdownContentFromExistingEvent && eventAlreadyInCatalog) {
+    if (
+      !markdownContent &&
+      useMarkdownContentFromExistingEvent &&
+      eventAlreadyInCatalog
+    ) {
       try {
-        const data = getEventFromCatalog({ catalogDirectory })(eventName, { version: !isLatestVersion ? version : undefined });
-        markdownContent = data?.content ? data?.content : '';
+        const data = getEventFromCatalog({ catalogDirectory })(eventName, {
+          version: !isLatestVersion ? version : undefined,
+        });
+        markdownContent = data?.content ? data?.content : "";
       } catch (error) {
         // TODO: do nothing
         console.log(error);
@@ -157,14 +222,21 @@ export const writeEventToCatalog =
 
     // Check if we should carry frontmatter from previous event into the new one.
     if (eventAlreadyInCatalog && frontMatterToCopyToNewVersions) {
-      const eventFromCatalog = getEventFromCatalog({ catalogDirectory })(eventName, {
-        version: !isLatestVersion ? version : undefined,
-      });
-      defaultFrontMatterForNewEvent = Object.keys(frontMatterToCopyToNewVersions).reduce(
+      const eventFromCatalog = getEventFromCatalog({ catalogDirectory })(
+        eventName,
+        {
+          version: !isLatestVersion ? version : undefined,
+        },
+      );
+      defaultFrontMatterForNewEvent = Object.keys(
+        frontMatterToCopyToNewVersions,
+      ).reduce(
         (defaultValues: any, key: string) =>
           // @ts-ignore
-          frontMatterToCopyToNewVersions[key] ? { ...defaultValues, [key]: eventFromCatalog?.data[key] } : defaultValues,
-        {}
+          frontMatterToCopyToNewVersions[key]
+            ? { ...defaultValues, [key]: eventFromCatalog?.data[key] }
+            : defaultValues,
+        {},
       );
     }
 
@@ -172,7 +244,12 @@ export const writeEventToCatalog =
       versionEvent({ catalogDirectory })(eventName);
     }
 
-    const eventPath = path.join(catalogDirectory, 'events', eventName, !isLatestVersion ? path.join('versioned', version) : '');
+    const eventPath = path.join(
+      catalogDirectory,
+      "events",
+      eventName,
+      !isLatestVersion ? path.join("versioned", version) : "",
+    );
 
     fs.ensureDirSync(eventPath);
     const data = buildEventMarkdownForCatalog()(event, {
@@ -183,16 +260,22 @@ export const writeEventToCatalog =
       defaultFrontMatter: defaultFrontMatterForNewEvent,
     });
 
-    fs.writeFileSync(path.join(eventPath, 'index.md'), data);
+    fs.writeFileSync(path.join(eventPath, "index.md"), data);
 
     if (schema && schema.extension && schema.fileContent) {
-      fs.writeFileSync(path.join(eventPath, `schema.${schema.extension}`), schema.fileContent);
+      fs.writeFileSync(
+        path.join(eventPath, `schema.${schema.extension}`),
+        schema.fileContent,
+      );
     }
 
     if (codeExamples.length > 0) {
-      fs.ensureDirSync(path.join(eventPath, 'examples'));
+      fs.ensureDirSync(path.join(eventPath, "examples"));
       codeExamples.forEach((codeExample) => {
-        fs.writeFileSync(path.join(eventPath, 'examples', codeExample.fileName), codeExample.fileContent);
+        fs.writeFileSync(
+          path.join(eventPath, "examples", codeExample.fileName),
+          codeExample.fileContent,
+        );
       });
     }
 

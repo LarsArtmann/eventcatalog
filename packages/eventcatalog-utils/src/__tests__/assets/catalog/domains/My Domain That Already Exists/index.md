@@ -1,7 +1,8 @@
 ---
-name: 'My Domain That Already Exists'
-summary: 'This is a summary for my domain'
+name: "My Domain That Already Exists"
+summary: "This is a summary for my domain"
 owners:
-    - dBoyne
+  - dBoyne
 ---
+
 # Content already exists

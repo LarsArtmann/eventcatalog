@@ -1,11 +1,17 @@
-import React, { useContext, ReactNode } from 'react';
-import type { EventCatalogConfig, User } from '@eventcatalog/types';
-import path from 'path';
-import defaultConfig from '../eventcatalog.config';
+import React, { useContext, ReactNode } from "react";
+import type { EventCatalogConfig, User } from "@eventcatalog/types";
+import path from "path";
+import defaultConfig from "../eventcatalog.config";
 
-export const Context = React.createContext<EventCatalogConfig | null>(defaultConfig);
+export const Context = React.createContext<EventCatalogConfig | null>(
+  defaultConfig,
+);
 
-export function EventCatalogContextProvider({ children }: { children: ReactNode }): JSX.Element {
+export function EventCatalogContextProvider({
+  children,
+}: {
+  children: ReactNode;
+}): JSX.Element {
   return <Context.Provider value={defaultConfig}>{children}</Context.Provider>;
 }
 

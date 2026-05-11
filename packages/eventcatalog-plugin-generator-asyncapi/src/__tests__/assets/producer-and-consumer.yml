@@ -14,14 +14,14 @@ channels:
       operationId: NotifyDeliveryCreated
       summary: Inform when delivery is created.
       message:
-        $ref: '#/components/messages/deliveryEvent'
+        $ref: "#/components/messages/deliveryEvent"
   delivery-event:
     publish:
       operationId: DeliveryCreatedConsumer
       summary: Updates deliverymapfeatures using Delivery event
       message:
         payload:
-          $ref: '#/components/schemas/deliveryEvent'
+          $ref: "#/components/schemas/deliveryEvent"
 components:
   schemas:
     deliveryEvent:
@@ -37,5 +37,5 @@ components:
   messages:
     deliveryEvent:
       payload:
-        $ref: '#/components/schemas/deliveryEvent'
+        $ref: "#/components/schemas/deliveryEvent"
       name: deliveryEvent

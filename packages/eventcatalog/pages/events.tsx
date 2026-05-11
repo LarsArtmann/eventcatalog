@@ -1,24 +1,24 @@
-import { Fragment, useState, useCallback, useEffect } from 'react';
-import Head from 'next/head';
-import type { Event, Service } from '@eventcatalog/types';
-import debounce from 'lodash.debounce';
+import { Fragment, useState, useCallback, useEffect } from "react";
+import Head from "next/head";
+import type { Event, Service } from "@eventcatalog/types";
+import debounce from "lodash.debounce";
 
-import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon, SearchIcon } from '@heroicons/react/solid';
-import EventGrid from '@/components/Grids/EventGrid';
-import { getAllEvents, getUniqueServicesNamesFromEvents } from '@/lib/events';
-import { getUniqueDomainNamesFromEvents } from '@/lib/domains';
-import { useConfig } from '@/hooks/EventCatalog';
-import { useRouter } from 'next/router';
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon, SearchIcon } from "@heroicons/react/solid";
+import EventGrid from "@/components/Grids/EventGrid";
+import { getAllEvents, getUniqueServicesNamesFromEvents } from "@/lib/events";
+import { getUniqueDomainNamesFromEvents } from "@/lib/domains";
+import { useConfig } from "@/hooks/EventCatalog";
+import { useRouter } from "next/router";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 const sortOptions = [
-  { name: 'Name', href: '#', current: true },
-  { name: 'Version', href: '#', current: false },
-  { name: 'Domains', href: '#', current: false },
+  { name: "Name", href: "#", current: true },
+  { name: "Version", href: "#", current: false },
+  { name: "Domains", href: "#", current: false },
 ];
 
 export interface PageProps {
@@ -28,15 +28,19 @@ export interface PageProps {
 }
 
 export default function Page({ events, services, domains }: PageProps) {
-  const [selectedFilters, setSelectedFilters] = useState({ services: [], domains: [], badges: [] });
+  const [selectedFilters, setSelectedFilters] = useState({
+    services: [],
+    domains: [],
+    badges: [],
+  });
   const [showMermaidDiagrams, setShowMermaidDiagrams] = useState(false);
   const [showNodeGraphs, setShowNodeGraphs] = useState(false);
   const [eventsToRender, setEventsToRender] = useState(events);
-  const [searchFilter, setSearchFilter] = useState('');
+  const [searchFilter, setSearchFilter] = useState("");
 
   const filters = [
     {
-      id: 'domains',
+      id: "domains",
       name: `Filter by Domains`,
       options: domains.map((domain) => ({
         value: domain,
@@ -45,7 +49,7 @@ export default function Page({ events, services, domains }: PageProps) {
       })),
     },
     {
-      id: 'services',
+      id: "services",
       name: `Filter by Services`,
       options: services.map((service) => ({
         value: service,
@@ -54,24 +58,27 @@ export default function Page({ events, services, domains }: PageProps) {
       })),
     },
     {
-      id: 'badges',
+      id: "badges",
       name: `Filter by Badges`,
-      options: events.reduce((p, c) => {
-        if (!c.badges) {
-          return p;
-        }
-        c.badges.forEach((badge) => {
-          const existing = p.map((b) => b.value);
-          if (!existing.includes(badge.content)) {
-            p.push({
-              value: badge.content,
-              label: badge.content,
-              checked: false,
-            });
+      options: events.reduce(
+        (p, c) => {
+          if (!c.badges) {
+            return p;
           }
-        });
-        return p;
-      }, [] as { value: string; label: string; checked: boolean }[]),
+          c.badges.forEach((badge) => {
+            const existing = p.map((b) => b.value);
+            if (!existing.includes(badge.content)) {
+              p.push({
+                value: badge.content,
+                label: badge.content,
+                checked: false,
+              });
+            }
+          });
+          return p;
+        },
+        [] as { value: string; label: string; checked: boolean }[],
+      ),
     },
   ];
 
@@ -82,13 +89,21 @@ export default function Page({ events, services, domains }: PageProps) {
       const newFilters = selectedFilters[type].concat([option.value]);
       setSelectedFilters({ ...selectedFilters, [type]: newFilters });
     } else {
-      const newFilters = selectedFilters[type].filter((value) => value !== option.value);
+      const newFilters = selectedFilters[type].filter(
+        (value) => value !== option.value,
+      );
       setSelectedFilters({ ...selectedFilters, [type]: newFilters });
     }
   };
 
   const getFilteredEvents = (): any => {
-    if (!selectedFilters.services && !searchFilter && !selectedFilters.domains && !selectedFilters.badges) return events;
+    if (
+      !selectedFilters.services &&
+      !searchFilter &&
+      !selectedFilters.domains &&
+      !selectedFilters.badges
+    )
+      return events;
 
     let filteredEvents = events;
 
@@ -97,8 +112,12 @@ export default function Page({ events, services, domains }: PageProps) {
       filteredEvents = filteredEvents.filter((event) => {
         const { services: serviceFilters } = selectedFilters;
 
-        const hasConsumersFromFilters = event.consumerNames.some((consumerId) => serviceFilters.indexOf(consumerId) > -1);
-        const hasProducersFromFilters = event.producerNames.some((producerId) => serviceFilters.indexOf(producerId) > -1);
+        const hasConsumersFromFilters = event.consumerNames.some(
+          (consumerId) => serviceFilters.indexOf(consumerId) > -1,
+        );
+        const hasProducersFromFilters = event.producerNames.some(
+          (producerId) => serviceFilters.indexOf(producerId) > -1,
+        );
 
         return hasConsumersFromFilters || hasProducersFromFilters;
       });
@@ -119,12 +138,17 @@ export default function Page({ events, services, domains }: PageProps) {
         if (!event.badges) {
           return false;
         }
-        return event.badges.filter((badge) => badgeFilters.includes(badge.content)).length !== 0;
+        return (
+          event.badges.filter((badge) => badgeFilters.includes(badge.content))
+            .length !== 0
+        );
       });
     }
 
     if (searchFilter) {
-      filteredEvents = filteredEvents.filter((event) => event.name.toLowerCase().includes(searchFilter.toLowerCase()));
+      filteredEvents = filteredEvents.filter((event) =>
+        event.name.toLowerCase().includes(searchFilter.toLowerCase()),
+      );
     }
 
     return filteredEvents;
@@ -148,7 +172,7 @@ export default function Page({ events, services, domains }: PageProps) {
     debounce((e) => {
       setSearchFilter(e.target.value);
     }, 500),
-    [eventsToRender]
+    [eventsToRender],
   );
 
   const filtersApplied =
@@ -165,7 +189,9 @@ export default function Page({ events, services, domains }: PageProps) {
       </Head>
       <main className="max-w-7xl mx-auto min-h-screen px-4 xl:px-0">
         <div className="relative z-10 flex items-baseline justify-between pt-8 pb-6 border-b border-gray-200">
-          <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">Events ({events.length})</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">
+            Events ({events.length})
+          </h1>
 
           <div className="flex items-center">
             <Menu as="div" className="hidden relative text-left">
@@ -196,9 +222,11 @@ export default function Page({ events, services, domains }: PageProps) {
                           <a
                             href={option.href}
                             className={classNames(
-                              option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                              active ? 'bg-gray-100' : '',
-                              'block px-4 py-2 text-sm'
+                              option.current
+                                ? "font-medium text-gray-900"
+                                : "text-gray-500",
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm",
                             )}
                           >
                             {option.name}
@@ -218,12 +246,18 @@ export default function Page({ events, services, domains }: PageProps) {
             {/* Filters */}
             <form className="hidden lg:block">
               <div className="border-b border-gray-200 pb-6">
-                <label htmlFor="event" className="font-bold block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="event"
+                  className="font-bold block text-sm font-medium text-gray-700"
+                >
                   Search Events
                 </label>
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    <SearchIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
                   </div>
                   <input
                     type="text"
@@ -241,7 +275,10 @@ export default function Page({ events, services, domains }: PageProps) {
               {filters.map((section: any) => {
                 if (!section.options.length) return null;
                 return (
-                  <div key={section.id} className="border-b border-gray-200 py-6">
+                  <div
+                    key={section.id}
+                    className="border-b border-gray-200 py-6"
+                  >
                     <h3 className="-my-3 flow-root">
                       <div className="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500">
                         <span className="font-bold font-medium text-gray-900">
@@ -254,17 +291,29 @@ export default function Page({ events, services, domains }: PageProps) {
                         {section.options
                           .sort((a, b) => a.value.localeCompare(b.value))
                           .map((option, optionIdx) => (
-                            <div key={option.value} className="flex items-center">
+                            <div
+                              key={option.value}
+                              className="flex items-center"
+                            >
                               <input
                                 id={`filter-${section.id}-${optionIdx}`}
                                 name={`${section.id}[]`}
                                 defaultValue={option.value}
                                 type="checkbox"
-                                onChange={(event) => handleFilterSelection(option, section.id, event)}
+                                onChange={(event) =>
+                                  handleFilterSelection(
+                                    option,
+                                    section.id,
+                                    event,
+                                  )
+                                }
                                 defaultChecked={option.checked}
                                 className="h-4 w-4 border-gray-300 rounded text-gray-600 focus:ring-gray-500"
                               />
-                              <label htmlFor={`filter-${section.id}-${optionIdx}`} className="ml-3 text-sm text-gray-600">
+                              <label
+                                htmlFor={`filter-${section.id}-${optionIdx}`}
+                                className="ml-3 text-sm text-gray-600"
+                              >
                                 {option.label}
                               </label>
                             </div>
@@ -278,7 +327,9 @@ export default function Page({ events, services, domains }: PageProps) {
               <div className="border-b border-gray-200 py-6">
                 <h3 className="-my-3 flow-root">
                   <div className="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500">
-                    <span className="font-bold font-medium text-gray-900">Features</span>
+                    <span className="font-bold font-medium text-gray-900">
+                      Features
+                    </span>
                   </div>
                 </h3>
                 <div className="pt-6">
@@ -287,11 +338,16 @@ export default function Page({ events, services, domains }: PageProps) {
                       <input
                         id="show-mermaid"
                         type="checkbox"
-                        onChange={(e) => setShowMermaidDiagrams(e.target.checked)}
+                        onChange={(e) =>
+                          setShowMermaidDiagrams(e.target.checked)
+                        }
                         defaultChecked={showMermaidDiagrams}
                         className="h-4 w-4 border-gray-300 rounded text-gray-600 focus:ring-gray-500"
                       />
-                      <label htmlFor="show-mermaid" className="ml-3 text-sm text-gray-600">
+                      <label
+                        htmlFor="show-mermaid"
+                        className="ml-3 text-sm text-gray-600"
+                      >
                         Show Mermaid Diagrams
                       </label>
                     </div>
@@ -307,7 +363,10 @@ export default function Page({ events, services, domains }: PageProps) {
                         defaultChecked={showNodeGraphs}
                         className="h-4 w-4 border-gray-300 rounded text-gray-600 focus:ring-gray-500"
                       />
-                      <label htmlFor="show-node-graph" className="ml-3 text-sm text-gray-600">
+                      <label
+                        htmlFor="show-node-graph"
+                        className="ml-3 text-sm text-gray-600"
+                      >
                         Show Node Graphs
                       </label>
                     </div>
@@ -323,7 +382,11 @@ export default function Page({ events, services, domains }: PageProps) {
                     ? `Filtered Events (${eventsToRender.length}/${events.length})`
                     : `All Events (${events.length})`}
                 </h2>
-                <EventGrid events={eventsToRender} showMermaidDiagrams={showMermaidDiagrams} showNodeGraphs={showNodeGraphs} />
+                <EventGrid
+                  events={eventsToRender}
+                  showMermaidDiagrams={showMermaidDiagrams}
+                  showNodeGraphs={showNodeGraphs}
+                />
                 {eventsToRender.length === 0 && (
                   <div className="text-gray-400 flex h-96  justify-center items-center">
                     <div>

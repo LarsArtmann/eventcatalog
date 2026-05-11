@@ -1,10 +1,9 @@
 ---
-title: Introducing the Visualiser 
+title: Introducing the Visualiser
 authors: [dboyne]
 tags: [release, feature]
 image: /img/blog/visualiser/cover.png
 ---
-
 
 ![cover](/img/blog/visualiser/cover.png)
 
@@ -32,10 +31,9 @@ If you have yet to try EventCatalog head over to our [getting started guide](/do
 
 ## Summary
 
-EventCatalog has only been out over a month so far and we have a great community providing feedback and using the catalog. 
+EventCatalog has only been out over a month so far and we have a great community providing feedback and using the catalog.
 
 The visualiser feature was designed to help you and your team document your architectures and provide visual help to do that.
-
 
 If you have any ideas or feedback feel free to raise an issue on [GitHub](https://github.com/boyney123/eventcatalog/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) or come join us on [Discord](https://discord.gg/3rjaZMmrAm).
 

@@ -3,7 +3,7 @@ sidebar_position: 1
 id: components-overview
 title: Component List
 slug: /components/overview
----  
+---
 
 ### `<Schema />`
 
@@ -19,13 +19,12 @@ For more information check out the [schema guide for events](/docs/events/adding
 
 #### Props
 
-
-| Name                    | Type      | Default           | Description                                                       |
-| ----------------------- | --------- | ----------------- | ----------------------------------------------------------------- |
-| `title`                 | `string`  | (empty)           | Title to render above your schema viewer                          |
-| `maxHeight`             | `number`  | (empty)           | The max height of the schema viewer                               |
-| `defaultExpandedDepth`  | `number`  | `1`               | Define the expand level for displaying nested objects/properties  |
-| `renderRootTreeLines`   | `boolean` | `false`           | Define show/hide a visual line for the root level                 |
+| Name                   | Type      | Default | Description                                                      |
+| ---------------------- | --------- | ------- | ---------------------------------------------------------------- |
+| `title`                | `string`  | (empty) | Title to render above your schema viewer                         |
+| `maxHeight`            | `number`  | (empty) | The max height of the schema viewer                              |
+| `defaultExpandedDepth` | `number`  | `1`     | Define the expand level for displaying nested objects/properties |
+| `renderRootTreeLines`  | `boolean` | `false` | Define show/hide a visual line for the root level                |
 
 #### Usage
 
@@ -47,13 +46,12 @@ If you would like to **render custom** mermaid diagrams you can use the `charts`
 
 Read [Mermaid documentation](https://mermaid-js.github.io/mermaid/#/) if you want to learn what other graphs you can render.
 
-#### Props 
+#### Props
 
-
-| Name      | Type       | Default | Description                                                                  |
-| --------- | ---------- | ------- | ---------------------------------------------------------------------------- |
-| `title`   | `string`   | (empty) | Title to render above your chart                                             |
-| `charts`  | `string[]` | `[]`    | An array of [mermaid charts](https://mermaid-js.github.io/mermaid/#/) to render to your document |
+| Name     | Type       | Default | Description                                                                                      |
+| -------- | ---------- | ------- | ------------------------------------------------------------------------------------------------ |
+| `title`  | `string`   | (empty) | Title to render above your chart                                                                 |
+| `charts` | `string[]` | `[]`    | An array of [mermaid charts](https://mermaid-js.github.io/mermaid/#/) to render to your document |
 
 #### Usage
 
@@ -62,7 +60,7 @@ Read [Mermaid documentation](https://mermaid-js.github.io/mermaid/#/) if you wan
 ```
 
 ```md title="Render any Mermaid Graph"
-<Mermaid title="Event Rules & Targets" charts={[`flowchart LR 
+<Mermaid title="Event Rules & Targets" charts={[`flowchart LR
 Start --> Stop`]} />
 ```
 
@@ -81,15 +79,14 @@ EventCatalog will render the relationships between your consumers and producers.
 
 #### Props
 
-| Name          | Type      | Default | Description                                                  |
-| ------------- | --------- | ------- | ------------------------------------------------------------ |
-| `title`       | `string`  | (empty) | Title to render above your node graph                        |
-| `maxHeight`   | `number`  | (empty) | Set the max height of the node graph                         |
-| `maxZoom`     | `number`  | `10`    | Set the max zoom level of the node graph                     |
-| `fitView`     | `boolean` | `true`  | Fit all elements on the view size                            |
-| `isAnimated`  | `boolean` | `true`  | Toggle if the node connections should be animating           |
-| `isDraggable` | `boolean` | `false` | Toggle if the nodes are draggable                            |
-
+| Name          | Type      | Default | Description                                        |
+| ------------- | --------- | ------- | -------------------------------------------------- |
+| `title`       | `string`  | (empty) | Title to render above your node graph              |
+| `maxHeight`   | `number`  | (empty) | Set the max height of the node graph               |
+| `maxZoom`     | `number`  | `10`    | Set the max zoom level of the node graph           |
+| `fitView`     | `boolean` | `true`  | Fit all elements on the view size                  |
+| `isAnimated`  | `boolean` | `true`  | Toggle if the node connections should be animating |
+| `isDraggable` | `boolean` | `false` | Toggle if the nodes are draggable                  |
 
 #### Usage
 
@@ -105,7 +102,8 @@ EventCatalog will render the relationships between your consumers and producers.
 
 #### Rendered Examples
 
-#### Rendered Example 
+#### Rendered Example
+
 ![Admonition Example](/img/guides/mdx/admonition-examples.png)
 
 #### Usage
@@ -122,7 +120,6 @@ EventCatalog will render the relationships between your consumers and producers.
 <Admonition type="alert">Example of alert</Admonition>
 ```
 
-
 ### `<EventExamples />`
 
 This component will allow you share code examples for any event. Reasons why you might do this:
@@ -133,9 +130,9 @@ This component will allow you share code examples for any event. Reasons why you
 
 **Any language is supported!**
 
-#### Rendered Example 
-![UserSignedUp with Code Example](/img/guides/events/UserSignedUpExampleWithExamples.png)
+#### Rendered Example
 
+![UserSignedUp with Code Example](/img/guides/events/UserSignedUpExampleWithExamples.png)
 
 #### Usage
 
@@ -143,7 +140,7 @@ This component will allow you share code examples for any event. Reasons why you
 <EventExamples title="How to trigger event" />
 ```
 
-EventCatalog will look inside your `examples` directory and every example will be rendered in it's own  tab.
+EventCatalog will look inside your `examples` directory and every example will be rendered in it's own tab.
 
 If you want to learn more you can read the [code examples guide](/docs/events/adding-examples).
 
@@ -157,15 +154,14 @@ To understand how it works and use OpenAPI with your Services checkout the [sche
 
 #### Props
 
-| Name        | Type      | Default | Description                                                                                                                                               |
-| ----------- | --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `showTitle` | `boolean` | `true`  | Show or hide the title rendered by Swagger UI                                                                                                             |
+| Name        | Type      | Default | Description                                                                                                                                                           |
+| ----------- | --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `showTitle` | `boolean` | `true`  | Show or hide the title rendered by Swagger UI                                                                                                                         |
 | `url`       | `string`  | (empty) | Optional URL to load your OpenAPI file. If you provide a URL to load, this will be used over the local file system, and the file will be loaded from an external URL. |
 
+#### Rendered Example
 
-#### Rendered Example 
 ![OpenAPI Example](/img/guides/mdx/openapi.png)
-
 
 #### Usage
 
@@ -191,13 +187,12 @@ To understand how it works and use AsyncAPI with your Services checkout the [sch
 
 #### Props
 
+| Name  | Type     | Default | Description                                                                                   |
+| ----- | -------- | ------- | --------------------------------------------------------------------------------------------- |
+| `url` | `string` | (empty) | Optional URL to load your AsyncAPI file. If you provide a URL to load, this will be used over |
 
-| Name | Type     | Default | Description                                                                                                                                  |
-| ---- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `url` | `string` | (empty) | Optional URL to load your AsyncAPI file. If you provide a URL to load, this will be used over
+#### Rendered Example
 
-
-#### Rendered Example 
 ![AsyncAPI Example](/img/guides/mdx/asyncapi.gif)
 
 #### Usage

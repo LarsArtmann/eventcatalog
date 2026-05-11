@@ -1,23 +1,23 @@
-import { Fragment, useState, useCallback, useEffect } from 'react';
-import Head from 'next/head';
-import { Service } from '@eventcatalog/types';
-import debounce from 'lodash.debounce';
+import { Fragment, useState, useCallback, useEffect } from "react";
+import Head from "next/head";
+import { Service } from "@eventcatalog/types";
+import debounce from "lodash.debounce";
 
-import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon, SearchIcon } from '@heroicons/react/solid';
-import ServiceGrid from '@/components/Grids/ServiceGrid';
-import { getAllServices } from '@/lib/services';
-import { useConfig } from '@/hooks/EventCatalog';
-import { useRouter } from 'next/router';
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon, SearchIcon } from "@heroicons/react/solid";
+import ServiceGrid from "@/components/Grids/ServiceGrid";
+import { getAllServices } from "@/lib/services";
+import { useConfig } from "@/hooks/EventCatalog";
+import { useRouter } from "next/router";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 const sortOptions = [
-  { name: 'Name', href: '#', current: true },
-  { name: 'Version', href: '#', current: false },
-  { name: 'Domains', href: '#', current: false },
+  { name: "Name", href: "#", current: true },
+  { name: "Version", href: "#", current: false },
+  { name: "Domains", href: "#", current: false },
 ];
 
 export interface PageProps {
@@ -26,29 +26,32 @@ export interface PageProps {
 
 export default function Page({ services }: PageProps) {
   const [servicesToRender, setServicesToRender] = useState(services);
-  const [searchFilter, setSearchFilter] = useState('');
+  const [searchFilter, setSearchFilter] = useState("");
   const [selectedFilters, setSelectedFilters] = useState({ badges: [] });
 
   const filters = [
     {
-      id: 'badges',
+      id: "badges",
       name: `Filter by Badges`,
-      options: services.reduce((p, c) => {
-        if (!c.badges) {
-          return p;
-        }
-        c.badges.forEach((badge) => {
-          const existing = p.map((b) => b.value);
-          if (!existing.includes(badge.content)) {
-            p.push({
-              value: badge.content,
-              label: badge.content,
-              checked: false,
-            });
+      options: services.reduce(
+        (p, c) => {
+          if (!c.badges) {
+            return p;
           }
-        });
-        return p;
-      }, [] as { value: string; label: string; checked: boolean }[]),
+          c.badges.forEach((badge) => {
+            const existing = p.map((b) => b.value);
+            if (!existing.includes(badge.content)) {
+              p.push({
+                value: badge.content,
+                label: badge.content,
+                checked: false,
+              });
+            }
+          });
+          return p;
+        },
+        [] as { value: string; label: string; checked: boolean }[],
+      ),
     },
   ];
 
@@ -59,7 +62,9 @@ export default function Page({ services }: PageProps) {
       const newFilters = selectedFilters[type].concat([option.value]);
       setSelectedFilters({ ...selectedFilters, [type]: newFilters });
     } else {
-      const newFilters = selectedFilters[type].filter((value) => value !== option.value);
+      const newFilters = selectedFilters[type].filter(
+        (value) => value !== option.value,
+      );
       setSelectedFilters({ ...selectedFilters, [type]: newFilters });
     }
   };
@@ -70,7 +75,9 @@ export default function Page({ services }: PageProps) {
     if (!selectedFilters.badges && !searchFilter) return services;
 
     if (searchFilter) {
-      filteredServices = filteredServices.filter((service) => service.name.toLowerCase().includes(searchFilter.toLowerCase()));
+      filteredServices = filteredServices.filter((service) =>
+        service.name.toLowerCase().includes(searchFilter.toLowerCase()),
+      );
     }
 
     if (selectedFilters.badges.length > 0) {
@@ -80,7 +87,10 @@ export default function Page({ services }: PageProps) {
         if (!event.badges) {
           return false;
         }
-        return event.badges.filter((badge) => badgeFilters.includes(badge.content)).length !== 0;
+        return (
+          event.badges.filter((badge) => badgeFilters.includes(badge.content))
+            .length !== 0
+        );
       });
     }
 
@@ -104,7 +114,7 @@ export default function Page({ services }: PageProps) {
     debounce((e) => {
       setSearchFilter(e.target.value);
     }, 500),
-    [servicesToRender]
+    [servicesToRender],
   );
 
   const filtersApplied = !!searchFilter || selectedFilters.badges.length > 0;
@@ -119,7 +129,9 @@ export default function Page({ services }: PageProps) {
       </Head>
       <main className="max-w-7xl mx-auto md:min-h-screen px-4 xl:px-0">
         <div className="relative z-10 flex items-baseline justify-between pt-8 pb-6 border-b border-gray-200">
-          <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">Services ({services.length})</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">
+            Services ({services.length})
+          </h1>
 
           <div className="flex items-center">
             <Menu as="div" className="relative hidden text-left">
@@ -150,9 +162,11 @@ export default function Page({ services }: PageProps) {
                           <a
                             href={option.href}
                             className={classNames(
-                              option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                              active ? 'bg-gray-100' : '',
-                              'block px-4 py-2 text-sm'
+                              option.current
+                                ? "font-medium text-gray-900"
+                                : "text-gray-500",
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm",
                             )}
                           >
                             {option.name}
@@ -172,12 +186,18 @@ export default function Page({ services }: PageProps) {
             {/* Filters */}
             <form className="hidden lg:block">
               <div className="border-b border-gray-200 pb-6">
-                <label htmlFor="service" className="font-bold block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="service"
+                  className="font-bold block text-sm font-medium text-gray-700"
+                >
                   Search Services
                 </label>
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    <SearchIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
                   </div>
                   <input
                     type="text"
@@ -196,7 +216,10 @@ export default function Page({ services }: PageProps) {
               {filters.map((section: any) => {
                 if (!section.options.length) return null;
                 return (
-                  <div key={section.id} className="border-b border-gray-200 py-6">
+                  <div
+                    key={section.id}
+                    className="border-b border-gray-200 py-6"
+                  >
                     <h3 className="-my-3 flow-root">
                       <div className="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500">
                         <span className="font-bold font-medium text-gray-900">
@@ -209,17 +232,29 @@ export default function Page({ services }: PageProps) {
                         {section.options
                           .sort((a, b) => a.value.localeCompare(b.value))
                           .map((option, optionIdx) => (
-                            <div key={option.value} className="flex items-center">
+                            <div
+                              key={option.value}
+                              className="flex items-center"
+                            >
                               <input
                                 id={`filter-${section.id}-${optionIdx}`}
                                 name={`${section.id}[]`}
                                 defaultValue={option.value}
                                 type="checkbox"
-                                onChange={(event) => handleFilterSelection(option, section.id, event)}
+                                onChange={(event) =>
+                                  handleFilterSelection(
+                                    option,
+                                    section.id,
+                                    event,
+                                  )
+                                }
                                 defaultChecked={option.checked}
                                 className="h-4 w-4 border-gray-300 rounded text-gray-600 focus:ring-gray-500"
                               />
-                              <label htmlFor={`filter-${section.id}-${optionIdx}`} className="ml-3 text-sm text-gray-600">
+                              <label
+                                htmlFor={`filter-${section.id}-${optionIdx}`}
+                                className="ml-3 text-sm text-gray-600"
+                              >
                                 {option.label}
                               </label>
                             </div>
@@ -242,11 +277,16 @@ export default function Page({ services }: PageProps) {
                       <input
                         id="show-mermaid"
                         type="checkbox"
-                        onChange={(e) => setShowMermaidDiagrams(e.target.checked)}
+                        onChange={(e) =>
+                          setShowMermaidDiagrams(e.target.checked)
+                        }
                         defaultChecked={showMermaidDiagrams}
                         className="h-4 w-4 border-gray-300 rounded text-gray-600 focus:ring-gray-500"
                       />
-                      <label htmlFor="show-mermaid" className="ml-3 text-sm text-gray-600">
+                      <label
+                        htmlFor="show-mermaid"
+                        className="ml-3 text-sm text-gray-600"
+                      >
                         Show Mermaid Diagrams
                       </label>
                     </div>
@@ -262,7 +302,10 @@ export default function Page({ services }: PageProps) {
                         defaultChecked={showNodeGraphs}
                         className="h-4 w-4 border-gray-300 rounded text-gray-600 focus:ring-gray-500"
                       />
-                      <label htmlFor="show-node-graph" className="ml-3 text-sm text-gray-600">
+                      <label
+                        htmlFor="show-node-graph"
+                        className="ml-3 text-sm text-gray-600"
+                      >
                         Show Node Graphs
                       </label>
                     </div>

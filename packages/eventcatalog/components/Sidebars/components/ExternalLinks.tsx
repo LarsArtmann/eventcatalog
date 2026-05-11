@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { ExternalLinkIcon } from '@heroicons/react/outline';
+import { ExternalLinkIcon } from "@heroicons/react/outline";
 
 function ExternalLinks({ externalLinks }: { externalLinks: any[] }) {
   if (externalLinks.length === 0) return null;
@@ -16,7 +16,10 @@ function ExternalLinks({ externalLinks }: { externalLinks: any[] }) {
             rel="noreferrer"
             key={tag.url}
           >
-            <ExternalLinkIcon className="-ml-1 mr-2 h-5 w-5 text-teal-200" aria-hidden="true" />
+            <ExternalLinkIcon
+              className="-ml-1 mr-2 h-5 w-5 text-teal-200"
+              aria-hidden="true"
+            />
             <span>{`${tag.label}`}</span>
           </a>
         ))}

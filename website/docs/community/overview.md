@@ -1,9 +1,9 @@
 ---
 sidebar_position: 0
 id: plugins-overview
-title: 'Contributing'
+title: "Contributing"
 sidebar_label: Contributing
-slug: '/community/contributing'
+slug: "/community/contributing"
 ---
 
 # Contributing to EventCatalog

@@ -36,7 +36,7 @@ Name of the event.
 
 ```mdx title="Example"
 ---
-  name: EmailSent
+name: EmailSent
 ---
 ```
 
@@ -48,14 +48,13 @@ The version of your event.
 
 ```mdx title="Example"
 ---
-  version: 0.0.1
+version: 0.0.1
 ---
 ```
 
 :::tip
-  You can version your events and use EventCatalog to see previous events and changelogs for events. Check out XXX for more information.
+You can version your events and use EventCatalog to see previous events and changelogs for events. Check out XXX for more information.
 :::
-
 
 ## Optional fields {#optional-fields}
 
@@ -65,8 +64,8 @@ Short summary of your event, shown on event summary pages.
 
 ```mdx title="Example"
 ---
-  summary: |
-    Tells us when an email has been sent
+summary: |
+  Tells us when an email has been sent
 ---
 ```
 
@@ -76,10 +75,10 @@ An array of `services` that produce the event.
 
 ```mdx title="Example"
 ---
-  producers:
-    - Email Platform
-    - User Service
-    - Internal API
+producers:
+  - Email Platform
+  - User Service
+  - Internal API
 ---
 ```
 
@@ -89,9 +88,9 @@ An array of `services` that consume/subscribe the event.
 
 ```mdx title="Example"
 ---
-  consumers:
-    - Email Platform
-    - User Service
+consumers:
+  - Email Platform
+  - User Service
 ---
 ```
 
@@ -101,9 +100,9 @@ An array of user ids that own the event.
 
 ```mdx title="Example"
 ---
-  owners:
-    - dboyne
-    - mSmith
+owners:
+  - dboyne
+  - mSmith
 ---
 ```
 
@@ -123,9 +122,9 @@ List of URLs that can be used when people want to reference to external document
 
 ```mdx title="Example"
 ---
-  externalLinks:
-    - label: AsyncAPI Specification
-      url: https://studio.asyncapi.com/#schema-lightMeasuredPayload
+externalLinks:
+  - label: AsyncAPI Specification
+    url: https://studio.asyncapi.com/#schema-lightMeasuredPayload
 ---
 ```
 
@@ -139,9 +138,9 @@ List of tags related to the event.
 
 ```mdx title="Example"
 ---
-  tags:
-    - label: 'Topic: order-requested'
-    - label: 'Broker: kafka'
-      url: https://kafka.apache.org
+tags:
+  - label: "Topic: order-requested"
+  - label: "Broker: kafka"
+    url: https://kafka.apache.org
 ---
 ```

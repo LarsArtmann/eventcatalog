@@ -1,13 +1,13 @@
-import { EventBridge, Rule } from '@aws-sdk/client-eventbridge';
-import { Arn, ArnFormat } from 'aws-cdk-lib';
+import { EventBridge, Rule } from "@aws-sdk/client-eventbridge";
+import { Arn, ArnFormat } from "aws-cdk-lib";
 import {
   Schemas,
   Schemas as SchemaSDK,
   ExportSchemaCommandOutput,
   ForbiddenException,
   SchemaSummary,
-} from '@aws-sdk/client-schemas';
-import { PluginOptions } from '../types';
+} from "@aws-sdk/client-schemas";
+import { PluginOptions } from "../types";
 
 export interface CustomSchema extends ExportSchemaCommandOutput {
   Content?: any;
@@ -16,73 +16,76 @@ export interface CustomSchema extends ExportSchemaCommandOutput {
   Description?: string;
 }
 
-const getSchemas = (schemas: SchemaSDK, registryName: string, schemaNamePrefix?: string) => async (): Promise<CustomSchema[]> => {
-  // First get all schemas
-  let nextToken: string | undefined;
-  let registrySchemas: SchemaSummary[] = [];
-  do {
-    // eslint-disable-next-line no-await-in-loop
-    const { Schemas: batchRegistrySchemas = [], NextToken: token } = await schemas.listSchemas({
-      RegistryName: registryName,
-      NextToken: nextToken,
-      SchemaNamePrefix: schemaNamePrefix,
-    });
-    registrySchemas = registrySchemas.concat(batchRegistrySchemas);
-    nextToken = token;
-  } while (nextToken !== undefined);
+const getSchemas =
+  (schemas: SchemaSDK, registryName: string, schemaNamePrefix?: string) =>
+  async (): Promise<CustomSchema[]> => {
+    // First get all schemas
+    let nextToken: string | undefined;
+    let registrySchemas: SchemaSummary[] = [];
+    do {
+      // eslint-disable-next-line no-await-in-loop
+      const { Schemas: batchRegistrySchemas = [], NextToken: token } =
+        await schemas.listSchemas({
+          RegistryName: registryName,
+          NextToken: nextToken,
+          SchemaNamePrefix: schemaNamePrefix,
+        });
+      registrySchemas = registrySchemas.concat(batchRegistrySchemas);
+      nextToken = token;
+    } while (nextToken !== undefined);
 
-  const allSchemas = registrySchemas.map(async (registrySchema: any) => {
-    let schemaAsJSON: ExportSchemaCommandOutput = { $metadata: {} };
+    const allSchemas = registrySchemas.map(async (registrySchema: any) => {
+      let schemaAsJSON: ExportSchemaCommandOutput = { $metadata: {} };
 
-    try {
-      // Get the JSON schema
-      schemaAsJSON = await schemas.exportSchema({
+      try {
+        // Get the JSON schema
+        schemaAsJSON = await schemas.exportSchema({
+          RegistryName: registryName,
+          SchemaName: registrySchema.SchemaName,
+          Type: "JSONSchemaDraft4",
+        });
+      } catch (error) {
+        if (error instanceof ForbiddenException) {
+          console.warn(error);
+        } else {
+          throw error;
+        }
+      }
+
+      // Get the OpenAPI schema
+      const schemaAsOpenAPI = await schemas.describeSchema({
         RegistryName: registryName,
         SchemaName: registrySchema.SchemaName,
-        Type: 'JSONSchemaDraft4',
       });
-    } catch (error) {
-      if (error instanceof ForbiddenException) {
-        console.warn(error);
-      } else {
-        throw error;
-      }
-    }
 
-    // Get the OpenAPI schema
-    const schemaAsOpenAPI = await schemas.describeSchema({
-      RegistryName: registryName,
-      SchemaName: registrySchema.SchemaName,
+      const jsonSchema = buildSchema(schemaAsJSON);
+      const openAPISchema = buildSchema(schemaAsOpenAPI);
+
+      return {
+        ...jsonSchema,
+        ...openAPISchema,
+        Content: {
+          jsonSchema: jsonSchema?.Content,
+          openAPISchema: openAPISchema?.Content,
+        },
+        Type: "Custom-Merged",
+        DetailType: jsonSchema?.Content["x-amazon-events-detail-type"],
+        Source: jsonSchema?.Content["x-amazon-events-source"],
+      };
     });
 
-    const jsonSchema = buildSchema(schemaAsJSON);
-    const openAPISchema = buildSchema(schemaAsOpenAPI);
-
-    return {
-      ...jsonSchema,
-      ...openAPISchema,
-      Content: {
-        jsonSchema: jsonSchema?.Content,
-        openAPISchema: openAPISchema?.Content,
-      },
-      Type: 'Custom-Merged',
-      DetailType: jsonSchema?.Content['x-amazon-events-detail-type'],
-      Source: jsonSchema?.Content['x-amazon-events-source'],
-    };
-  });
-
-  return Promise.all(allSchemas);
-};
+    return Promise.all(allSchemas);
+  };
 
 const buildSchema = (rawSchema: ExportSchemaCommandOutput): CustomSchema => ({
   ...rawSchema,
-  Content: JSON.parse(rawSchema.Content || ''),
+  Content: JSON.parse(rawSchema.Content || ""),
 });
 
 const flattenRules = (busRules: Rule[]) =>
   busRules.reduce((rules: any, rule: any) => {
     const eventPattern = JSON.parse(rule.EventPattern);
-    const detailType = eventPattern['detail-type'] || [];
+    const detailType = eventPattern["detail-type"] || [];
 
     detailType.forEach((detail: any) => {
       if (!rules[detail]) {
@@ -107,7 +110,7 @@ export const getAWSConsoleUrlForEventBridgeRule = ({
 }) => {
   const url = new URL(
     `events/home?region=${region}#/eventbus/${eventBusName}/rules/${ruleName}`,
-    `https://${region}.console.aws.amazon.com`
+    `https://${region}.console.aws.amazon.com`,
   );
   return url.href;
 };
@@ -124,43 +127,67 @@ export const getAWSConsoleUrlForEventBridgeRuleMetrics = ({
   const query = `*7bAWS*2fEvents*2cEventBusName*2CRuleName*7d*20RuleName*3d*22${ruleName}*22*20EventBusName*3d*22${eventBusName}*22`;
   const url = new URL(
     `cloudwatch/home?region=${region}#metricsV2:graph=~();query=~'${query}`,
-    `https://${region}.console.aws.amazon.com`
+    `https://${region}.console.aws.amazon.com`,
   );
   return url.href;
 };
 
-export const getAWSConsoleUrlForService = ({ region, service }: { region: string; service: string }) => {
-  const url = new URL(`${service}/home?region=${region}`, `https://${region}.console.aws.amazon.com`);
+export const getAWSConsoleUrlForService = ({
+  region,
+  service,
+}: {
+  region: string;
+  service: string;
+}) => {
+  const url = new URL(
+    `${service}/home?region=${region}`,
+    `https://${region}.console.aws.amazon.com`,
+  );
   return url.href;
 };
 
-const getEventBusRulesAndTargets = (eventbridge: EventBridge, eventBusName: string) => async () => {
-  const rulesForEvents = await eventbridge.listRules({ EventBusName: eventBusName, Limit: 100 });
-  const rulesByEvent = rulesForEvents.Rules ? flattenRules(rulesForEvents.Rules) : {};
-
-  return Object.keys(rulesByEvent).reduce(async (data, event) => {
-    const listOfRulesForEvent = rulesByEvent[event].rules || [];
-
-    const eventTargetsAndRules = listOfRulesForEvent.map(async (rule: any) => {
-      const { Targets = [] } = await eventbridge.listTargetsByRule({ Rule: rule.name, EventBusName: eventBusName });
-      const targets = Targets.map(({ Arn: arnString = '' }) => {
-        const { service, resource, resourceName } = Arn.split(arnString, ArnFormat.SLASH_RESOURCE_SLASH_RESOURCE_NAME);
-        return { service, resource, resourceName, arn: arnString };
-      });
-      return { ...rule, targets };
+const getEventBusRulesAndTargets =
+  (eventbridge: EventBridge, eventBusName: string) => async () => {
+    const rulesForEvents = await eventbridge.listRules({
+      EventBusName: eventBusName,
+      Limit: 100,
     });
+    const rulesByEvent = rulesForEvents.Rules
+      ? flattenRules(rulesForEvents.Rules)
+      : {};
 
-    const eventWithTargetsAndRules = await Promise.all(eventTargetsAndRules);
+    return Object.keys(rulesByEvent).reduce(async (data, event) => {
+      const listOfRulesForEvent = rulesByEvent[event].rules || [];
 
-    return {
-      ...(await data),
-      [event]: eventWithTargetsAndRules,
-    };
-  }, {});
-};
+      const eventTargetsAndRules = listOfRulesForEvent.map(
+        async (rule: any) => {
+          const { Targets = [] } = await eventbridge.listTargetsByRule({
+            Rule: rule.name,
+            EventBusName: eventBusName,
+          });
+          const targets = Targets.map(({ Arn: arnString = "" }) => {
+            const { service, resource, resourceName } = Arn.split(
+              arnString,
+              ArnFormat.SLASH_RESOURCE_SLASH_RESOURCE_NAME,
+            );
+            return { service, resource, resourceName, arn: arnString };
+          });
+          return { ...rule, targets };
+        },
+      );
+
+      const eventWithTargetsAndRules = await Promise.all(eventTargetsAndRules);
+
+      return {
+        ...(await data),
+        [event]: eventWithTargetsAndRules,
+      };
+    }, {});
+  };
 
 export default (options: PluginOptions) => {
-  const { credentials, registryName, region, eventBusName, schemaNamePrefix } = options;
+  const { credentials, registryName, region, eventBusName, schemaNamePrefix } =
+    options;
 
   const schemas = new Schemas({ credentials, region });
 
@@ -168,6 +195,9 @@ export default (options: PluginOptions) => {
 
   return {
     getSchemas: getSchemas(schemas, registryName, schemaNamePrefix),
-    getEventBusRulesAndTargets: getEventBusRulesAndTargets(eventbridge, eventBusName),
+    getEventBusRulesAndTargets: getEventBusRulesAndTargets(
+      eventbridge,
+      eventBusName,
+    ),
   };
 };

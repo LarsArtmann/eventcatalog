@@ -1,12 +1,12 @@
-const plugin = require('../lib/index');
-const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '../', '.env') });
+const plugin = require("../lib/index");
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../", ".env") });
 
 const main = async () => {
   const amazonEventBridgePlugin = plugin.default;
 
   await amazonEventBridgePlugin(
-    { eventCatalogConfig: { title: 'EventCatalog', organizationName: 'Test' } },
+    { eventCatalogConfig: { title: "EventCatalog", organizationName: "Test" } },
     {
       credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -16,7 +16,7 @@ const main = async () => {
       region: process.env.REGION,
       registryName: process.env.SCHEMA_REGISTRY_NAME,
       schemaNamePrefix: process.env.SCHEMA_NAME_PREFIX,
-    }
+    },
   );
 };
 

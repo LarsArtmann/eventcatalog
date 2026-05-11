@@ -1,7 +1,7 @@
 name: Default Issue Template
 about: Use this template for anything else
-title: ''
+title: ""
 labels:
   - bug
 assignees:
-  - ''
+  - ""

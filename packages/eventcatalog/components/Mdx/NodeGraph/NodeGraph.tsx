@@ -1,9 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import Link from 'next/link';
-import ReactFlow, { Controls, ReactFlowProvider, Background, useZoomPanHelper } from 'react-flow-renderer';
-import { Domain, Event, Service } from '@eventcatalog/types';
-import { getEventElements, getServiceElements } from './GraphElements';
-import createGraphLayout, { calcCanvasHeight } from './GraphLayout';
+import React, { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
+import ReactFlow, {
+  Controls,
+  ReactFlowProvider,
+  Background,
+  useZoomPanHelper,
+} from "react-flow-renderer";
+import { Domain, Event, Service } from "@eventcatalog/types";
+import { getEventElements, getServiceElements } from "./GraphElements";
+import createGraphLayout, { calcCanvasHeight } from "./GraphLayout";
 
 interface CombinedEventsAndServices {
   events: Event[];
@@ -13,25 +18,29 @@ interface CombinedEventsAndServices {
 
 interface CombinedEventsAndServicesSource {
   data: CombinedEventsAndServices;
-  source: 'all';
+  source: "all";
 }
 
 interface DomainSource {
   data: Domain;
-  source: 'domain';
+  source: "domain";
 }
 
 interface ServiceSource {
   data: Service;
-  source: 'service';
+  source: "service";
 }
 
 interface EventSource {
   data: Event;
-  source: 'event';
+  source: "event";
 }
 
-export type DataSource = CombinedEventsAndServicesSource | DomainSource | ServiceSource | EventSource;
+export type DataSource =
+  | CombinedEventsAndServicesSource
+  | DomainSource
+  | ServiceSource
+  | EventSource;
 
 interface NodeGraphBuilderSharedProps {
   title?: string;
@@ -73,23 +82,48 @@ function NodeGraphBuilder({
   subtitle,
 }: NodeGraphBuilderProps) {
   const getElements = useCallback(() => {
-    if (source === 'domain' || source === 'all') {
-      const totalEventElements = data.events.map((event) => getEventElements(event, rootNodeColor, isAnimated, true, true));
-      const totalServiceElements = data.services.map((service) =>
-        getServiceElements(service, rootNodeColor, isAnimated, true, true)
+    if (source === "domain" || source === "all") {
+      const totalEventElements = data.events.map((event) =>
+        getEventElements(event, rootNodeColor, isAnimated, true, true),
       );
-      const eventsWithServices = totalEventElements.flat().concat(totalServiceElements.flat());
+      const totalServiceElements = data.services.map((service) =>
+        getServiceElements(service, rootNodeColor, isAnimated, true, true),
+      );
+      const eventsWithServices = totalEventElements
+        .flat()
+        .concat(totalServiceElements.flat());
       // after we merge make sure all elements are unique for the diagram
       // @ts-ignore
-      return [...new Map(eventsWithServices.map((item) => [item.id, item])).values()];
+      return [
+        ...new Map(eventsWithServices.map((item) => [item.id, item])).values(),
+      ];
     }
 
-    if (source === 'event') {
-      return getEventElements(data as Event, rootNodeColor, isAnimated, includeEdgeLabels, includeNodeIcons);
+    if (source === "event") {
+      return getEventElements(
+        data as Event,
+        rootNodeColor,
+        isAnimated,
+        includeEdgeLabels,
+        includeNodeIcons,
+      );
     }
 
-    return getServiceElements(data as Service, rootNodeColor, isAnimated, includeEdgeLabels, includeNodeIcons);
-  }, [data, includeEdgeLabels, includeNodeIcons, isAnimated, rootNodeColor, source]);
+    return getServiceElements(
+      data as Service,
+      rootNodeColor,
+      isAnimated,
+      includeEdgeLabels,
+      includeNodeIcons,
+    );
+  }, [
+    data,
+    includeEdgeLabels,
+    includeNodeIcons,
+    isAnimated,
+    rootNodeColor,
+    source,
+  ]);
 
   const { fitView: resetView } = useZoomPanHelper();
 
@@ -106,7 +140,7 @@ function NodeGraphBuilder({
   // ReactFlow operations
   const onElementClick = (event, element) => {
     if (element.data?.link) {
-      window.open(element.data.link, '_self');
+      window.open(element.data.link, "_self");
     }
   };
 
@@ -116,7 +150,7 @@ function NodeGraphBuilder({
         reactFlowInstance.fitView();
       }
     },
-    [fitView]
+    [fitView],
   );
 
   return (
@@ -146,20 +180,31 @@ function NodeGraphBuilder({
 }
 
 // NodeGraph wrapping NodeGraphBuilder Component
-function NodeGraph({ maxHeight, renderWithBorder = true, ...builderProps }: NodeGraphProps) {
+function NodeGraph({
+  maxHeight,
+  renderWithBorder = true,
+  ...builderProps
+}: NodeGraphProps) {
   // Set dynamic height of node graph
   const dynamicHeight = maxHeight || calcCanvasHeight(builderProps);
 
   const borderClasses = `border-dashed border-2 border-slate-300`;
 
   return (
-    <div className={`node-graph w-full h-screen ${renderWithBorder ? borderClasses : ''}`} style={{ height: dynamicHeight }}>
+    <div
+      className={`node-graph w-full h-screen ${renderWithBorder ? borderClasses : ""}`}
+      style={{ height: dynamicHeight }}
+    >
       {/* @ts-ignore */}
       <ReactFlowProvider>
         <NodeGraphBuilder {...builderProps} />
       </ReactFlowProvider>
-      <Link href={`/visualiser?type=${builderProps.source}&name=${builderProps.data.name}`}>
-        <a className="block text-right  underline text-xs mt-4">Open in Visualiser &rarr;</a>
+      <Link
+        href={`/visualiser?type=${builderProps.source}&name=${builderProps.data.name}`}
+      >
+        <a className="block text-right  underline text-xs mt-4">
+          Open in Visualiser &rarr;
+        </a>
       </Link>
     </div>
   );

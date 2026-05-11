@@ -2,7 +2,7 @@
 sidebar_position: 3
 id: deployment
 title: Deployment
----  
+---
 
 EventCatalog exports your catalog to static HTML which means **you can deploy your application anywhere you want!**
 
@@ -64,4 +64,3 @@ docker run -p 3000:3000 -it eventcatalog
 [Kalle Marjokorpi](https://www.kallemarjokorpi.fi/blog/how-to-create-and-event-catalog.html) gives an example of how to build an EventCataog with Azure, EventGrid and EventHub.
 
 ![!alt](https://cdn.buttercms.com/5y2OEb07T1e8i0e18PjC)
-

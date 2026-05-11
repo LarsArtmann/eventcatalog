@@ -51,5 +51,6 @@ usercreated-to-hello-world{{usercreated-to-hello-world}}:::rule-- fa:fa-cloud se
 
 export default {
   userCreated: generatedUserCreatedEventMarkdownFile,
-  userDeletedWithNoTargetsOrRules: generatedUserDeletedWithNoRulesOrTargetsMarkdownFile,
+  userDeletedWithNoTargetsOrRules:
+    generatedUserDeletedWithNoRulesOrTargetsMarkdownFile,
 };

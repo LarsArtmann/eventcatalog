@@ -2,19 +2,19 @@
   "name": "@eventcatalog/types",
   "version": "0.4.2",
   "description": "Common types for EventCatalog packages",
-  "types": "./src/index.d.ts",
-  "scripts": {
-    "test": "tsc -p ."
-  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/boyney123/eventcatalog.git",
     "directory": "packages/eventcatalog-plugin-doc-generator-asyncapi"
   },
+  "types": "./src/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
-  "license": "MIT",
+  "scripts": {
+    "test": "tsc -p ."
+  },
   "engines": {
     "node": ">=14"
   }

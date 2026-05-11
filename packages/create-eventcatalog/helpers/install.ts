@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import chalk from 'chalk';
-import spawn from 'cross-spawn';
+import chalk from "chalk";
+import spawn from "cross-spawn";
 
 interface InstallArgs {
   /**
@@ -25,7 +25,7 @@ interface InstallArgs {
 export function install(
   root: string,
   dependencies: string[] | null,
-  { useYarn, isOnline, devDependencies }: InstallArgs
+  { useYarn, isOnline, devDependencies }: InstallArgs,
 ): Promise<void> {
   /**
    * NPM-specific command-line flags.
@@ -40,7 +40,7 @@ export function install(
    */
   return new Promise((resolve, reject) => {
     let args: string[];
-    let command: string = useYarn ? 'yarnpkg' : 'npm';
+    let command: string = useYarn ? "yarnpkg" : "npm";
 
     if (dependencies && dependencies.length) {
       /**
@@ -50,17 +50,17 @@ export function install(
         /**
          * Call `yarn add --exact (--offline)? (-D)? ...`.
          */
-        args = ['add', '--exact'];
-        if (!isOnline) args.push('--offline');
-        args.push('--cwd', root);
-        if (devDependencies) args.push('--dev');
+        args = ["add", "--exact"];
+        if (!isOnline) args.push("--offline");
+        args.push("--cwd", root);
+        if (devDependencies) args.push("--dev");
         args.push(...dependencies);
       } else {
         /**
          * Call `npm install [--save|--save-dev] ...`.
          */
-        args = ['install', '--save-exact'];
-        args.push(devDependencies ? '--save-dev' : '--save');
+        args = ["install", "--save-exact"];
+        args.push(devDependencies ? "--save-dev" : "--save");
         args.push(...dependencies);
       }
     } else {
@@ -68,17 +68,17 @@ export function install(
        * If there are no dependencies, run a variation of `{displayCommand}
        * install`.
        */
-      args = ['install'];
+      args = ["install"];
       if (useYarn) {
         if (!isOnline) {
-          console.log(chalk.yellow('You appear to be offline.'));
-          console.log(chalk.yellow('Falling back to the local Yarn cache.'));
+          console.log(chalk.yellow("You appear to be offline."));
+          console.log(chalk.yellow("Falling back to the local Yarn cache."));
           console.log();
-          args.push('--offline');
+          args.push("--offline");
         }
       } else {
         if (!isOnline) {
-          console.log(chalk.yellow('You appear to be offline.'));
+          console.log(chalk.yellow("You appear to be offline."));
           console.log();
         }
       }
@@ -95,17 +95,17 @@ export function install(
      * Spawn the installation process.
      */
     const child = spawn(command, args, {
-      stdio: 'inherit',
+      stdio: "inherit",
       env: {
         ...process.env,
-        NODE_ENV: devDependencies ? 'development' : 'production',
-        ADBLOCK: '1',
-        DISABLE_OPENCOLLECTIVE: '1',
+        NODE_ENV: devDependencies ? "development" : "production",
+        ADBLOCK: "1",
+        DISABLE_OPENCOLLECTIVE: "1",
       },
     });
-    child.on('close', (code) => {
+    child.on("close", (code) => {
       if (code !== 0) {
-        reject({ command: `${command} ${args.join(' ')}` });
+        reject({ command: `${command} ${args.join(" ")}` });
         return;
       }
       resolve();

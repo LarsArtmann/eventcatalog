@@ -13,7 +13,7 @@ Here are some reasons why you might want to add code examples:
 - Give developers examples of how to trigger the event
 - Give developers the ability to quickly copy and paste commands
 
-EventCatalog is all about event discovery and documentation for your team. 
+EventCatalog is all about event discovery and documentation for your team.
 
 Giving them code examples might help them get up and running with your architecture easier.
 
@@ -25,8 +25,8 @@ To add code examples to your event you will need to create a new folder called `
 
 You will need to add the files inside the examples directory
 
-- `/events/{Event Name}/examples/{any-file}` 
-  - (example `/events/UserSignedUp/examples/FiringEventExample.js`) 
+- `/events/{Event Name}/examples/{any-file}`
+  - (example `/events/UserSignedUp/examples/FiringEventExample.js`)
 
 :::tip
 Within the `examples` folder you can add any file and any programming language you want. EventCatalog will read the directory and render the example code into the UI.
@@ -47,9 +47,9 @@ version: 0.0.1
 summary: |
   Tells us when the user has been created
 consumers:
-    - Email Platform
+  - Email Platform
 producers:
-    - User Service
+  - User Service
 ---
 
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id
@@ -59,28 +59,27 @@ neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <EventExamples title="How to trigger event" />
-
 ```
 
 Let's add the Example for this Event in `/events/UserCreated/examples/Example.js`
 
 ```js
-var mqtt = require('mqtt')
-var client  = mqtt.connect('mqtt://test.mosquitto.org')
+var mqtt = require("mqtt");
+var client = mqtt.connect("mqtt://test.mosquitto.org");
 
-client.on('connect', function () {
-  client.subscribe('presence', function (err) {
+client.on("connect", function () {
+  client.subscribe("presence", function (err) {
     if (!err) {
-      client.publish('presence', 'Hello mqtt')
+      client.publish("presence", "Hello mqtt");
     }
-  })
-})
+  });
+});
 
-client.on('message', function (topic, message) {
+client.on("message", function (topic, message) {
   // message is Buffer
-  console.log(message.toString())
-  client.end()
-})
+  console.log(message.toString());
+  client.end();
+});
 ```
 
 _This is just an example of a JavaScript file connecting to MQTT broker, this is just dummy code_
@@ -91,9 +90,4 @@ Remember the name of the file and extension of the example does not matter, you 
 
 Let's see how the code example will render in the document.
 
-
-
 ![UserSignedUp with Code Example](/img/guides/events/UserSignedUpExampleWithExamples.png)
-
-
-

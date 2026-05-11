@@ -1,11 +1,11 @@
-import React from 'react';
-import Link from 'next/link';
-import type { Domain } from '@eventcatalog/types';
-import { CubeIcon } from '@heroicons/react/outline';
-import ExternalLinks from './components/ExternalLinks';
-import Tags from './components/Tags';
-import Owners from './components/Owners';
-import ItemList from './components/ItemList';
+import React from "react";
+import Link from "next/link";
+import type { Domain } from "@eventcatalog/types";
+import { CubeIcon } from "@heroicons/react/outline";
+import ExternalLinks from "./components/ExternalLinks";
+import Tags from "./components/Tags";
+import Owners from "./components/Owners";
+import ItemList from "./components/ItemList";
 
 interface DomainSideBarProps {
   domain: Domain;
@@ -21,19 +21,23 @@ function ServiceSidebar({ domain }: DomainSideBarProps) {
       {events.length > 0 && (
         <ItemList
           title={`Events (${events.length})`}
-          titleIcon={{ icon: CubeIcon, className: 'text-indigo-400' }}
-          items={events.map((event) => ({ label: event.name, href: `/domains/${name}/events/${event.name}`, bgColor: 'indigo' }))}
+          titleIcon={{ icon: CubeIcon, className: "text-indigo-400" }}
+          items={events.map((event) => ({
+            label: event.name,
+            href: `/domains/${name}/events/${event.name}`,
+            bgColor: "indigo",
+          }))}
         />
       )}
 
       {services.length > 0 && (
         <ItemList
           title={`Services (${services.length})`}
-          titleIcon={{ icon: CubeIcon, className: 'text-green-400' }}
+          titleIcon={{ icon: CubeIcon, className: "text-green-400" }}
           items={services.map((service) => ({
             label: service.name,
             href: `/domains/${name}/services/${service.name}`,
-            bgColor: 'green',
+            bgColor: "green",
           }))}
         />
       )}
@@ -46,7 +50,9 @@ function ServiceSidebar({ domain }: DomainSideBarProps) {
         </a>
       </Link>
 
-      {externalLinks.length > 0 && <ExternalLinks externalLinks={externalLinks} />}
+      {externalLinks.length > 0 && (
+        <ExternalLinks externalLinks={externalLinks} />
+      )}
       {tags.length > 0 && <Tags tags={tags} />}
     </aside>
   );

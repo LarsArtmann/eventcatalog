@@ -1,27 +1,32 @@
-import Link from 'next/link';
-import getConfig from 'next/config';
-import { useRouter } from 'next/router';
-import { useConfig } from '@/hooks/EventCatalog';
+import Link from "next/link";
+import getConfig from "next/config";
+import { useRouter } from "next/router";
+import { useConfig } from "@/hooks/EventCatalog";
 
 const defaultNavigation = [
-  { label: 'Events', href: '/events' },
-  { label: 'Services', href: '/services' },
-  { label: 'Domains', href: '/domains' },
-  { label: 'Users', href: '/users' },
-  { label: 'Visualiser', href: '/visualiser' },
-  { label: '3D Node Graph', href: '/overview' },
+  { label: "Events", href: "/events" },
+  { label: "Services", href: "/services" },
+  { label: "Domains", href: "/domains" },
+  { label: "Users", href: "/users" },
+  { label: "Visualiser", href: "/visualiser" },
+  { label: "3D Node Graph", href: "/overview" },
 ];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
-  const { title, homepageLink, logo, headerLinks: configNavigation } = useConfig();
+  const {
+    title,
+    homepageLink,
+    logo,
+    headerLinks: configNavigation,
+  } = useConfig();
   const router = useRouter();
 
-  const { publicRuntimeConfig: { basePath = '' } = {} } = getConfig();
-  const logoToLoad = logo || { alt: 'EventCatalog Logo', src: `logo.svg` };
+  const { publicRuntimeConfig: { basePath = "" } = {} } = getConfig();
+  const logoToLoad = logo || { alt: "EventCatalog Logo", src: `logo.svg` };
 
   const headerNavigation = configNavigation || defaultNavigation;
 
@@ -34,14 +39,22 @@ export default function Example() {
               {!homepageLink && (
                 <Link href="/">
                   <a className="flex items-center">
-                    <img alt="logo" className="text-white w-8 inline-block mr-3" src={`${basePath}/${logoToLoad.src}`} />
+                    <img
+                      alt="logo"
+                      className="text-white w-8 inline-block mr-3"
+                      src={`${basePath}/${logoToLoad.src}`}
+                    />
                     <span className="text-xl">{title}</span>
                   </a>
                 </Link>
               )}
               {homepageLink && (
                 <a href={homepageLink} className="flex items-center">
-                  <img alt="logo" className="text-white w-8 inline-block mr-3" src={`${basePath}/${logoToLoad.src}`} />
+                  <img
+                    alt="logo"
+                    className="text-white w-8 inline-block mr-3"
+                    src={`${basePath}/${logoToLoad.src}`}
+                  />
                   <span className="text-xl">{title}</span>
                 </a>
               )}
@@ -55,10 +68,12 @@ export default function Example() {
                   <Link key={item.label} href={item.href}>
                     <a
                       className={classNames(
-                        current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                        'px-3 py-2 rounded-md text-sm font-medium'
+                        current
+                          ? "bg-gray-900 text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                        "px-3 py-2 rounded-md text-sm font-medium",
                       )}
-                      aria-current={current ? 'page' : undefined}
+                      aria-current={current ? "page" : undefined}
                     >
                       {item.label}
                     </a>

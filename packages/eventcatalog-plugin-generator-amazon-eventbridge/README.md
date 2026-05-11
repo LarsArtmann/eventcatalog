@@ -27,4 +27,3 @@ Once you set your variables you can then run
 ```
 
 This will run the build of the plugin and generate an eventcatalog from your amazon-eventbridge schema registry
-

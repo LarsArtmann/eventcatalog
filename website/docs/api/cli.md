@@ -15,7 +15,7 @@ Once your catalog is bootstrapped, the source will contain the EventCatalog scri
     "dev": "eventcatalog dev",
     "start": "eventcatalog start",
     "build": "eventcatalog build",
-    "generate": "eventcatalog generate",
+    "generate": "eventcatalog generate"
   }
 }
 ```
@@ -31,11 +31,13 @@ Below is a list of EventCatalog CLI commands and their usages:
 ### `eventcatalog start` {#eventcatalog-start-sitedir}
 
 Starts the built EventCatalog (post-build phase)
+
 ### `eventcatalog build` {#eventcatalog-build-sitedir}
 
 Compiles your site for production.
 
 Starts the built EventCatalog (post-build phase)
+
 ### `eventcatalog dev` {#eventcatalog-dev-sitedir}
 
 Runs your catalog in dev mode
@@ -43,4 +45,3 @@ Runs your catalog in dev mode
 ### `eventcatalog generate` {#eventcatalog-dev-sitedir}
 
 Used to generate your documentation from third party systems.
-

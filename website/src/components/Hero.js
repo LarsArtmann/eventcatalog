@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import 'prismjs';
-import 'prismjs/themes/prism-tomorrow.css';
+import "prismjs";
+import "prismjs/themes/prism-tomorrow.css";
 
 const markdownExample = `---
 name: AddedItemToCart
@@ -21,43 +21,44 @@ owners:
 
 const testimonials = [
   {
-    body: 'Creating easy to maintain and easy to consume API and event documentation that is always up to date has been one of the most consistent challenges of my career. EventCatalog has become the keystone tool to finally make it possible.',
+    body: "Creating easy to maintain and easy to consume API and event documentation that is always up to date has been one of the most consistent challenges of my career. EventCatalog has become the keystone tool to finally make it possible.",
     author: {
-      name: 'Adam Fanello',
-      handle: 'Strategic Cloud Software Architect, Rackspace Technology',
-      imageUrl: '/img/people/adam-fanello.jpeg',
+      name: "Adam Fanello",
+      handle: "Strategic Cloud Software Architect, Rackspace Technology",
+      imageUrl: "/img/people/adam-fanello.jpeg",
     },
   },
   {
     body: "EventCatalog unlocked the power to visualise events and flows. It simplifies event documentation, providing a clear and comprehensive view of all our events, producers, and consumers. It's the essential tool that was missing in my documentation process.",
     author: {
-      name: 'Tim Haselaars',
-      handle: 'Product Manager , Apideck',
-      imageUrl: '/img/people/tim-h.jpeg',
+      name: "Tim Haselaars",
+      handle: "Product Manager , Apideck",
+      imageUrl: "/img/people/tim-h.jpeg",
     },
   },
   {
-    body: 'When I started to work with EDA 4 years ago, I always wondering how to document events across the organization with easy access and useful for all stakeholders, recently I discovered Event Catalog which has been amazing because it automated the creation of EventBridge event powered by the plugging you created, big thanks!',
+    body: "When I started to work with EDA 4 years ago, I always wondering how to document events across the organization with easy access and useful for all stakeholders, recently I discovered Event Catalog which has been amazing because it automated the creation of EventBridge event powered by the plugging you created, big thanks!",
     author: {
-      name: 'Daniel Castillo',
-      handle: 'Software Architect, Propelus',
-      imageUrl: '/img/people/daniel-castillo.png',
+      name: "Daniel Castillo",
+      handle: "Software Architect, Propelus",
+      imageUrl: "/img/people/daniel-castillo.png",
     },
   },
   {
     body: "EventCatalog does a tremendous job in bringing transparency to our landscape. With it's visualisation features it's easy to identify stakeholders for event changes.",
     author: {
-      name: 'Benjamin Otto',
-      handle: 'Fullstack developer, Cloud lover',
-      imageUrl: 'https://pbs.twimg.com/profile_images/663759011205029889/zIraFLcq_400x400.jpg',
+      name: "Benjamin Otto",
+      handle: "Fullstack developer, Cloud lover",
+      imageUrl:
+        "https://pbs.twimg.com/profile_images/663759011205029889/zIraFLcq_400x400.jpg",
     },
   },
   {
-    body: 'EventCatalog for us replaces a plain wiki. It offers much more insight into an EDA. Features such as the visualiser make seeing how events are used a breath of fresh air!',
+    body: "EventCatalog for us replaces a plain wiki. It offers much more insight into an EDA. Features such as the visualiser make seeing how events are used a breath of fresh air!",
     author: {
-      name: 'Billy Mumby',
-      handle: '',
-      imageUrl: '/img/user.png',
+      name: "Billy Mumby",
+      handle: "",
+      imageUrl: "/img/user.png",
     },
   },
   // More testimonials...
@@ -74,15 +75,22 @@ function Hero() {
                 <div>
                   <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:leading-none lg:mt-6 lg:text-5xl xl:text-6xl">
                     <span className="md:block">
-                      Documentation tool for <span className="text-green-500">Event-Driven Architectures</span>
-                    </span>{' '}
+                      Documentation tool for{" "}
+                      <span className="text-green-500">
+                        Event-Driven Architectures
+                      </span>
+                    </span>{" "}
                     {/* <span className="md:block">Documentation made Simple</span>{' '} */}
                   </h1>
                   <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                    EventCatalog is an Open Source project that helps you document your{' '}
-                    <span className="text-green-500">events</span>, <span className="text-green-500">services</span> and{' '}
-                    <span className="text-green-500">domains</span>. Over{' '}
-                    <span className="text-green-500 text-bold underline">11,000</span> catalogs created.
+                    EventCatalog is an Open Source project that helps you
+                    document your <span className="text-green-500">events</span>
+                    , <span className="text-green-500">services</span> and{" "}
+                    <span className="text-green-500">domains</span>. Over{" "}
+                    <span className="text-green-500 text-bold underline">
+                      11,000
+                    </span>{" "}
+                    catalogs created.
                   </p>
                   <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-sm">
                     Powered by markdown, components and plugins.
@@ -119,7 +127,9 @@ function Hero() {
                         <div className="w-2.5 h-2.5 bg-gray-200 rounded-full" />
                       </div>
                       <pre className="important-overflow-hidden w-full text-sm h-full rounded-lg rounded-t-none shadow-lg bg-gray-900">
-                        <code className="language-markdown">{markdownExample}</code>
+                        <code className="language-markdown">
+                          {markdownExample}
+                        </code>
                       </pre>
                     </div>
                     <div className="sm:hidden lg:block -top-40 h-64 lg:h-20 relative md:top-0 md:-mt-64 lg:-right-20 lg:relative md:px-6  ">
@@ -133,7 +143,10 @@ function Hero() {
                       </div>
 
                       <div className="bg-white shadow-lg rounded-lg">
-                        <img alt="Event Catalog Example" src="/img/page-example.png" />
+                        <img
+                          alt="Event Catalog Example"
+                          src="/img/page-example.png"
+                        />
                       </div>
                     </div>
                   </section>
@@ -150,9 +163,13 @@ function Hero() {
         <figure className="mx-0">
           <blockquote className="border-none">
             <p className="mt-6 max-w-3xl mx-auto text-lg">
-              Over time our Event Driven Architectures (EDA) grow and it can become difficult to discover and understand our{' '}
-              <span className="font-bold text-green-500">events, schemas, producers, consumers and services</span>. EventCatalog
-              is built to help you document, visualise and keep on top of your Event Driven Architectures.
+              Over time our Event Driven Architectures (EDA) grow and it can
+              become difficult to discover and understand our{" "}
+              <span className="font-bold text-green-500">
+                events, schemas, producers, consumers and services
+              </span>
+              . EventCatalog is built to help you document, visualise and keep
+              on top of your Event Driven Architectures.
             </p>
           </blockquote>
           <figcaption className="mt-6 flex items-center justify-center space-x-4 text-left">
@@ -163,8 +180,12 @@ function Hero() {
               loading="lazy"
             />
             <div>
-              <div className="text-slate-900 font-semibold dark:text-white">David Boyne</div>
-              <div className="mt-0.5 text-sm leading-6">Creator of EventCatalog</div>
+              <div className="text-slate-900 font-semibold dark:text-white">
+                David Boyne
+              </div>
+              <div className="mt-0.5 text-sm leading-6">
+                Creator of EventCatalog
+              </div>
             </div>
           </figcaption>
         </figure>
@@ -173,7 +194,9 @@ function Hero() {
       <div className="bg-gray-800 py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-xl text-center">
-            <h2 className="text-3xl font-semibold leading-8 tracking-tight text-green-400">Testimonials</h2>
+            <h2 className="text-3xl font-semibold leading-8 tracking-tight text-green-400">
+              Testimonials
+            </h2>
             <p className="mt-2 text-3xl font-bold tracking-tight text-gray-200 sm:text-4xl">
               EventCatalog is helping developers around the world 🌎
             </p>
@@ -181,16 +204,27 @@ function Hero() {
           <div className="mx-auto mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none">
             <div className="-mt-8 sm:-mx-4 sm:columns-2 sm:text-[0] lg:columns-2">
               {testimonials.map((testimonial) => (
-                <div key={testimonial.author.handle} className="pt-8 sm:inline-block sm:w-full sm:px-4">
+                <div
+                  key={testimonial.author.handle}
+                  className="pt-8 sm:inline-block sm:w-full sm:px-4"
+                >
                   <figure className="rounded-2xl bg-gray-50 p-8 text-sm leading-6">
                     <blockquote className="text-gray-900">
                       <p>{`“${testimonial.body}”`}</p>
                     </blockquote>
                     <figcaption className="mt-6 flex items-center gap-x-4">
-                      <img className="h-10 w-10 rounded-full bg-gray-50" src={testimonial.author.imageUrl} alt="" />
+                      <img
+                        className="h-10 w-10 rounded-full bg-gray-50"
+                        src={testimonial.author.imageUrl}
+                        alt=""
+                      />
                       <div>
-                        <div className="font-semibold text-gray-900">{testimonial.author.name}</div>
-                        {testimonial.author.handle && <div className="text-gray-600">{`@${testimonial.author.handle}`}</div>}
+                        <div className="font-semibold text-gray-900">
+                          {testimonial.author.name}
+                        </div>
+                        {testimonial.author.handle && (
+                          <div className="text-gray-600">{`@${testimonial.author.handle}`}</div>
+                        )}
                       </div>
                     </figcaption>
                   </figure>
@@ -281,16 +315,30 @@ function Hero() {
           <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
             <div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
               <div>
-                <h4 className="text-gray-400 mb-2 uppercase">Document your Events, Services and Domains</h4>
-                <h2 className="text-4xl font-extrabold tracking-tight text-gray-900">Powered by Markdown</h2>
+                <h4 className="text-gray-400 mb-2 uppercase">
+                  Document your Events, Services and Domains
+                </h4>
+                <h2 className="text-4xl font-extrabold tracking-tight text-gray-900">
+                  Powered by Markdown
+                </h2>
                 <p className="mt-4 text-lg text-gray-500">
-                  <p>Document your events and upstream/downstream services with Markdown and our custom components.</p>
-
-                  <p>Render: Code Examples, Node Graphs, Event Schemas, Event Versions, Event Owners and much more...</p>
+                  <p>
+                    Document your events and upstream/downstream services with
+                    Markdown and our custom components.
+                  </p>
 
                   <p>
-                    You can also generate documentation from any third party system using{' '}
-                    <a className="text-green-600 underline" href="/docs/api/plugins">
+                    Render: Code Examples, Node Graphs, Event Schemas, Event
+                    Versions, Event Owners and much more...
+                  </p>
+
+                  <p>
+                    You can also generate documentation from any third party
+                    system using{" "}
+                    <a
+                      className="text-green-600 underline"
+                      href="/docs/api/plugins"
+                    >
                       our plugin architecture
                     </a>
                     .
@@ -321,13 +369,16 @@ function Hero() {
           <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
             <div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-32 lg:max-w-none lg:mx-0 lg:px-0 lg:col-start-2">
               <h4 className="text-gray-400 mb-2 uppercase">The Visualiser</h4>
-              <h2 className="text-3xl font-extrabold tracking-tight text-gray-900">Visualise your Architecture</h2>
+              <h2 className="text-3xl font-extrabold tracking-tight text-gray-900">
+                Visualise your Architecture
+              </h2>
               <p className="mt-4 text-lg text-gray-500">
-                Visualise your Event Driven Architecture using the visualiser or 3D graphs.
+                Visualise your Event Driven Architecture using the visualiser or
+                3D graphs.
               </p>
               <p className="mt-4 text-lg text-gray-500">
-                EventCatalog allows you to see exactly what’s happening in your architecture without needing to know the code or
-                how it works.
+                EventCatalog allows you to see exactly what’s happening in your
+                architecture without needing to know the code or how it works.
               </p>
               <div className="mt-6">
                 <a
@@ -353,16 +404,26 @@ function Hero() {
           <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
             <div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
               <div>
-                <h4 className="text-gray-400 mb-2 uppercase">Search, tag and find events, domains and services</h4>
-                <h2 className="text-4xl font-extrabold tracking-tight text-gray-900">Filter and find events and services</h2>
+                <h4 className="text-gray-400 mb-2 uppercase">
+                  Search, tag and find events, domains and services
+                </h4>
+                <h2 className="text-4xl font-extrabold tracking-tight text-gray-900">
+                  Filter and find events and services
+                </h2>
                 <p className="mt-4 text-lg text-gray-500">
-                  <p>View your events, services and domains with a high level overview.</p>
-
-                  <p>Filter information, search and tag your events,services and domains.</p>
+                  <p>
+                    View your events, services and domains with a high level
+                    overview.
+                  </p>
 
                   <p>
-                    Generate a quick overview of everything your architecture is doing and dive deeper into the generated markdown
-                    pages.
+                    Filter information, search and tag your events,services and
+                    domains.
+                  </p>
+
+                  <p>
+                    Generate a quick overview of everything your architecture is
+                    doing and dive deeper into the generated markdown pages.
                   </p>
                 </p>
                 <div className="mt-6">

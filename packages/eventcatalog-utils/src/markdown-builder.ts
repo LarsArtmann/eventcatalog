@@ -1,6 +1,6 @@
-import YAML from 'yamljs';
-import json2md from 'json2md';
-import { Event, Service, Domain } from '@eventcatalog/types';
+import YAML from "yamljs";
+import json2md from "json2md";
+import { Event, Service, Domain } from "@eventcatalog/types";
 
 export default ({
   frontMatterObject,
@@ -16,13 +16,17 @@ export default ({
   renderNodeGraph?: boolean;
 }) => {
   const customJSON2MD = (content: any) => {
-    json2md.converters.mermaid = (render) => (render ? '<Mermaid />' : '');
-    json2md.converters.schema = (render) => (render ? '<Schema />' : '');
-    json2md.converters.nodeGraph = (render) => (render ? '<NodeGraph />' : '');
+    json2md.converters.mermaid = (render) => (render ? "<Mermaid />" : "");
+    json2md.converters.schema = (render) => (render ? "<Schema />" : "");
+    json2md.converters.nodeGraph = (render) => (render ? "<NodeGraph />" : "");
     return json2md(content);
   };
 
-  const content = [{ mermaid: renderMermaidDiagram }, { nodeGraph: renderNodeGraph }, { schema: includeSchemaComponent }];
+  const content = [
+    { mermaid: renderMermaidDiagram },
+    { nodeGraph: renderNodeGraph },
+    { schema: includeSchemaComponent },
+  ];
 
   return `---
 ${YAML.stringify(frontMatterObject)}---

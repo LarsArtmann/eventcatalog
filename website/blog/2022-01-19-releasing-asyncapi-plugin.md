@@ -5,7 +5,6 @@ tags: [release, plugin]
 image: /img/blog/asyncapi-plugin/cover.png
 ---
 
-
 ![cover](/img/blog/asyncapi-plugin/cover.png)
 
 EventCatalog now supports integration and document generation from your [AsyncAPI](https://www.asyncapi.com/) specification files.
@@ -45,7 +44,6 @@ If your AsyncAPI version has changed since last time, EventCatalog will version 
 If you already have events and services documented in your catalog, the `asyncapi-plugin` can version your events for you (configurable) before overriding them.
 
 Any [content](/docs/events/adding-event#example) you add in your existing events or services will be used and not overridden on the next generation phase. This means you can keep all your custom markdown content without replacing it every time you generate your documents. The [frontmatter](/docs/api/event-frontmatter) of your services and events will be the only things that are replaced.
-
 
 ## Summary
 

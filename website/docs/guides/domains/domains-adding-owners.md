@@ -18,11 +18,13 @@ module.exports = {
   // ...
   users: [
     {
-      id: 'dboyne',
-      name: 'David Boyne',
-      avatarUrl: 'https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png',
-      role: 'Developer',
-      summary: 'Maintainer of EventCatalog and loves building tools for Event Architectures.'
+      id: "dboyne",
+      name: "David Boyne",
+      avatarUrl:
+        "https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png",
+      role: "Developer",
+      summary:
+        "Maintainer of EventCatalog and loves building tools for Event Architectures.",
     },
   ],
 };
@@ -30,7 +32,7 @@ module.exports = {
 
 :::info Adding Users to your catalog
 
-The `eventcatalog.config.js` is the place to store your users information. You can access these across events, services and domains. 
+The `eventcatalog.config.js` is the place to store your users information. You can access these across events, services and domains.
 
 Find out more reading the [users documentation](/docs/api/eventcatalog-config#users)
 
@@ -44,7 +46,7 @@ name: Orders
 summary: |
   Domain that holds all the order information
 owners:
-    - dboyne    
+  - dboyne
 ---
 
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id
@@ -54,7 +56,6 @@ neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <NodeGraph />
-
 ```
 
 Now when you render your domain you will see your new `owner` for that domain. You can add as many owners as you like, as long as you add their details in the `eventcatalog.config.js` file.

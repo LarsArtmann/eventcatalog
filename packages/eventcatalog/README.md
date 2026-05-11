@@ -1,6 +1,5 @@
 ## EventCatalog (core)
 
-
 This is the main EventCatalog application.
 
 To make changes or run this application core code, you will need to fork the EventCatalog repo and run the following command:

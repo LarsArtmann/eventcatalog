@@ -2,42 +2,42 @@
   "name": "@eventcatalog/plugin-doc-generator-asyncapi",
   "version": "0.4.0",
   "description": "Documentation generator for EventCatalog using AsyncAPI",
-  "main": "lib/index.js",
-  "scripts": {
-    "build": "tsc",
-    "build:package": "tsc",
-    "watch": "tsc --watch"
-  },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/boyney123/eventcatalog.git",
     "directory": "packages/eventcatalog-plugin-doc-generator-asyncapi"
   },
+  "main": "lib/index.js",
   "publishConfig": {
     "access": "public"
   },
-  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "build:package": "tsc",
+    "watch": "tsc --watch"
+  },
   "dependencies": {
     "@asyncapi/avro-schema-parser": "^3.0.24",
     "@asyncapi/parser": "^3.6.0",
     "@eventcatalog/utils": "^0.2.2",
     "chalk": "^5.6.2",
     "front-matter": "^4.0.2",
-    "fs-extra": "^11.3.4",
+    "fs-extra": "^11.3.5",
     "js-yaml": "^4.1.1",
     "json2md": "^2.0.3",
     "lodash.merge": "^4.6.2",
     "yamljs": "^0.3.0"
   },
-  "engines": {
-    "node": ">=14"
-  },
   "devDependencies": {
-    "@types/node-fetch": "2.6.13",
     "@eventcatalog/types": "0.4.2",
     "@types/fs-extra": "^11.0.4",
     "@types/json2md": "^1.5.4",
     "@types/lodash.merge": "^4.6.9",
+    "@types/node-fetch": "2.6.13",
     "@types/yamljs": "^0.2.34"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

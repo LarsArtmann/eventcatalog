@@ -1,11 +1,16 @@
 {
   "name": "@eventcatalog/core",
   "version": "1.2.6",
-  "publishConfig": {
-    "access": "public"
-  },
+  "gitHead": "5f82ce7f267e9b3ec771bbd3cc81359ed0a8fd18",
   "bin": {
     "eventcatalog": "bin/eventcatalog.js"
+  },
+  "browser": {
+    "fs": false,
+    "os": false
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "dev": "next dev",
@@ -16,7 +21,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@asyncapi/react-component": "^3.1.2",
+    "@asyncapi/react-component": "^3.1.3",
     "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
     "@mdx-js/react": "^3.1.1",
@@ -33,14 +38,14 @@
     "dagre": "^0.8.5",
     "diff": "^9.0.0",
     "diff2html": "^3.4.56",
-    "fs-extra": "^11.3.4",
+    "fs-extra": "^11.3.5",
     "gray-matter": "^4.0.3",
     "lodash.debounce": "^4.0.8",
     "mermaid": "11.14.0",
-    "next": "^16.2.4",
+    "next": "^16.2.6",
     "next-mdx-remote": "^6.0.0",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
     "react-flow-renderer": "^10.3.17",
     "react-force-graph-3d": "^1.29.1",
     "react-syntax-highlighter": "^16.1.1",
@@ -53,15 +58,10 @@
     "commander": "^14.0.3",
     "cross-env": "^10.1.0",
     "eslint": "10.3.0",
-    "eslint-config-next": "16.2.4",
+    "eslint-config-next": "16.2.6",
     "postcss": "^8.5.14",
-    "tailwindcss": "^4.2.4",
+    "tailwindcss": "^4.3.0",
     "trim": "1.0.1",
     "typescript": "^6.0.3"
-  },
-  "browser": {
-    "fs": false,
-    "os": false
-  },
-  "gitHead": "5f82ce7f267e9b3ec771bbd3cc81359ed0a8fd18"
+  }
 }

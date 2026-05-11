@@ -10,7 +10,7 @@ With EventCatalog you can add your AsyncAPI Specifications to your services, or 
 To use the feature you will need to do two things:
 
 1. Add your `asyncapi.yaml` file into your service
-    - example `/services/{Your Service}/asyncapi.yaml`
+   - example `/services/{Your Service}/asyncapi.yaml`
 2. Add the Component [AsyncAPI](/docs/components/overview#asyncapi-) inside your service markdown file.
 
 This will load your AsyncAPI file into your Service Page.
@@ -24,7 +24,7 @@ owners:
   - dboyne
 ---
 
-The payment service is our own internal payment service that listens to events from stripe and handles them within our own domain. 
+The payment service is our own internal payment service that listens to events from stripe and handles them within our own domain.
 
 We use Stripe to handle services and use this Payment service to enrich events for internal use.
 

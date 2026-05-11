@@ -1,11 +1,11 @@
 function toMatchMarkdown(received, expectedValue) {
-  const trimmedReceived = received.replace(/\s/g, '');
-  const trimmedValue = expectedValue.replace(/\s/g, '');
+  const trimmedReceived = received.replace(/\s/g, "");
+  const trimmedValue = expectedValue.replace(/\s/g, "");
 
   const pass = trimmedReceived === trimmedValue;
   if (pass) {
     return {
-      message: 'Pass',
+      message: "Pass",
       pass: true,
     };
   }

@@ -1,18 +1,18 @@
-import { MDXRemote } from 'next-mdx-remote';
-import React, { useEffect } from 'react';
-import Link from 'next/link';
+import { MDXRemote } from "next-mdx-remote";
+import React, { useEffect } from "react";
+import Link from "next/link";
 
-import * as Diff2Html from 'diff2html/lib/ui/js/diff2html-ui-slim';
-import 'diff2html/bundles/css/diff2html.min.css';
+import * as Diff2Html from "diff2html/lib/ui/js/diff2html-ui-slim";
+import "diff2html/bundles/css/diff2html.min.css";
 
-import { CodeIcon } from '@heroicons/react/solid';
-import { Event } from '@eventcatalog/types';
-import BreadCrumbs from '@/components/BreadCrumbs';
+import { CodeIcon } from "@heroicons/react/solid";
+import { Event } from "@eventcatalog/types";
+import BreadCrumbs from "@/components/BreadCrumbs";
 
-import { getLogsForEvent, getEventByName, getAllEvents } from '@/lib/events';
+import { getLogsForEvent, getEventByName, getAllEvents } from "@/lib/events";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 interface LogsProps {
@@ -31,16 +31,18 @@ function Logs({ changes, event, breadCrumbs }: LogsProps) {
         ? `/domains/${event.domain}/events/${eventName}`
         : `/domains/${event.domain}/events/${eventName}/v/${version}`;
     }
-    return isVersionCurrentVersion ? `/events/${eventName}` : `/events/${eventName}/v/${version}`;
+    return isVersionCurrentVersion
+      ? `/events/${eventName}`
+      : `/events/${eventName}/v/${version}`;
   };
 
   useEffect(() => {
     const configuration = {
       drawFileList: false,
-      matching: 'lines',
+      matching: "lines",
       highlight: true,
       fileListToggle: false,
-      outputFormat: 'side-by-side',
+      outputFormat: "side-by-side",
     };
 
     changes.forEach((diff, index) => {
@@ -48,7 +50,11 @@ function Logs({ changes, event, breadCrumbs }: LogsProps) {
         const targetElement = document.getElementById(`code-diff-${index}`);
 
         // @ts-ignore
-        const diff2htmlUi = new Diff2Html.Diff2HtmlUI(targetElement, diff.value, configuration);
+        const diff2htmlUi = new Diff2Html.Diff2HtmlUI(
+          targetElement,
+          diff.value,
+          configuration,
+        );
         diff2htmlUi.draw();
         diff2htmlUi.highlightCode();
       }
@@ -68,11 +74,17 @@ function Logs({ changes, event, breadCrumbs }: LogsProps) {
                 <div>
                   <div className="border-b pb-4 flex justify-between mb-4">
                     <div className="space-y-2 w-full">
-                      <h1 className="text-3xl font-bold text-gray-900 relative">{eventName}</h1>
+                      <h1 className="text-3xl font-bold text-gray-900 relative">
+                        {eventName}
+                      </h1>
                     </div>
                   </div>
 
-                  {changes.length === 0 && <div className="text-gray-400 text-xl">No versions for Event found.</div>}
+                  {changes.length === 0 && (
+                    <div className="text-gray-400 text-xl">
+                      No versions for Event found.
+                    </div>
+                  )}
 
                   <div className="flow-root mb-20">
                     <ul className="">
@@ -80,13 +92,16 @@ function Logs({ changes, event, breadCrumbs }: LogsProps) {
                         <li key={eventIdx} className="">
                           <div className="relative pb-8">
                             {eventIdx !== changes.length - 1 ? (
-                              <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-100" aria-hidden="true" />
+                              <span
+                                className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-100"
+                                aria-hidden="true"
+                              />
                             ) : null}
                             <div className="relative flex space-x-3">
                               <div>
                                 <span
                                   className={classNames(
-                                    'h-8 text-white text-xs w-8 rounded-full flex items-center justify-center ring-8 ring-white bg-blue-500'
+                                    "h-8 text-white text-xs w-8 rounded-full flex items-center justify-center ring-8 ring-white bg-blue-500",
                                   )}
                                 >
                                   <CodeIcon className="h-4 w-4" />
@@ -98,12 +113,17 @@ function Logs({ changes, event, breadCrumbs }: LogsProps) {
                                   <p className="font-bold text-gray-800 text-xl">
                                     Schema version update
                                     {data.versions.map((version, index) => (
-                                      <Link key={version} href={getEventUrl(version)}>
+                                      <Link
+                                        key={version}
+                                        href={getEventUrl(version)}
+                                      >
                                         <a className="font-medium">
                                           {index === 0 && ` from`}
                                           <span className="text-blue-500 underline px-1">
                                             {version}
-                                            {version === currentVersion ? '(latest)' : ''}
+                                            {version === currentVersion
+                                              ? "(latest)"
+                                              : ""}
                                           </span>
                                           {index === 0 && `to`}
                                         </a>
@@ -121,7 +141,9 @@ function Logs({ changes, event, breadCrumbs }: LogsProps) {
                                     </>
                                   )}
                                   {!data.changelog.source && (
-                                    <h2 className="text-base text-gray-300 font-bold mt-4">No changelog file found.</h2>
+                                    <h2 className="text-base text-gray-300 font-bold mt-4">
+                                      No changelog file found.
+                                    </h2>
                                   )}
                                 </div>
                                 <div className="text-right text-sm text-gray-500 py-4">
@@ -155,9 +177,9 @@ export const getStaticProps = async ({ params }) => {
       changes: history,
       event,
       breadCrumbs: [
-        { name: 'Events', href: '/events', current: false },
+        { name: "Events", href: "/events", current: false },
         { name: event.name, href: `/events/${event.name}`, current: false },
-        { name: 'Logs', href: `/events/${event.name}/history`, current: true },
+        { name: "Logs", href: `/events/${event.name}/history`, current: true },
       ],
     },
   };
@@ -166,7 +188,9 @@ export const getStaticProps = async ({ params }) => {
 export async function getStaticPaths() {
   const events = getAllEvents();
   const eventsWithoutDomains = events.filter((event) => !event.domain);
-  const paths = eventsWithoutDomains.map((event) => ({ params: { name: event.name } }));
+  const paths = eventsWithoutDomains.map((event) => ({
+    params: { name: event.name },
+  }));
 
   return {
     paths,

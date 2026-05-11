@@ -14,12 +14,12 @@ Knowing who produces and consumes which events can be quite valuable and can hel
 Knowing this relationship of services and events allows us to visually display the relationships of our events inside EventCatalog.
 
 :::tip
-Keeping your producer/consumer list up to date can be painful. 
+Keeping your producer/consumer list up to date can be painful.
 
-EventCatalog provides a plugin API that allows you to update the consumers/producers without changing your documentation. 
+EventCatalog provides a plugin API that allows you to update the consumers/producers without changing your documentation.
 
 This means you can use third party tools/systems to get the list of producers/consumers and update your documentation without needing to do this yourself!
-::: 
+:::
 
 Adding producers/consumers in EventCatalog is done through the event frontmatter. We call these `services`.
 
@@ -42,7 +42,6 @@ summary: |
 My Event
 
 ...
-
 ```
 
 Let's add some consumers and producers to the event.
@@ -54,18 +53,17 @@ version: 0.0.1
 summary: |
   Tells us when the user has signed up
 consumers:
-    - Email Platform
+  - Email Platform
 producers:
-    - User Service
+  - User Service
 ---
 
 My Event
 
 ...
-
 ```
 
-As you can see here we added `Email Platform` as a consumer of this event and the `User Service` as the event producer. 
+As you can see here we added `Email Platform` as a consumer of this event and the `User Service` as the event producer.
 
 You can add as many consumers/producers to your events as you want.
 
@@ -74,7 +72,6 @@ Adding consumer/producer relationships into your docs allows you to:
 - Add documentation for the services
 - Visualise relationships
 - Visualise your Architecture
-
 
 ## Visualising Producers/Consumers and Events
 
@@ -95,9 +92,9 @@ version: 0.0.1
 summary: |
   Tells us when the user has signed up
 consumers:
-    - Email Platform
+  - Email Platform
 producers:
-    - User Service
+  - User Service
 ---
 
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id
@@ -107,11 +104,9 @@ neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <Mermaid />
-
 ```
 
 It will render the event page with the mermaid diagram.
-
 
 ![UserSignedUp with Schema Example](/img/guides/events/UserSignedUpExample.png)
 

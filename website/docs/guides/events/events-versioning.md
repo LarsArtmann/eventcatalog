@@ -63,8 +63,8 @@ These are great ways to help developers understand what changes have happened be
 
 To add a changlog to your events you need to add a changelog.md file into your versioned event folder.
 
-- `/events/{Event Name}/versioned/{version}/changelog.md` 
-  - (example `/events/EmailSent/versioned/1.0.0/changelog.md`) 
+- `/events/{Event Name}/versioned/{version}/changelog.md`
+  - (example `/events/EmailSent/versioned/1.0.0/changelog.md`)
 
 Add any markdown you want in the `changelog.md` file, and it will be rendered in the Events log.
 

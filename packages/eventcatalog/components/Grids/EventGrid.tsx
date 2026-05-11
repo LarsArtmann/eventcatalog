@@ -1,16 +1,16 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
-import { CubeIcon, CollectionIcon } from '@heroicons/react/outline';
+import { CubeIcon, CollectionIcon } from "@heroicons/react/outline";
 
-import { Event } from '@eventcatalog/types';
-import getBackgroundColor from '@/utils/random-bg';
+import { Event } from "@eventcatalog/types";
+import getBackgroundColor from "@/utils/random-bg";
 
-import Mermaid from '@/components/Mermaid';
-import NodeGraph from '@/components/Mdx/NodeGraph/NodeGraph';
+import Mermaid from "@/components/Mermaid";
+import NodeGraph from "@/components/Mdx/NodeGraph/NodeGraph";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 interface EventGridProps {
@@ -19,12 +19,18 @@ interface EventGridProps {
   showNodeGraphs?: boolean;
 }
 
-function EventGrid({ events = [], showMermaidDiagrams = false, showNodeGraphs = false }: EventGridProps) {
+function EventGrid({
+  events = [],
+  showMermaidDiagrams = false,
+  showNodeGraphs = false,
+}: EventGridProps) {
   return (
     <ul className="mt-3 grid grid-cols-1 gap-5 md:grid-cols-2">
       {events.map((event) => {
         const { draft: isDraft, domain } = event;
-        const eventURL = domain ? `/domains/${domain}/events/${event.name}` : `/events/${event.name}`;
+        const eventURL = domain
+          ? `/domains/${domain}/events/${event.name}`
+          : `/events/${event.name}`;
         const eventKey = domain ? `${domain}-${event.name}` : event.name;
 
         return (
@@ -36,8 +42,8 @@ function EventGrid({ events = [], showMermaidDiagrams = false, showNodeGraphs = 
                     background: getBackgroundColor(event.name),
                   }}
                   className={classNames(
-                    'bg-red-500',
-                    'flex-shrink-0 flex items-center justify-center w-4 text-white text-sm font-medium rounded-l-md'
+                    "bg-red-500",
+                    "flex-shrink-0 flex items-center justify-center w-4 text-white text-sm font-medium rounded-l-md",
                   )}
                 />
                 <div className="w-full border-t border-r border-b border-gray-200 bg-white rounded-r-md ">
@@ -61,29 +67,48 @@ function EventGrid({ events = [], showMermaidDiagrams = false, showNodeGraphs = 
                         </span>
                       )}
                     </div>
-                    <div className="text-gray-500 text-xs font-normal mt-2 ">{event.summary}</div>
+                    <div className="text-gray-500 text-xs font-normal mt-2 ">
+                      {event.summary}
+                    </div>
                     {showMermaidDiagrams && (
                       <div className="h-full items-center flex">
-                        <Mermaid source="event" data={event} rootNodeColor={getBackgroundColor(event.name)} />
+                        <Mermaid
+                          source="event"
+                          data={event}
+                          rootNodeColor={getBackgroundColor(event.name)}
+                        />
                       </div>
                     )}
                     {showNodeGraphs && (
                       <div className="h-full items-center flex">
-                        <NodeGraph source="event" data={event} rootNodeColor={getBackgroundColor(event.name)} />
+                        <NodeGraph
+                          source="event"
+                          data={event}
+                          rootNodeColor={getBackgroundColor(event.name)}
+                        />
                       </div>
                     )}
                     <div className="flex space-x-4 text-xs pt-2 relative bottom-0 left-0">
                       <div className=" font-medium text-gray-500">
-                        <CubeIcon className="h-4 w-4 text-green-400 inline-block mr-2" aria-hidden="true" />
+                        <CubeIcon
+                          className="h-4 w-4 text-green-400 inline-block mr-2"
+                          aria-hidden="true"
+                        />
                         Producers ({event.producerNames.length})
                       </div>
                       <div className=" font-medium text-gray-500">
-                        <CubeIcon className="h-4 w-4 text-indigo-400 inline-block mr-2" aria-hidden="true" />
+                        <CubeIcon
+                          className="h-4 w-4 text-indigo-400 inline-block mr-2"
+                          aria-hidden="true"
+                        />
                         Subscribers ({event.consumerNames.length})
                       </div>
                       {event.domain && (
                         <div className=" font-medium text-gray-500">
-                          <CollectionIcon className="h-4 w-4 text-yellow-400 inline-block mr-2" aria-hidden="true" />
+                          <CollectionIcon
+                            className="h-4 w-4 text-yellow-400 inline-block mr-2"
+                            aria-hidden="true"
+                          />
                           {event.domain}
                         </div>
                       )}

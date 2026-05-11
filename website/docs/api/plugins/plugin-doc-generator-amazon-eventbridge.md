@@ -1,8 +1,8 @@
 ---
 sidebar_position: 1
 id: plugin-doc-generator-amazon-eventbridge
-title: '📦 plugin-generator-amazon-eventbridge'
-slug: '/api/plugins/@eventcatalog/plugin-doc-generator-amazon-eventbridge'
+title: "📦 plugin-generator-amazon-eventbridge"
+slug: "/api/plugins/@eventcatalog/plugin-doc-generator-amazon-eventbridge"
 ---
 
 EventCatalog allows you to document your Event Driven Architecture powered by markdown files.
@@ -23,10 +23,9 @@ This plugin will generate **Event** documents based on your EventBridge Schemas,
 - 💅 Customise and add content to each event (capture information, and details)
 - ⚡️ Powered by markdown, setup in seconds.
 
-
 ### EventCatalog with EventBridge Schema (example)
-![example](/img/api/plugins/amazon-eventbridge/example.jpeg)
 
+![example](/img/api/plugins/amazon-eventbridge/example.jpeg)
 
 ## How the plugin works
 
@@ -40,7 +39,7 @@ EventCatalog is powered by Markdown files. This plugin will pull down your event
 
 ### Event Versioning
 
-EventBridge schema registry provides automatic versioning for your event schemas (detects changes). This EventCatalog plugin will read the versions of your schemas and automatically version your events for you. 
+EventBridge schema registry provides automatic versioning for your event schemas (detects changes). This EventCatalog plugin will read the versions of your schemas and automatically version your events for you.
 
 ### Schemas
 
@@ -53,7 +52,6 @@ EventCatalog will inspect your event's targets and rules and try to show diagram
 ### Adding Owners to Events
 
 EventCatalog allows you to add [owners](/docs/events/adding-event-owners) to your events. This allows you to add teams or users as owners of your EventBridge Schemas.
-
 
 ## Installation and Usage {#installation-and-usage}
 
@@ -76,23 +74,22 @@ npm install --save @eventcatalog/plugin-doc-generator-amazon-eventbridge
 Now we have to configure our plugin in the `eventcatalog.config.js` file.
 
 ```js title="eventcatalog.config.js"
-
-const path = require('path');
+const path = require("path");
 
 module.exports = {
   //...
   generators: [
     [
-      '@eventcatalog/plugin-doc-generator-amazon-eventbridge',
+      "@eventcatalog/plugin-doc-generator-amazon-eventbridge",
       {
-        eventBusName: 'boyne-test-bus', // your event bus name
-        region: 'us-west-1', // your region
-        registryName: 'discovered-schemas', // your registry normally "discovered-schemas"
-        schemaNamePrefix: 'my-prefix', // Schema name prefix filter, optional
+        eventBusName: "boyne-test-bus", // your event bus name
+        region: "us-west-1", // your region
+        registryName: "discovered-schemas", // your registry normally "discovered-schemas"
+        schemaNamePrefix: "my-prefix", // Schema name prefix filter, optional
         credentials: {
           accessKeyId: process.env.AWS_ACCESS_KEY,
           secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-          sessionToken: process.env.AWS_SESSION_TOKEN // optional
+          sessionToken: process.env.AWS_SESSION_TOKEN, // optional
         },
       },
     ],
@@ -100,6 +97,7 @@ module.exports = {
   //...
 };
 ```
+
 ### Generating your documents
 
 Once you have setup the plugin you will need to run
@@ -110,52 +108,50 @@ npm run generate
 
 This command will run through your plugin and generate your EventCatalog documentation.
 
+## Plugin Configuration
 
-## Plugin Configuration 
-
-| Name                           | Type                                                       | Default             | Description                                                                           |
-| ------------------------------ | ---------------------------------------------------------- | ------------------- | ------------------------------------------------------------------------------------- |
-| `eventBusName`                 | `string`                                                   | (empty)             | Name of your EventBus                                                                 |
-| `region`                       | `string`                                                   | (empty)             | AWS Region of your eventbus                                                           |
-| `registryName`                 | `string`                                                   | (empty)             | Name of your Schema Registry                                                          |
-| `credentials`                  | `AWSCredentials`- [View Schema](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Credentials.html) | (empty)             | AWS `accessKeyId` and `secretAccessKey`                                               |
-| `schemaTypeToRenderToEvent`    | `string` (`JSONSchemaDraft4`/`OpenAPI`)                    | `JSONSchemaDraft4`  | Schema type to render alongside your event in EventCatalog                            |
-| `versionEvents`                | `boolean`                                                  | `true`              | Version your events as new versions get detected from your Schema Registry            |
-| `schemaNamePrefix`             | `string`                                                   | (empty)             | Schema name prefix used to filter retrieved schemas                                   |
-
+| Name                        | Type                                                                                                      | Default            | Description                                                                |
+| --------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------ | -------------------------------------------------------------------------- |
+| `eventBusName`              | `string`                                                                                                  | (empty)            | Name of your EventBus                                                      |
+| `region`                    | `string`                                                                                                  | (empty)            | AWS Region of your eventbus                                                |
+| `registryName`              | `string`                                                                                                  | (empty)            | Name of your Schema Registry                                               |
+| `credentials`               | `AWSCredentials`- [View Schema](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Credentials.html) | (empty)            | AWS `accessKeyId` and `secretAccessKey`                                    |
+| `schemaTypeToRenderToEvent` | `string` (`JSONSchemaDraft4`/`OpenAPI`)                                                                   | `JSONSchemaDraft4` | Schema type to render alongside your event in EventCatalog                 |
+| `versionEvents`             | `boolean`                                                                                                 | `true`             | Version your events as new versions get detected from your Schema Registry |
+| `schemaNamePrefix`          | `string`                                                                                                  | (empty)            | Schema name prefix used to filter retrieved schemas                        |
 
 ## AWS Configuration
 
 ### Policy for AWS
 
-This plugin will require some read access to your Amazon EventBridge Bus, Schema Registry and Versions. 
+This plugin will require some read access to your Amazon EventBridge Bus, Schema Registry and Versions.
 
 It's recommended you create a new IAM user with the following policy.
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "EventCatalog",
-            "Effect": "Allow",
-            "Action": [
-                "events:DescribeRule",
-                "events:DescribeEventBus",
-                "events:DescribeEventSource",
-                "events:ListRuleNamesByTarget",
-                "events:ListRules",
-                "events:ListTargetsByRule",
-                "schemas:ExportSchema",
-                "schemas:SearchSchemas",
-                "schemas:ListSchemas",
-                "schemas:ListSchemaVersions",
-                "schemas:DescribeSchema",
-                "schemas:GetDiscoveredSchema"
-            ],
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "EventCatalog",
+      "Effect": "Allow",
+      "Action": [
+        "events:DescribeRule",
+        "events:DescribeEventBus",
+        "events:DescribeEventSource",
+        "events:ListRuleNamesByTarget",
+        "events:ListRules",
+        "events:ListTargetsByRule",
+        "schemas:ExportSchema",
+        "schemas:SearchSchemas",
+        "schemas:ListSchemas",
+        "schemas:ListSchemaVersions",
+        "schemas:DescribeSchema",
+        "schemas:GetDiscoveredSchema"
+      ],
+      "Resource": "*"
+    }
+  ]
 }
 ```
 
@@ -176,4 +172,3 @@ With EventCatalog it's key goal is to make documentation easy to maintain, that 
 Any changes to your events markdown content will be persisted across generation, but event metadata will be updated with the latest information (from generation).
 
 _TL;DR - EventCatalog allows you to generate from sources and also keep your manual changes._
-

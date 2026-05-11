@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Credentials } from '@aws-sdk/types';
+import { Credentials } from "@aws-sdk/types";
 
 // eslint-disable-next-line no-shadow
 export enum SchemaTypes {

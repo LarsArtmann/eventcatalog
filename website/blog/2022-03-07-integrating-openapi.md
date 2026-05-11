@@ -28,12 +28,10 @@ We have now introduced [a new component](/docs/components/overview#openapi-) tha
 You can add OpenAPI specification files to your services following these steps:
 
 1. Add your `openapi.yaml` or `openapi.json` file into your service
-    - example `/services/{Your Service}/openapi.yaml`
+   - example `/services/{Your Service}/openapi.yaml`
 2. Add the Component [OpenAPI](/docs/components/overview#openapi-) inside your service markdown file.
 
 This will load your OpenAPI file into your Service Page.
-
-
 
 ```mdx title="Example of loading OpenAPI into Service file"
 ---
@@ -44,17 +42,14 @@ owners:
   - dboyne
 ---
 
-The payment service is our own internal payment service that listens to events from stripe and handles them within our own domain. 
+The payment service is our own internal payment service that listens to events from stripe and handles them within our own domain.
 
 We use Stripe to handle services and use this Payment service to enrich events for internal use.
 
 <OpenAPI />
 
 <NodeGraph />
-
-
 ```
-
 
 ### Example Output
 
@@ -76,8 +71,6 @@ This is a great feature from [Rodolfo Toro](https://github.com/rtoro) and it is 
 
 Thank you [Rodolfo Toro](https://github.com/rtoro) for your great contribution and we hope you all find it useful!
 
-
 If you have any ideas or feedback feel free to raise an issue on [GitHub](https://github.com/boyney123/eventcatalog/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) or come join us on [Discord](https://discord.gg/3rjaZMmrAm).
-
 
 Enjoy!

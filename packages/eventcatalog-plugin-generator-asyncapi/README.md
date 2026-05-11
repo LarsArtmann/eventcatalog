@@ -16,11 +16,10 @@ First build all the projects
 npm install && npm run build
 ```
 
-Then you can run 
+Then you can run
 
 ```sh
 "PROJECT_DIR={outputForCatalog} node packages/eventcatalog-plugin-generator-asyncapi/scripts/generate-catalog-with-plugin.js
 ```
 
 This will run the build of the plugin and generate an eventcatalog from an AsyncAPI file (found in examples).
-

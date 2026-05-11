@@ -1,22 +1,23 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import debounce from 'lodash.debounce';
-import type { Domain, Event, Service } from '@eventcatalog/types';
+import React, { useEffect, useState, useCallback } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import debounce from "lodash.debounce";
+import type { Domain, Event, Service } from "@eventcatalog/types";
 
-import { SearchIcon } from '@heroicons/react/outline';
+import { SearchIcon } from "@heroicons/react/outline";
 
-import { getAllEvents } from '@/lib/events';
-import { getAllServices } from '@/lib/services';
-import { getAllDomains } from '@/lib/domains';
-import { useConfig } from '@/hooks/EventCatalog';
-import NodeGraph from '@/components/Mdx/NodeGraph/NodeGraph';
-import getBackgroundColor from '@/utils/random-bg';
+import { getAllEvents } from "@/lib/events";
+import { getAllServices } from "@/lib/services";
+import { getAllDomains } from "@/lib/domains";
+import { useConfig } from "@/hooks/EventCatalog";
+import NodeGraph from "@/components/Mdx/NodeGraph/NodeGraph";
+import getBackgroundColor from "@/utils/random-bg";
 
-const filterByString = (filter, data) => data.filter((item) => item.name.indexOf(filter) > -1);
+const filterByString = (filter, data) =>
+  data.filter((item) => item.name.indexOf(filter) > -1);
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 export interface PageProps {
@@ -27,27 +28,46 @@ export interface PageProps {
 
 function Graph({ events, services, domains }: PageProps) {
   const { title } = useConfig();
-  const [searchFilter, setSearchFilter] = useState('');
+  const [searchFilter, setSearchFilter] = useState("");
   const [selectedRootNode, setSelectedRootNode] = useState<any>();
-  const [listItemsToRender, setListItemsToRender] = useState({ events, services, domains });
+  const [listItemsToRender, setListItemsToRender] = useState({
+    events,
+    services,
+    domains,
+  });
 
   const router = useRouter();
   const { query, isReady: isRouterReady } = router;
   const { name, type } = query;
 
   const dropdownValues = [
-    ...events.map((event) => ({ ...event, type: 'event', label: `Event: ${event.name}` })),
-    ...services.map((event) => ({ ...event, type: 'service', label: `Service: ${event.name}` })),
-    ...domains.map((event) => ({ ...event, type: 'domain', label: `Domain: ${event.name}` })),
+    ...events.map((event) => ({
+      ...event,
+      type: "event",
+      label: `Event: ${event.name}`,
+    })),
+    ...services.map((event) => ({
+      ...event,
+      type: "service",
+      label: `Service: ${event.name}`,
+    })),
+    ...domains.map((event) => ({
+      ...event,
+      type: "domain",
+      label: `Domain: ${event.name}`,
+    })),
   ];
 
   const navItems = [
-    { title: 'Domains', type: 'domain', data: listItemsToRender.domains },
-    { title: 'Events', type: 'event', data: listItemsToRender.events },
-    { title: 'Services', type: 'service', data: listItemsToRender.services },
+    { title: "Domains", type: "domain", data: listItemsToRender.domains },
+    { title: "Events", type: "event", data: listItemsToRender.events },
+    { title: "Services", type: "service", data: listItemsToRender.services },
   ];
 
-  const handleListItemSelection = (data: Event | Service, dataType: 'event' | 'service' | 'domain') => {
+  const handleListItemSelection = (
+    data: Event | Service,
+    dataType: "event" | "service" | "domain",
+  ) => {
     router.push({ query: `type=${dataType}&name=${data.name}` });
     setSelectedRootNode({ label: data.name, data, type: dataType });
   };
@@ -55,9 +75,9 @@ function Graph({ events, services, domains }: PageProps) {
   const handleAllEventsAndServicesSelection = () => {
     router.push({ query: `type=all&name=AllEventsAndServices` });
     setSelectedRootNode({
-      label: 'All Events and Services',
-      data: { name: 'All Events and Services', events, services },
-      type: 'all',
+      label: "All Events and Services",
+      data: { name: "All Events and Services", events, services },
+      type: "all",
     });
   };
 
@@ -65,7 +85,7 @@ function Graph({ events, services, domains }: PageProps) {
     debounce((e) => {
       setSearchFilter(e.target.value);
     }, 500),
-    [listItemsToRender]
+    [listItemsToRender],
   );
 
   const handleDropdownSelect = (e) => {
@@ -92,25 +112,33 @@ function Graph({ events, services, domains }: PageProps) {
     if (!isRouterReady) return;
 
     const initialDataToLoad = events[0];
-    const initialSelectedRootNode = { label: initialDataToLoad.name, type: 'event', data: initialDataToLoad };
+    const initialSelectedRootNode = {
+      label: initialDataToLoad.name,
+      type: "event",
+      data: initialDataToLoad,
+    };
 
     if (!name || !type) {
       setSelectedRootNode(initialSelectedRootNode);
       return;
     }
 
-    if (type === 'all') {
+    if (type === "all") {
       setSelectedRootNode({
-        label: 'All Events and Services',
-        data: { name: 'All Events and Services', events, services },
-        type: 'all',
+        label: "All Events and Services",
+        data: { name: "All Events and Services", events, services },
+        type: "all",
       });
       return;
     }
 
     const dataByType = { event: events, service: services, domain: domains };
-    const match = dataByType[type.toString()].find((item) => item.name === name);
-    const newSelectedItem = match ? { label: match.name, type, data: match } : initialSelectedRootNode;
+    const match = dataByType[type.toString()].find(
+      (item) => item.name === name,
+    );
+    const newSelectedItem = match
+      ? { label: match.name, type, data: match }
+      : initialSelectedRootNode;
     setSelectedRootNode(newSelectedItem);
   }, [name, type, events, domains, services, isRouterReady]);
 
@@ -127,7 +155,14 @@ function Graph({ events, services, domains }: PageProps) {
           >
             <option>Please select your event or service</option>
             {dropdownValues.map((item) => (
-              <option key={item.name} value={JSON.stringify({ label: item.name, data: item, type: item.type })}>
+              <option
+                key={item.name}
+                value={JSON.stringify({
+                  label: item.name,
+                  data: item,
+                  type: item.type,
+                })}
+              >
                 {item.label}
               </option>
             ))}
@@ -139,7 +174,10 @@ function Graph({ events, services, domains }: PageProps) {
           <div className="border-b border-gray-200 pb-6">
             <div className="mt-1 relative rounded-md shadow-sm">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <SearchIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <SearchIcon
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
               </div>
               <input
                 type="text"
@@ -161,13 +199,15 @@ function Graph({ events, services, domains }: PageProps) {
               >
                 <div
                   className={classNames(
-                    'bg-blue-500',
-                    'flex-shrink-0 flex h-full items-center justify-center w-4 text-white text-sm font-medium rounded-l-md'
+                    "bg-blue-500",
+                    "flex-shrink-0 flex h-full items-center justify-center w-4 text-white text-sm font-medium rounded-l-md",
                   )}
                 />
                 <div
                   className={`w-full rounded-r-md border-t border-r border-b ${
-                    selectedRootNode?.type === 'all' ? 'bg-green-50' : 'bg-white'
+                    selectedRootNode?.type === "all"
+                      ? "bg-green-50"
+                      : "bg-white"
                   }`}
                 >
                   <div className="p-4 text-sm space-y-2 flex flex-col justify-between h-full">
@@ -175,7 +215,8 @@ function Graph({ events, services, domains }: PageProps) {
                       All Events and Services
                     </div>
                     <div className="hidden xl:block text-gray-500 text-xs font-normal mt-2 ">
-                      Diagram that shows all your events and services in one place
+                      Diagram that shows all your events and services in one
+                      place
                     </div>
                   </div>
                 </div>
@@ -222,14 +263,21 @@ function Graph({ events, services, domains }: PageProps) {
 interface SelectionGroupProps {
   title: string;
   data: Service[] | Event[] | Domain[];
-  type: 'event' | 'service' | 'domain';
+  type: "event" | "service" | "domain";
   // eslint-disable-next-line no-unused-vars
   onClick(data: Event | Service | Domain, type: string): void;
   currentSelectedItem?: any;
   filterBy?: string;
 }
 
-function SelectionGroup({ title, data, currentSelectedItem, onClick, filterBy, type }: SelectionGroupProps) {
+function SelectionGroup({
+  title,
+  data,
+  currentSelectedItem,
+  onClick,
+  filterBy,
+  type,
+}: SelectionGroupProps) {
   const [dataWithoutFilter] = useState(data);
 
   return (
@@ -243,11 +291,17 @@ function SelectionGroup({ title, data, currentSelectedItem, onClick, filterBy, t
         )}
         {!filterBy && <>({dataWithoutFilter.length})</>}
       </span>
-      {data.length === 0 && <span className="text-sm text-gray-300">No {type}s found</span>}
+      {data.length === 0 && (
+        <span className="text-sm text-gray-300">No {type}s found</span>
+      )}
       <ul className="space-y-4 overflow-auto">
         {data.map((item) => {
-          const isSelected = currentSelectedItem ? currentSelectedItem.label === item.name : false;
-          const itemKey = hasDomain(item) ? `${item.domain}-${item.name}}` : item.name;
+          const isSelected = currentSelectedItem
+            ? currentSelectedItem.label === item.name
+            : false;
+          const itemKey = hasDomain(item)
+            ? `${item.domain}-${item.name}}`
+            : item.name;
 
           return (
             <ListItem
@@ -272,12 +326,12 @@ interface ListItemProps {
   data: Service | Event;
   // eslint-disable-next-line no-unused-vars
   onClick(data: Event | Service | Domain, type: string): void;
-  type: 'event' | 'service' | 'domain';
+  type: "event" | "service" | "domain";
   isSelected: boolean;
 }
 
 function ListItem({ data, onClick, type, isSelected }: ListItemProps) {
-  const border = isSelected ? 'border-green-500 bg-green-50 shadow-md ' : '';
+  const border = isSelected ? "border-green-500 bg-green-50 shadow-md " : "";
   return (
     <li className="flex">
       <button
@@ -290,14 +344,20 @@ function ListItem({ data, onClick, type, isSelected }: ListItemProps) {
             background: getBackgroundColor(data.name),
           }}
           className={classNames(
-            'bg-red-500',
-            'flex-shrink-0 flex h-full items-center justify-center w-4 text-white text-sm font-medium rounded-l-md'
+            "bg-red-500",
+            "flex-shrink-0 flex h-full items-center justify-center w-4 text-white text-sm font-medium rounded-l-md",
           )}
         />
-        <div className={`w-full rounded-r-md border-t border-r border-b ${isSelected ? 'bg-green-50' : 'bg-white'}`}>
+        <div
+          className={`w-full rounded-r-md border-t border-r border-b ${isSelected ? "bg-green-50" : "bg-white"}`}
+        >
           <div className="p-4 text-sm space-y-2 flex flex-col justify-between h-full">
-            <div className="text-gray-900 font-bold hover:text-gray-600 break-all text-xs xl:text-md">{data.name}</div>
-            <div className="hidden xl:block text-gray-500 text-xs font-normal mt-2 ">{data.summary}</div>
+            <div className="text-gray-900 font-bold hover:text-gray-600 break-all text-xs xl:text-md">
+              {data.name}
+            </div>
+            <div className="hidden xl:block text-gray-500 text-xs font-normal mt-2 ">
+              {data.summary}
+            </div>
           </div>
         </div>
       </button>

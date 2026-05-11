@@ -10,11 +10,10 @@ With EventCatalog you can add your OpenAPI Specifications to your services.
 To use the feature you will need to do two things:
 
 1. Add your `openapi.yaml` or `openapi.json` file into your service
-    - example `/services/{Your Service}/openapi.yaml`
+   - example `/services/{Your Service}/openapi.yaml`
 2. Add the Component [OpenAPI](/docs/components/overview#openapi-) inside your service markdown file.
 
 This will load your OpenAPI file into your Service Page.
-
 
 ```mdx title="Example of loading OpenAPI into Service file"
 ---
@@ -25,15 +24,13 @@ owners:
   - dboyne
 ---
 
-The payment service is our own internal payment service that listens to events from stripe and handles them within our own domain. 
+The payment service is our own internal payment service that listens to events from stripe and handles them within our own domain.
 
 We use Stripe to handle services and use this Payment service to enrich events for internal use.
 
 <OpenAPI />
 
 <NodeGraph />
-
-
 ```
 
 ### Props for Component
@@ -41,7 +38,7 @@ We use Stripe to handle services and use this Payment service to enrich events f
 The `<OpenAPI/>` component uses [swagger-ui-react](https://www.npmjs.com/package/swagger-ui-react) under the hood. If you want to configure your component you can pass these props into your component.
 
 ```mdx title="Example of passing through props from swagger-ui-react"
-<OpenAPI docExpansion="full"  />
+<OpenAPI docExpansion="full" />
 ```
 
 ### Example Output

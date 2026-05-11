@@ -2,30 +2,41 @@ import {
   getAWSConsoleUrlForEventBridgeRule,
   getAWSConsoleUrlForEventBridgeRuleMetrics,
   getAWSConsoleUrlForService,
-} from './lib/aws';
+} from "./lib/aws";
 
-const buildRulesAndTargetMermaidGraph = ({ eventName, rules }: any) => `flowchart LR
+const buildRulesAndTargetMermaidGraph = ({
+  eventName,
+  rules,
+}: any) => `flowchart LR
 ${rules
   .map(
-    (rule: any) => `event>"${eventName}"]:::event-- fa:fa-filter rule -->${rule.name}:::rule
+    (
+      rule: any,
+    ) => `event>"${eventName}"]:::event-- fa:fa-filter rule -->${rule.name}:::rule
 classDef event stroke:#ed8ece,stroke-width: 2px, fill:#ffa7e2, color: #160505;
 classDef rule stroke:#7b7fcb,stroke-width: 2px, fill: #c0c3ff;
 classDef target stroke:#bec9c7,stroke-width: 2px, fill: #dbf3ef;
 ${rule.targets
   .map(
     (target: any) =>
-      `${rule.name}{{${rule.name}}}:::rule-- fa:fa-cloud service:${target.service}, resource:${target.resource} --> ${target.resourceName}:::target\n`
+      `${rule.name}{{${rule.name}}}:::rule-- fa:fa-cloud service:${target.service}, resource:${target.resource} --> ${target.resourceName}:::target\n`,
   )
-  .join('')}`
+  .join("")}`,
   )
-  .join('')}`;
+  .join("")}`;
 
-export const buildMarkdownForEventWithoutRules = () => `No matched rules or targets found for event.
+export const buildMarkdownForEventWithoutRules =
+  () => `No matched rules or targets found for event.
 <Schema />
 <EventExamples />
 `;
 
-export const buildMarkdownForEvent = ({ rules, eventBusName, eventName, region }: any) => `## Matched rules for event
+export const buildMarkdownForEvent = ({
+  rules,
+  eventBusName,
+  eventName,
+  region,
+}: any) => `## Matched rules for event
 ${
   rules.length > 0
     ? `
@@ -33,7 +44,7 @@ The event \`${eventName}\` has **${rules.length}** matched rules on the event bu
 
 | Rules | Number Of Targets | Targets | Metrics |
 | --- | ------ | ----------- | ----------- |`
-    : ''
+    : ""
 }
 ${rules
   .map(
@@ -43,12 +54,12 @@ ${rules
       } | ${rule.targets
         .map(
           (target: any) =>
-            `[${target.resourceName} (${target.resource})](${getAWSConsoleUrlForService({ region, service: target.service })})`
+            `[${target.resourceName} (${target.resource})](${getAWSConsoleUrlForService({ region, service: target.service })})`,
         )
-        .join(', ')
-        .toString()} | [View](${getAWSConsoleUrlForEventBridgeRuleMetrics({ region, eventBusName, ruleName: rule?.name })}) |`
+        .join(", ")
+        .toString()} | [View](${getAWSConsoleUrlForEventBridgeRuleMetrics({ region, eventBusName, ruleName: rule?.name })}) |`,
   )
-  .join('\n')}
+  .join("\n")}
 
 <Mermaid title="Targets and Rules" charts={[\`${buildRulesAndTargetMermaidGraph({ eventName, rules })}\`]}/>
 

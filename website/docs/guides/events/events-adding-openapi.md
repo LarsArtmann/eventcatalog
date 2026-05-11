@@ -10,7 +10,7 @@ With EventCatalog you can add your OpenAPI Specifications to your events.
 To use the feature you will need to do two things:
 
 1. Add your `openapi.yaml` or `openapi.json` file into your event
-    - example `/events/{Your Event}/openapi.yaml`
+   - example `/events/{Your Event}/openapi.yaml`
 2. Add the Component [OpenAPI](/docs/components/overview#openapi-) inside your event markdown file.
 
 This will load your OpenAPI file into your Event Page.
@@ -20,14 +20,14 @@ This will load your OpenAPI file into your Event Page.
 name: OrderCreated
 version: 0.0.1
 summary: |
-  Event represents when an order has been created. 
+  Event represents when an order has been created.
 producers:
-    - Orders Service
+  - Orders Service
 consumers:
-    - Data Lake
+  - Data Lake
 owners:
-    - dboyne
-    - mSmith
+  - dboyne
+  - mSmith
 ---
 
 <NodeGraph title="Consumer/Producer Diagram" />
@@ -36,8 +36,7 @@ owners:
 
 OpenAPI schema for the event can be found below.
 
-<OpenAPI  />
-
+<OpenAPI />
 ```
 
 ### Props for Component
@@ -45,7 +44,7 @@ OpenAPI schema for the event can be found below.
 The `<OpenAPI/>` component uses [swagger-ui-react](https://www.npmjs.com/package/swagger-ui-react) under the hood. If you want to configure your component you can pass these props into your component.
 
 ```mdx title="Example of passing through props from swagger-ui-react"
-<OpenAPI docExpansion="full"  />
+<OpenAPI docExpansion="full" />
 ```
 
 ### Example Output

@@ -4,13 +4,13 @@ version: 0.0.1
 summary: |
   Holds information about when the user has been removed.
 producers:
-    - Application API
+  - Application API
 consumers:
-    - Customer Portal
+  - Customer Portal
 owners:
-    - dboyne
-    - mSmith
-draft: true    
+  - dboyne
+  - mSmith
+draft: true
 ---
 
 # Testing

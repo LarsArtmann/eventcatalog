@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-promise-executor-return */
 // @ts-nocheck
-import utils from '@eventcatalog/utils';
+import utils from "@eventcatalog/utils";
 
-import path from 'path';
-import fs from 'fs-extra';
-import plugin from '../index';
+import path from "path";
+import fs from "fs-extra";
+import plugin from "../index";
 
-import awsClientSchemasMocks from './assets/aws-mock-responses/client-schemas';
-import awsEventBridgeMocks from './assets/aws-mock-responses/client-eventbridge';
-import eventSnapshots from './assets/event-markdown-snapshot';
+import awsClientSchemasMocks from "./assets/aws-mock-responses/client-schemas";
+import awsEventBridgeMocks from "./assets/aws-mock-responses/client-eventbridge";
+import eventSnapshots from "./assets/event-markdown-snapshot";
 
-import { PluginOptions, SchemaTypes } from '../types';
+import { PluginOptions, SchemaTypes } from "../types";
 
 declare global {
   namespace jest {
@@ -30,18 +30,20 @@ const mockDescribeSchema = jest.fn(() => awsClientSchemasMocks.describeSchemas);
 
 // @aws-sdk/client-eventbridge mocks
 const mockListRules = jest.fn(() => awsEventBridgeMocks.listRules);
-const mockListTargetsByRule = jest.fn(() => awsEventBridgeMocks.listTargetsForRules);
+const mockListTargetsByRule = jest.fn(
+  () => awsEventBridgeMocks.listTargetsForRules,
+);
 
-jest.mock('@aws-sdk/client-eventbridge', () => ({
-  ...jest.requireActual('@aws-sdk/client-eventbridge'),
+jest.mock("@aws-sdk/client-eventbridge", () => ({
+  ...jest.requireActual("@aws-sdk/client-eventbridge"),
   EventBridge: jest.fn(() => ({
     listRules: mockListRules,
     listTargetsByRule: mockListTargetsByRule,
   })),
 }));
 
-jest.mock('@aws-sdk/client-schemas', () => ({
-  ...jest.requireActual('@aws-sdk/client-schemas'),
+jest.mock("@aws-sdk/client-schemas", () => ({
+  ...jest.requireActual("@aws-sdk/client-schemas"),
   Schemas: jest.fn(() => ({
     listSchemas: mockListSchemas,
     exportSchema: mockExportSchema,
@@ -51,23 +53,23 @@ jest.mock('@aws-sdk/client-schemas', () => ({
 
 const pluginOptions: PluginOptions = {
   credentials: {
-    secretAccessKey: 'some-secret',
-    accessKeyId: 'access-key',
+    secretAccessKey: "some-secret",
+    accessKeyId: "access-key",
   },
-  region: 'eu-west-1',
-  eventBusName: 'test-event-bus',
-  registryName: 'discovered-schemas',
+  region: "eu-west-1",
+  eventBusName: "test-event-bus",
+  registryName: "discovered-schemas",
 };
 
-describe('eventcatalog-plugin-generator-amazon-eventbridge', () => {
+describe("eventcatalog-plugin-generator-amazon-eventbridge", () => {
   beforeAll(() => {
     PROJECT_DIR = process.env.PROJECT_DIR;
-    process.env.PROJECT_DIR = path.join(__dirname, 'tmp');
+    process.env.PROJECT_DIR = path.join(__dirname, "tmp");
   });
 
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    jest.spyOn(console, "error").mockImplementation(() => {});
   });
 
   afterAll(() => {
@@ -76,54 +78,73 @@ describe('eventcatalog-plugin-generator-amazon-eventbridge', () => {
 
   afterEach(() => {
     try {
-      fs.rmdirSync(path.join(__dirname, 'tmp'), { recursive: true });
+      fs.rmdirSync(path.join(__dirname, "tmp"), { recursive: true });
     } catch (error) {
-      console.log('Nothing to remove');
+      console.log("Nothing to remove");
     }
   });
 
-  describe('plugin', () => {
-    it('creates catalog events, examples and schemas with events from amazon eventbridge schema registry', async () => {
+  describe("plugin", () => {
+    it("creates catalog events, examples and schemas with events from amazon eventbridge schema registry", async () => {
       await plugin({}, pluginOptions);
 
       // just wait for files to be there in time.
       await new Promise((r) => setTimeout(r, 200));
 
-      const { getEventFromCatalog } = utils({ catalogDirectory: process.env.PROJECT_DIR });
+      const { getEventFromCatalog } = utils({
+        catalogDirectory: process.env.PROJECT_DIR,
+      });
 
-      const { raw: eventFile, data: event } = getEventFromCatalog('users@UserCreated');
+      const { raw: eventFile, data: event } =
+        getEventFromCatalog("users@UserCreated");
 
       // known issue with utils that will default props... replace it for now
       expect(eventFile).toMatchMarkdown(eventSnapshots.userCreated);
 
       // verify the schema next to the event is the JSONDraft4 from EventBridge
-      const expectedSchemaForEvent = JSON.parse(awsClientSchemasMocks.exportSchema.Content);
-      const generatedSchemaForEvent = fs.readFileSync(
-        path.join(process.env.PROJECT_DIR, 'events', event.name, 'schema.json'),
-        'utf-8'
+      const expectedSchemaForEvent = JSON.parse(
+        awsClientSchemasMocks.exportSchema.Content,
       );
-      expect(generatedSchemaForEvent).toEqual(JSON.stringify(expectedSchemaForEvent, null, 4));
+      const generatedSchemaForEvent = fs.readFileSync(
+        path.join(process.env.PROJECT_DIR, "events", event.name, "schema.json"),
+        "utf-8",
+      );
+      expect(generatedSchemaForEvent).toEqual(
+        JSON.stringify(expectedSchemaForEvent, null, 4),
+      );
 
       // verify the code examples next to the event is the open-api version of the event
-      const expectedCodeExampleForEvent = JSON.parse(awsClientSchemasMocks.describeSchemas.Content);
-      const generatedCodeExampleForEvent = fs.readFileSync(
-        path.join(process.env.PROJECT_DIR, 'events', event.name, 'examples', 'users@UserCreated-openapi-schema.json'),
-        'utf-8'
+      const expectedCodeExampleForEvent = JSON.parse(
+        awsClientSchemasMocks.describeSchemas.Content,
       );
-      expect(generatedCodeExampleForEvent).toEqual(JSON.stringify(expectedCodeExampleForEvent, null, 4));
+      const generatedCodeExampleForEvent = fs.readFileSync(
+        path.join(
+          process.env.PROJECT_DIR,
+          "events",
+          event.name,
+          "examples",
+          "users@UserCreated-openapi-schema.json",
+        ),
+        "utf-8",
+      );
+      expect(generatedCodeExampleForEvent).toEqual(
+        JSON.stringify(expectedCodeExampleForEvent, null, 4),
+      );
     });
 
-    describe('when user has existing events in their event catalog', () => {
-      it('when the schema versions (from AWS) match the current version of the event in the catalog, the event is overriden and not versioned', async () => {
+    describe("when user has existing events in their event catalog", () => {
+      it("when the schema versions (from AWS) match the current version of the event in the catalog, the event is overriden and not versioned", async () => {
         const oldEvent = {
-          name: 'users@UserCreated',
-          version: '1',
-          summary: 'Old event from Amazon EventBridge that was created',
+          name: "users@UserCreated",
+          version: "1",
+          summary: "Old event from Amazon EventBridge that was created",
         };
 
-        const { writeEventToCatalog } = utils({ catalogDirectory: process.env.PROJECT_DIR });
+        const { writeEventToCatalog } = utils({
+          catalogDirectory: process.env.PROJECT_DIR,
+        });
         await writeEventToCatalog(oldEvent, {
-          schema: { extension: 'json', fileContent: 'hello' },
+          schema: { extension: "json", fileContent: "hello" },
         });
 
         await plugin({}, pluginOptions);
@@ -131,142 +152,223 @@ describe('eventcatalog-plugin-generator-amazon-eventbridge', () => {
         // just wait for files to be there in time.
         await new Promise((r) => setTimeout(r, 200));
 
-        const { getEventFromCatalog } = utils({ catalogDirectory: process.env.PROJECT_DIR });
-
-        const { data: event } = getEventFromCatalog('users@UserCreated');
-
-        expect(event.summary).toEqual('Found on the "test-event-bus" Amazon EventBridge bus.');
-      });
-
-      it('when the schema versions (from AWS) do not match the current version of the event, the event in the catalog is versioned and the new event documentation is created', async () => {
-        const oldEventFromAWSAlreadyInCatalog = {
-          name: 'users@UserCreated',
-          version: '0.1',
-          summary: 'really old version of this event',
-        };
-
-        const eventPath = path.join(process.env.PROJECT_DIR, 'events', 'users@UserCreated');
-
-        const { writeEventToCatalog } = utils({ catalogDirectory: process.env.PROJECT_DIR });
-        await writeEventToCatalog(oldEventFromAWSAlreadyInCatalog, {
-          schema: { extension: 'json', fileContent: 'some-old-schema-example' },
+        const { getEventFromCatalog } = utils({
+          catalogDirectory: process.env.PROJECT_DIR,
         });
 
-        expect(fs.existsSync(path.join(eventPath, 'versioned'))).toEqual(false);
+        const { data: event } = getEventFromCatalog("users@UserCreated");
+
+        expect(event.summary).toEqual(
+          'Found on the "test-event-bus" Amazon EventBridge bus.',
+        );
+      });
+
+      it("when the schema versions (from AWS) do not match the current version of the event, the event in the catalog is versioned and the new event documentation is created", async () => {
+        const oldEventFromAWSAlreadyInCatalog = {
+          name: "users@UserCreated",
+          version: "0.1",
+          summary: "really old version of this event",
+        };
+
+        const eventPath = path.join(
+          process.env.PROJECT_DIR,
+          "events",
+          "users@UserCreated",
+        );
+
+        const { writeEventToCatalog } = utils({
+          catalogDirectory: process.env.PROJECT_DIR,
+        });
+        await writeEventToCatalog(oldEventFromAWSAlreadyInCatalog, {
+          schema: { extension: "json", fileContent: "some-old-schema-example" },
+        });
+
+        expect(fs.existsSync(path.join(eventPath, "versioned"))).toEqual(false);
 
         await plugin({}, pluginOptions);
         await new Promise((r) => setTimeout(r, 200));
 
-        const { getEventFromCatalog } = utils({ catalogDirectory: process.env.PROJECT_DIR });
+        const { getEventFromCatalog } = utils({
+          catalogDirectory: process.env.PROJECT_DIR,
+        });
 
-        const { raw: eventFile } = getEventFromCatalog('users@UserCreated');
+        const { raw: eventFile } = getEventFromCatalog("users@UserCreated");
 
         expect(eventFile).toMatchMarkdown(eventSnapshots.userCreated);
 
         // Check the version has been set
-        expect(fs.existsSync(path.join(eventPath, 'versioned', '0.1', 'index.md'))).toEqual(true);
-        expect(fs.existsSync(path.join(eventPath, 'versioned', '0.1', 'schema.json'))).toEqual(true);
+        expect(
+          fs.existsSync(path.join(eventPath, "versioned", "0.1", "index.md")),
+        ).toEqual(true);
+        expect(
+          fs.existsSync(
+            path.join(eventPath, "versioned", "0.1", "schema.json"),
+          ),
+        ).toEqual(true);
       });
 
-      it('when new events are created in the catalog the `owners`, `producers` and `consumers` from the previous version of the event is used in the new event metdata', async () => {
+      it("when new events are created in the catalog the `owners`, `producers` and `consumers` from the previous version of the event is used in the new event metdata", async () => {
         const oldEventFromAWSAlreadyInCatalog = {
-          name: 'users@UserCreated',
-          version: '0.1',
-          summary: 'really old version of this event',
-          owners: ['dboyne', 'tSmith'],
-          producers: ['Service A'],
-          consumers: ['Service B'],
+          name: "users@UserCreated",
+          version: "0.1",
+          summary: "really old version of this event",
+          owners: ["dboyne", "tSmith"],
+          producers: ["Service A"],
+          consumers: ["Service B"],
         };
 
-        const eventPath = path.join(process.env.PROJECT_DIR, 'events', 'users@UserCreated');
+        const eventPath = path.join(
+          process.env.PROJECT_DIR,
+          "events",
+          "users@UserCreated",
+        );
 
-        const { writeEventToCatalog } = utils({ catalogDirectory: process.env.PROJECT_DIR });
+        const { writeEventToCatalog } = utils({
+          catalogDirectory: process.env.PROJECT_DIR,
+        });
         await writeEventToCatalog(oldEventFromAWSAlreadyInCatalog, {
-          schema: { extension: 'json', fileContent: 'some-old-schema-example' },
+          schema: { extension: "json", fileContent: "some-old-schema-example" },
         });
 
         await plugin({}, pluginOptions);
         await new Promise((r) => setTimeout(r, 200));
 
-        const { getEventFromCatalog } = utils({ catalogDirectory: process.env.PROJECT_DIR });
+        const { getEventFromCatalog } = utils({
+          catalogDirectory: process.env.PROJECT_DIR,
+        });
 
-        const { data: newEventData } = getEventFromCatalog('users@UserCreated');
+        const { data: newEventData } = getEventFromCatalog("users@UserCreated");
 
         // Check the version has been set
-        expect(fs.existsSync(path.join(eventPath, 'versioned', '0.1', 'index.md'))).toEqual(true);
-        expect(fs.existsSync(path.join(eventPath, 'versioned', '0.1', 'schema.json'))).toEqual(true);
+        expect(
+          fs.existsSync(path.join(eventPath, "versioned", "0.1", "index.md")),
+        ).toEqual(true);
+        expect(
+          fs.existsSync(
+            path.join(eventPath, "versioned", "0.1", "schema.json"),
+          ),
+        ).toEqual(true);
 
-        expect(newEventData.version).toEqual('1');
-        expect(newEventData.owners).toEqual(['dboyne', 'tSmith']);
-        expect(newEventData.producers).toEqual(['Service A']);
-        expect(newEventData.consumers).toEqual(['Service B']);
+        expect(newEventData.version).toEqual("1");
+        expect(newEventData.owners).toEqual(["dboyne", "tSmith"]);
+        expect(newEventData.producers).toEqual(["Service A"]);
+        expect(newEventData.consumers).toEqual(["Service B"]);
       });
     });
 
-    describe('plugin options', () => {
-      describe('versionEvents', () => {
-        it('when `versionEvents` is set to false, no events will be versioned and everything is overriden', async () => {
+    describe("plugin options", () => {
+      describe("versionEvents", () => {
+        it("when `versionEvents` is set to false, no events will be versioned and everything is overriden", async () => {
           const oldEventFromAWSAlreadyInCatalog = {
-            name: 'users@UserCreated',
-            version: '0.1',
-            summary: 'really old version of this event',
+            name: "users@UserCreated",
+            version: "0.1",
+            summary: "really old version of this event",
           };
 
-          const eventPath = path.join(process.env.PROJECT_DIR, 'events', 'users@UserCreated');
+          const eventPath = path.join(
+            process.env.PROJECT_DIR,
+            "events",
+            "users@UserCreated",
+          );
 
-          const { writeEventToCatalog } = utils({ catalogDirectory: process.env.PROJECT_DIR });
+          const { writeEventToCatalog } = utils({
+            catalogDirectory: process.env.PROJECT_DIR,
+          });
           await writeEventToCatalog(oldEventFromAWSAlreadyInCatalog, {
-            schema: { extension: 'json', fileContent: 'some-old-schema-example' },
+            schema: {
+              extension: "json",
+              fileContent: "some-old-schema-example",
+            },
           });
 
           await plugin({}, { ...pluginOptions, versionEvents: false });
           await new Promise((r) => setTimeout(r, 200));
 
-          const { getEventFromCatalog } = utils({ catalogDirectory: process.env.PROJECT_DIR });
+          const { getEventFromCatalog } = utils({
+            catalogDirectory: process.env.PROJECT_DIR,
+          });
 
-          const { raw: eventFile } = getEventFromCatalog('users@UserCreated');
+          const { raw: eventFile } = getEventFromCatalog("users@UserCreated");
 
           // Check the version has NOT been set
-          expect(fs.existsSync(path.join(eventPath, 'versioned', '0.1', 'index.md'))).toEqual(false);
-          expect(fs.existsSync(path.join(eventPath, 'versioned', '0.1', 'schema.json'))).toEqual(false);
+          expect(
+            fs.existsSync(path.join(eventPath, "versioned", "0.1", "index.md")),
+          ).toEqual(false);
+          expect(
+            fs.existsSync(
+              path.join(eventPath, "versioned", "0.1", "schema.json"),
+            ),
+          ).toEqual(false);
 
           expect(eventFile).toMatchMarkdown(eventSnapshots.userCreated);
         });
       });
 
-      describe('schemaTypeToRenderToEvent', () => {
-        it('when the `schemaTypeToRenderToEvent` is set to `JSONSchemaDraft4` then the schema rendered in the document is the JSON Draft version', async () => {
-          await plugin({}, { ...pluginOptions, schemaTypeToRenderToEvent: SchemaTypes.JSONSchemaDraft4 });
+      describe("schemaTypeToRenderToEvent", () => {
+        it("when the `schemaTypeToRenderToEvent` is set to `JSONSchemaDraft4` then the schema rendered in the document is the JSON Draft version", async () => {
+          await plugin(
+            {},
+            {
+              ...pluginOptions,
+              schemaTypeToRenderToEvent: SchemaTypes.JSONSchemaDraft4,
+            },
+          );
           await new Promise((r) => setTimeout(r, 200));
 
           // verify the schema next to the event is the JSONDraft4 from EventBridge
-          const expectedSchemaForEvent = JSON.parse(awsClientSchemasMocks.exportSchema.Content);
-          const generatedSchemaForEvent = fs.readFileSync(
-            path.join(process.env.PROJECT_DIR, 'events', 'users@UserCreated', 'schema.json'),
-            'utf-8'
+          const expectedSchemaForEvent = JSON.parse(
+            awsClientSchemasMocks.exportSchema.Content,
           );
-          expect(generatedSchemaForEvent).toEqual(JSON.stringify(expectedSchemaForEvent, null, 4));
+          const generatedSchemaForEvent = fs.readFileSync(
+            path.join(
+              process.env.PROJECT_DIR,
+              "events",
+              "users@UserCreated",
+              "schema.json",
+            ),
+            "utf-8",
+          );
+          expect(generatedSchemaForEvent).toEqual(
+            JSON.stringify(expectedSchemaForEvent, null, 4),
+          );
         });
 
-        it('when the `schemaTypeToRenderToEvent` is set to `OpenAPI` then the schema rendered in the document is the OpenAPI version', async () => {
-          await plugin({}, { ...pluginOptions, schemaTypeToRenderToEvent: SchemaTypes.OpenAPI });
+        it("when the `schemaTypeToRenderToEvent` is set to `OpenAPI` then the schema rendered in the document is the OpenAPI version", async () => {
+          await plugin(
+            {},
+            {
+              ...pluginOptions,
+              schemaTypeToRenderToEvent: SchemaTypes.OpenAPI,
+            },
+          );
           await new Promise((r) => setTimeout(r, 200));
 
           // verify the schema next to the event is the OPEN API one
-          const expectedSchemaForEvent = JSON.parse(awsClientSchemasMocks.describeSchemas.Content);
-          const generatedSchemaForEvent = fs.readFileSync(
-            path.join(process.env.PROJECT_DIR, 'events', 'users@UserCreated', 'schema.json'),
-            'utf-8'
+          const expectedSchemaForEvent = JSON.parse(
+            awsClientSchemasMocks.describeSchemas.Content,
           );
-          expect(generatedSchemaForEvent).toEqual(JSON.stringify(expectedSchemaForEvent, null, 4));
+          const generatedSchemaForEvent = fs.readFileSync(
+            path.join(
+              process.env.PROJECT_DIR,
+              "events",
+              "users@UserCreated",
+              "schema.json",
+            ),
+            "utf-8",
+          );
+          expect(generatedSchemaForEvent).toEqual(
+            JSON.stringify(expectedSchemaForEvent, null, 4),
+          );
         });
       });
 
-      it('when events do not have any targets or rules the target and rule diagrams are not rendered in the markdown files', async () => {
-        mockExportSchema.mockImplementation(({ SchemaName }) => awsClientSchemasMocks.buildSchema({ eventName: SchemaName }));
+      it("when events do not have any targets or rules the target and rule diagrams are not rendered in the markdown files", async () => {
+        mockExportSchema.mockImplementation(({ SchemaName }) =>
+          awsClientSchemasMocks.buildSchema({ eventName: SchemaName }),
+        );
 
         mockDescribeSchema.mockImplementation(({ SchemaName }) =>
-          awsClientSchemasMocks.buildOpenAPIResponse({ eventName: SchemaName })
+          awsClientSchemasMocks.buildOpenAPIResponse({ eventName: SchemaName }),
         );
 
         await plugin({}, pluginOptions);
@@ -274,12 +376,19 @@ describe('eventcatalog-plugin-generator-amazon-eventbridge', () => {
         // just wait for files to be there in time.
         await new Promise((r) => setTimeout(r, 200));
 
-        const { getEventFromCatalog } = utils({ catalogDirectory: process.env.PROJECT_DIR });
+        const { getEventFromCatalog } = utils({
+          catalogDirectory: process.env.PROJECT_DIR,
+        });
 
-        const { raw: eventFile } = getEventFromCatalog('users@UserDeleted');
+        const { raw: eventFile } = getEventFromCatalog("users@UserDeleted");
 
         // known issue with utils that will default props... replace it for now
-        expect(eventFile).toMatchMarkdown(eventSnapshots.userDeletedWithNoTargetsOrRules.replace('owners: []', ''));
+        expect(eventFile).toMatchMarkdown(
+          eventSnapshots.userDeletedWithNoTargetsOrRules.replace(
+            "owners: []",
+            "",
+          ),
+        );
       });
     });
   });

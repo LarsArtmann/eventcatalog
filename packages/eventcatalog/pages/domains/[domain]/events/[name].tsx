@@ -1,6 +1,6 @@
-import { getEventByName } from '@/lib/events';
-import { getAllEventsFromDomains } from '@/lib/domains';
-import EventsPage from '../../../events/[name]';
+import { getEventByName } from "@/lib/events";
+import { getAllEventsFromDomains } from "@/lib/domains";
+import EventsPage from "../../../events/[name]";
 
 export default EventsPage;
 
@@ -16,13 +16,25 @@ export async function getStaticProps({ params }) {
         event,
         eventPath: `/domains/${event.domain}/events/${event.name}`,
         breadCrumbs: [
-          { name: 'Domain', href: '/domains', current: false },
-          { name: event.domain, href: `/domains/${event.domain}`, current: false },
-          { name: 'Events', href: `/events?domain=${event.domain}`, current: false },
-          { name: event.name, href: `/domains/${event.domain}/events/${event.name}`, current: true },
+          { name: "Domain", href: "/domains", current: false },
+          {
+            name: event.domain,
+            href: `/domains/${event.domain}`,
+            current: false,
+          },
+          {
+            name: "Events",
+            href: `/events?domain=${event.domain}`,
+            current: false,
+          },
+          {
+            name: event.name,
+            href: `/domains/${event.domain}/events/${event.name}`,
+            current: true,
+          },
         ],
         markdown,
-        loadedVersion: 'latest',
+        loadedVersion: "latest",
       },
     };
   } catch (error) {
@@ -37,7 +49,9 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   const events = getAllEventsFromDomains();
-  const paths = events.map((event) => ({ params: { name: event.name, domain: event.domain } }));
+  const paths = events.map((event) => ({
+    params: { name: event.name, domain: event.domain },
+  }));
 
   return {
     paths,

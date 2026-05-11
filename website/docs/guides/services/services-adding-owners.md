@@ -18,11 +18,13 @@ module.exports = {
   // ...
   users: [
     {
-      id: 'dboyne',
-      name: 'David Boyne',
-      avatarUrl: 'https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png',
-      role: 'Developer',
-      summary: 'Maintainer of EventCatalog and loves building tools for Event Architectures.'
+      id: "dboyne",
+      name: "David Boyne",
+      avatarUrl:
+        "https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png",
+      role: "Developer",
+      summary:
+        "Maintainer of EventCatalog and loves building tools for Event Architectures.",
     },
   ],
 };
@@ -44,13 +46,12 @@ id: Email Platform
 name: Email Platform
 summary: Internal Email system. Used to send emails to 1000s of customers. Hosted in AWS
 owners:
-    - dboyne
+  - dboyne
 ---
 
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id tellus. Vestibulum maximus velit eget massa pulvinar ornare. In vel libero nulla. Aliquam a leo risus. Donec bibendum velit non nulla sollicitudin lacinia. Vestibulum imperdiet nunc eget neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium. Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <Mermaid />
-
 ```
 
 Now when you render your service you will see your new `owner` for that service. You can add as many owners as you like, as long as you add their details in the `eventcatalog.config.js` file.

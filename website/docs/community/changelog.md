@@ -1,9 +1,9 @@
 ---
 sidebar_position: 1
 id: changelog
-title: 'EventCatalog Changelog'
+title: "EventCatalog Changelog"
 sidebar_label: Changelog
-slug: '/community/Changelog'
+slug: "/community/Changelog"
 ---
 
 EventCatalog uses [Lerna](https://github.com/lerna/lerna) and [Changesets](https://github.com/changesets/changesets) to manage releases of the packages.

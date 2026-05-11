@@ -1,7 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
-import type { Owner } from '@eventcatalog/types';
-import { useUser } from '@/hooks/EventCatalog';
+import React from "react";
+import Link from "next/link";
+import type { Owner } from "@eventcatalog/types";
+import { useUser } from "@/hooks/EventCatalog";
 
 function Owners({ owners }: { owners: Owner[] | string[] }) {
   const { getUserById } = useUser();
@@ -9,7 +9,9 @@ function Owners({ owners }: { owners: Owner[] | string[] }) {
   return (
     <div className=" py-6 space-y-8">
       <div>
-        <h2 className="text-sm font-medium text-gray-500">Domain Owners ({owners.length})</h2>
+        <h2 className="text-sm font-medium text-gray-500">
+          Domain Owners ({owners.length})
+        </h2>
         <ul className="mt-4 leading-8 space-y-2">
           {owners.map((owner) => {
             const user = getUserById(owner);
@@ -21,9 +23,15 @@ function Owners({ owners }: { owners: Owner[] | string[] }) {
                 <Link href={`/users/${user.id}`}>
                   <a className="flex items-center space-x-3">
                     <div className="flex-shrink-0">
-                      <img className="h-5 w-5 rounded-full" src={user.avatarUrl} alt="" />
+                      <img
+                        className="h-5 w-5 rounded-full"
+                        src={user.avatarUrl}
+                        alt=""
+                      />
                     </div>
-                    <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                    <div className="text-sm font-medium text-gray-900">
+                      {user.name}
+                    </div>
                   </a>
                 </Link>
               </li>

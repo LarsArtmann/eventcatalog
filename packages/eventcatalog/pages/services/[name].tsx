@@ -1,22 +1,22 @@
-import Head from 'next/head';
-import { MDXRemote } from 'next-mdx-remote';
+import Head from "next/head";
+import { MDXRemote } from "next-mdx-remote";
 
-import { Service } from '@eventcatalog/types';
-import ContentView from '@/components/ContentView';
-import { getAllServices, getServiceByName } from '@/lib/services';
+import { Service } from "@eventcatalog/types";
+import ContentView from "@/components/ContentView";
+import { getAllServices, getServiceByName } from "@/lib/services";
 
-import OpenApiSpec from '@/components/Mdx/OpenApiSpec';
-import AsyncApiSpec from '@/components/Mdx/AsyncApiSpec';
-import Admonition from '@/components/Mdx/Admonition';
-import Mermaid from '@/components/Mermaid';
-import ServiceSidebar from '@/components/Sidebars/ServiceSidebar';
-import BreadCrumbs from '@/components/BreadCrumbs';
-import NotFound from '@/components/NotFound';
-import getBackgroundColor from '@/utils/random-bg';
-import { useConfig, useUrl } from '@/hooks/EventCatalog';
+import OpenApiSpec from "@/components/Mdx/OpenApiSpec";
+import AsyncApiSpec from "@/components/Mdx/AsyncApiSpec";
+import Admonition from "@/components/Mdx/Admonition";
+import Mermaid from "@/components/Mermaid";
+import ServiceSidebar from "@/components/Sidebars/ServiceSidebar";
+import BreadCrumbs from "@/components/BreadCrumbs";
+import NotFound from "@/components/NotFound";
+import getBackgroundColor from "@/utils/random-bg";
+import { useConfig, useUrl } from "@/hooks/EventCatalog";
 
-import { MarkdownFile } from '@/types/index';
-import NodeGraph from '@/components/Mdx/NodeGraph/NodeGraph';
+import { MarkdownFile } from "@/types/index";
+import NodeGraph from "@/components/Mdx/NodeGraph/NodeGraph";
 
 interface ServicesPageProps {
   service: Service;
@@ -25,11 +25,26 @@ interface ServicesPageProps {
   breadCrumbs: any;
 }
 
-function MermaidComponent({ title, service, charts }: { title?: string; service: Service; charts?: string[] }) {
+function MermaidComponent({
+  title,
+  service,
+  charts,
+}: {
+  title?: string;
+  service: Service;
+  charts?: string[];
+}) {
   return (
     <div className="mx-auto w-full py-10">
-      {title && <h2 className="text-lg font-medium text-gray-900 underline">{title}</h2>}
-      <Mermaid source="service" data={service} rootNodeColor={getBackgroundColor(service.name)} charts={charts} />
+      {title && (
+        <h2 className="text-lg font-medium text-gray-900 underline">{title}</h2>
+      )}
+      <Mermaid
+        source="service"
+        data={service}
+        rootNodeColor={getBackgroundColor(service.name)}
+        charts={charts}
+      />
     </div>
   );
 }
@@ -69,7 +84,9 @@ const getComponents = (service: Service) => ({
     // isHorizontal?: boolean;
   }) => (
     <div className="mx-auto w-full">
-      {title && <h2 className="text-lg font-medium text-gray-900 underline">{title}</h2>}
+      {title && (
+        <h2 className="text-lg font-medium text-gray-900 underline">{title}</h2>
+      )}
       <NodeGraph
         source="service"
         data={service}
@@ -92,7 +109,7 @@ export default function Services(props: ServicesPageProps) {
   const { getEditUrl, hasEditUrl } = useUrl();
 
   const editURL = () => {
-    if (!hasEditUrl) return '';
+    if (!hasEditUrl) return "";
     const path = service.domain
       ? `/domains/${service.domain}/services/${service.name}/index.md`
       : `/services/${service.name}/index.md`;
@@ -100,7 +117,8 @@ export default function Services(props: ServicesPageProps) {
     return getEditUrl(path);
   };
 
-  if (notFound) return <NotFound type="service" name={service.name} editUrl={editURL()} />;
+  if (notFound)
+    return <NotFound type="service" name={service.name} editUrl={editURL()} />;
 
   const { name, summary, draft } = service;
   const { lastModifiedDate } = markdown;
@@ -132,15 +150,21 @@ export default function Services(props: ServicesPageProps) {
 
 export async function getStaticProps({ params }) {
   try {
-    const { service, markdown } = await getServiceByName({ serviceName: params.name });
+    const { service, markdown } = await getServiceByName({
+      serviceName: params.name,
+    });
 
     return {
       props: {
         service,
         markdown,
         breadCrumbs: [
-          { name: 'Services', href: '/services', current: false },
-          { name: service.name, href: `/services/${service.name}`, current: true },
+          { name: "Services", href: "/services", current: false },
+          {
+            name: service.name,
+            href: `/services/${service.name}`,
+            current: true,
+          },
         ],
       },
     };

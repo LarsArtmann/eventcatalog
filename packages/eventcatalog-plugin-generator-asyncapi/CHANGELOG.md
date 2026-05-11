@@ -5,7 +5,6 @@
 ### Minor Changes
 
 - [`7ce798d`](https://github.com/boyney123/eventcatalog/commit/7ce798ddff1ce9b13ca537b8ddb8bbcd3ca261ab) [#465](https://github.com/boyney123/eventcatalog/pull/465) Thanks [@linas-ipxo](https://github.com/linas-ipxo)! - \* Added AsyncAPI v3 schema support
-
   - Fixed racing condition when writing files to the catalog in the AsyncAPI plugin
 
     In certain cases the previous frontmatter for the event would not be kept. Instead it would be overwritten with the last event being parsed, causing loss if information.

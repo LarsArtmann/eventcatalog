@@ -5,7 +5,7 @@ sidebar_label: Adding Events
 slug: /events/adding-event
 ---
 
-EventCatalog is designed with the developer experience in mind. 
+EventCatalog is designed with the developer experience in mind.
 
 You should be able to add Events to your catalog within a few steps.
 
@@ -15,10 +15,10 @@ You will find all events within the `/events` directory.
 
 To add a new event you will need to create a new folder with your event name and an `index.md` file inside that folder.
 
-- `/events/{Event Name}/index.md` 
+- `/events/{Event Name}/index.md`
   - (example `/events/UserSignedUp/index.md`)
 
-Once you create your new file you will need to fill it with the event front-matter data and markdown content. 
+Once you create your new file you will need to fill it with the event front-matter data and markdown content.
 
 **There are two parts to the event data**
 
@@ -26,7 +26,6 @@ Once you create your new file you will need to fill it with the event front-matt
 2. [content (markdown)](#example)
 
 Fill in the details of your event and run the Catalog. You will see all your events and will be able to navigate around and explore them!
-
 
 ## Example of adding an Event {#example}
 
@@ -45,9 +44,9 @@ version: 0.0.1
 summary: |
   Tells us when the user has signed up
 consumers:
-    - Email Platform
+  - Email Platform
 producers:
-    - User Service
+  - User Service
 ---
 
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id
@@ -57,7 +56,6 @@ neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <Mermaid />
-
 ```
 
 Once done, run the EventCatalog and navigate to your new event [localhost:3000/events/UserSignedUp](http://localhost:3000/events/UserSignedUp)
@@ -81,9 +79,9 @@ version: 0.0.1
 summary: |
   Tells us when the user has signed up
 consumers:
-    - Email Platform
+  - Email Platform
 producers:
-    - User Service
+  - User Service
 ---
 ```
 
@@ -91,9 +89,7 @@ As you can see we have our event named `UserSignedUp` which has **one producer**
 
 The mapping of [consumers](docs/api/event-frontmatter) and [producers](/docs/api/event-frontmatter) in this format allows EventCatalog to paint a picture of your Architecture and provide you with diagrams, node graphs and enriched user experience.
 
-
 If you wish to know more about the event configuration you can read the [api docs](/docs/api/event-frontmatter).
-
 
 ### Adding Content (Markdown)
 
@@ -106,9 +102,9 @@ version: 0.0.1
 summary: |
   Tells us when the user has signed up
 consumers:
-    - Email Platform
+  - Email Platform
 producers:
-    - User Service
+  - User Service
 ---
 
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id
@@ -118,7 +114,6 @@ neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <Mermaid />
-
 ```
 
 Everything below the frontmatter section will be rendered on your events page.
@@ -126,7 +121,6 @@ Everything below the frontmatter section will be rendered on your events page.
 Let's have a look at this events content.
 
 ```mdx title="/events/UserSignedUp/index.md"
-
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id
 tellus. Vestibulum maximus velit eget massa pulvinar ornare. In vel libero nulla. Aliquam a leo risus.
 Donec bibendum velit non nulla sollicitudin lacinia. Vestibulum imperdiet nunc eget
@@ -134,16 +128,15 @@ neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <Mermaid />
-
 ```
 
-You can write any Markdown you want and it will render on your Events page. 
+You can write any Markdown you want and it will render on your Events page.
 
 :::tip
 Think about writing a blog. Your event is just markdown. Write and use it how you like, and the website will render your content!
 :::
 
-The great thing about EventCatalog is it uses [MDX](https://mdxjs.com/) to enchange your Markdown files, which means you can add [EventCatalog components](/docs/components/overview) to your page. 
+The great thing about EventCatalog is it uses [MDX](https://mdxjs.com/) to enchange your Markdown files, which means you can add [EventCatalog components](/docs/components/overview) to your page.
 
 This allows you to add things like:
 

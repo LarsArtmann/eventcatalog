@@ -5,14 +5,15 @@
 
 [![MIT License][license-badge]][license]
 [![PRs Welcome][prs-badge]][prs]
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-35-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Watch on GitHub][github-watch-badge]][github-watch]
 [![Star on GitHub][github-star-badge]][github-star]
-
-
 
 <hr />
 
@@ -41,7 +42,7 @@
 
 # The problem
 
-Event-Driven Architectures allow us to scale, be agile and keep our architecture decoupled. 
+Event-Driven Architectures allow us to scale, be agile and keep our architecture decoupled.
 
 When starting off with Event-Driven Architectures we spend time discovering our core business events, writing code to match them and maintain versions going forward.
 

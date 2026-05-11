@@ -6,9 +6,9 @@
 
 /* You can override the default Infima variables here. */
 :root {
-
   --site-primary-hue-saturation: 167, 1%;
-  --site-primary-hue-saturation-light: 167, 1%; /* do we really need this extra one? */
+  --site-primary-hue-saturation-light:
+    167, 1%; /* do we really need this extra one? */
 
   --ifm-color-primary: #5162b9;
   --ifm-color-primary-dark: #4555ab;
@@ -26,12 +26,12 @@
   padding: 0 var(--ifm-pre-padding);
 }
 
-html[data-theme='dark'] .docusaurus-highlight-code-line {
+html[data-theme="dark"] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-html[data-theme='dark'] .navbar {
-  background:inherit;
+html[data-theme="dark"] .navbar {
+  background: inherit;
   /* background-color: rgba(0, 0, 0, 0.3); */
 }
 
@@ -45,7 +45,7 @@ svg[class*="iconExternalLink_node_modules"] {
   vertical-align: inherit;
 }
 
-div[class^='announcementBar_'] {
+div[class^="announcementBar_"] {
   --site-announcement-bar-stripe-color1: hsl(
     var(--site-primary-hue-saturation),
     85%
@@ -64,7 +64,6 @@ div[class^='announcementBar_'] {
   font-weight: bold;
 }
 
-
 .markdown h1 {
   font-size: var(--ifm-h1-font-size);
   font-weight: var(--ifm-heading-font-weight);
@@ -82,7 +81,6 @@ div[class^='announcementBar_'] {
   line-height: var(--ifm-heading-line-height);
   margin: var(--ifm-heading-margin-top) 0 var(--ifm-heading-margin-bottom) 0;
 }
-
 
 .markdown h1 {
   font-size: var(--ifm-h1-font-size);
@@ -109,5 +107,5 @@ div[class^='announcementBar_'] {
 }
 
 #tailwind img {
-  border: 1px solid #d8d8d8
+  border: 1px solid #d8d8d8;
 }

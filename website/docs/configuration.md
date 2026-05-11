@@ -7,7 +7,6 @@ The `eventcatalog.config.js` file is the heart of your application. It allows yo
 
 Using the configuration you will be able to setup user pages, custom themes, plugins and much more.
 
-
 ## What goes into a `eventcatalog.config.js`? {#what-goes-into-a-eventcatalogconfigjs}
 
 Using the CLI tool when creating your EventCatalog you will get a default `eventcatalog.config.js` out the box.
@@ -30,7 +29,7 @@ They are used in a number of places such as your site's title and headings, brow
 
 ### Generators {#generators}
 
-EventCatalog allows you to generate your Event documentation from third party systems. Plugins can help you keep your documentation up to date with real world topics/events in the wild. 
+EventCatalog allows you to generate your Event documentation from third party systems. Plugins can help you keep your documentation up to date with real world topics/events in the wild.
 
 It is recommended to check the [plugin docs](/docs/api/plugins) for more information.
 
@@ -47,11 +46,12 @@ module.exports = {
   // ...
   users: [
     {
-      id: 'dboyne',
-      name: 'David Boyne',
-      avatarUrl: 'https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png',
-      role: 'Developer',
-      summary: 'Currently building tools for Event Architectures.'
+      id: "dboyne",
+      name: "David Boyne",
+      avatarUrl:
+        "https://pbs.twimg.com/profile_images/1262283153563140096/DYRDqKg6_400x400.png",
+      role: "Developer",
+      summary: "Currently building tools for Event Architectures.",
     },
   ],
 };

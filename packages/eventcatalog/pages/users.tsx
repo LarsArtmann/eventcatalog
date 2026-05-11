@@ -1,8 +1,8 @@
-import Head from 'next/head';
+import Head from "next/head";
 
-import UserGrid from '@/components/Grids/UserGrid';
+import UserGrid from "@/components/Grids/UserGrid";
 
-import { useConfig, useUsers } from '@/hooks/EventCatalog';
+import { useConfig, useUsers } from "@/hooks/EventCatalog";
 
 export default function Page() {
   const { getUsersArray } = useUsers();
@@ -19,7 +19,9 @@ export default function Page() {
       <section className="pt-6 pb-24">
         <main className="max-w-7xl mx-auto md:min-h-screen px-4 xl:px-0">
           <div className="relative z-10 flex items-baseline justify-between pt-8 pb-6 ">
-            <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">Users ({users.length})</h1>
+            <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">
+              Users ({users.length})
+            </h1>
           </div>
           <div className="flex relative min-h-screen">
             <div className="flex-1 ">

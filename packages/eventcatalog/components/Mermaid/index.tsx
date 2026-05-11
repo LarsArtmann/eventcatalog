@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
-import mermaid from 'mermaid';
-import { Service, Event } from '@eventcatalog/types';
-import { buildMermaidFlowChartForEvent, buildMermaidFlowChartForService } from '@/lib/graphs';
+import React, { useEffect } from "react";
+import mermaid from "mermaid";
+import { Service, Event } from "@eventcatalog/types";
+import {
+  buildMermaidFlowChartForEvent,
+  buildMermaidFlowChartForService,
+} from "@/lib/graphs";
 
 mermaid.initialize({
   startOnLoad: true,
-  theme: 'forest',
-  securityLevel: 'loose',
+  theme: "forest",
+  securityLevel: "loose",
   flowchart: {
     useMaxWidth: false,
   },
@@ -21,17 +24,22 @@ mermaid.initialize({
       fill: white
   }
     `,
-  fontFamily: 'Fira Code',
+  fontFamily: "Fira Code",
 });
 
 interface MermaidProps {
   data: Event | Service;
-  source: 'event' | 'service';
+  source: "event" | "service";
   rootNodeColor?: string;
   charts?: string[];
 }
 
-function Mermaid({ data, source = 'event', rootNodeColor, charts }: MermaidProps) {
+function Mermaid({
+  data,
+  source = "event",
+  rootNodeColor,
+  charts,
+}: MermaidProps) {
   useEffect(() => {
     mermaid.contentLoaded();
   }, []);
@@ -48,7 +56,7 @@ function Mermaid({ data, source = 'event', rootNodeColor, charts }: MermaidProps
     );
   }
   const mermaidChart =
-    source === 'event'
+    source === "event"
       ? buildMermaidFlowChartForEvent(data as Event, rootNodeColor)
       : buildMermaidFlowChartForService(data as Service, rootNodeColor);
 

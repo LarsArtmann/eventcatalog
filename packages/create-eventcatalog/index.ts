@@ -1,55 +1,55 @@
 #!/usr/bin/env node
-import chalk from 'chalk';
-import Commander from 'commander';
-import path from 'path';
-import prompts from 'prompts';
-import checkForUpdate from 'update-check';
-import { createApp, DownloadError } from './create-app';
-import { validateNpmName } from './helpers/validate-pkg';
-import packageJson from './package.json';
+import chalk from "chalk";
+import Commander from "commander";
+import path from "path";
+import prompts from "prompts";
+import checkForUpdate from "update-check";
+import { createApp, DownloadError } from "./create-app";
+import { validateNpmName } from "./helpers/validate-pkg";
+import packageJson from "./package.json";
 
-let projectPath = '';
+let projectPath = "";
 
 const program = new Commander.Command(packageJson.name)
   .version(packageJson.version)
-  .arguments('<project-directory>')
-  .usage(`${chalk.green('<project-directory>')} [options]`)
+  .arguments("<project-directory>")
+  .usage(`${chalk.green("<project-directory>")} [options]`)
   .action((name) => {
     projectPath = name;
   })
   .option(
-    '-e, --example [name]|[github-url]',
+    "-e, --example [name]|[github-url]",
     `
 
   An example to bootstrap the app with. You can use an example name
   from the official Glee repo or a GitHub URL. The URL can use
   any branch and/or subdirectory
-`
+`,
   )
   .option(
-    '--example-path <path-to-example>',
+    "--example-path <path-to-example>",
     `
 
   In a rare case, your GitHub URL might contain a branch name with
   a slash (e.g. bug/fix-1) and the path to the example (e.g. foo/bar).
   In this case, you must specify the path to the example separately:
   --example-path foo/bar
-`
+`,
   )
   .allowUnknownOption()
   .parse(process.argv);
 
 async function run(): Promise<void> {
-  if (typeof projectPath === 'string') {
+  if (typeof projectPath === "string") {
     projectPath = projectPath.trim();
   }
 
   if (!projectPath) {
     const res = await prompts({
-      type: 'text',
-      name: 'path',
-      message: 'What is your project named?',
-      initial: 'my-app',
+      type: "text",
+      name: "path",
+      message: "What is your project named?",
+      initial: "my-app",
       validate: (name) => {
         const validation = validateNpmName(path.basename(path.resolve(name)));
         if (validation.valid) {
@@ -59,20 +59,26 @@ async function run(): Promise<void> {
       },
     });
 
-    if (typeof res.path === 'string') {
+    if (typeof res.path === "string") {
       projectPath = res.path.trim();
     }
   }
 
   if (!projectPath) {
     console.log();
-    console.log('Please specify the project directory:');
-    console.log(`  ${chalk.cyan(program.name())} ${chalk.green('<project-directory>')}`);
+    console.log("Please specify the project directory:");
+    console.log(
+      `  ${chalk.cyan(program.name())} ${chalk.green("<project-directory>")}`,
+    );
     console.log();
-    console.log('For example:');
-    console.log(`  ${chalk.cyan(program.name())} ${chalk.green('my-eventcatalog-app')}`);
+    console.log("For example:");
+    console.log(
+      `  ${chalk.cyan(program.name())} ${chalk.green("my-eventcatalog-app")}`,
+    );
     console.log();
-    console.log(`Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`);
+    console.log(
+      `Run ${chalk.cyan(`${program.name()} --help`)} to see all options.`,
+    );
     process.exit(1);
   }
 
@@ -81,24 +87,28 @@ async function run(): Promise<void> {
 
   const { valid, problems } = validateNpmName(projectName);
   if (!valid) {
-    console.error(`Could not create a project called ${chalk.red(`"${projectName}"`)} because of npm naming restrictions:`);
+    console.error(
+      `Could not create a project called ${chalk.red(`"${projectName}"`)} because of npm naming restrictions:`,
+    );
 
-    problems!.forEach((p) => console.error(`    ${chalk.red.bold('*')} ${p}`));
+    problems!.forEach((p) => console.error(`    ${chalk.red.bold("*")} ${p}`));
     process.exit(1);
   }
 
   if (program.example === true) {
-    console.error('Please provide an example name or url, otherwise remove the example option.');
+    console.error(
+      "Please provide an example name or url, otherwise remove the example option.",
+    );
     process.exit(1);
     return;
   }
 
-  const example = typeof program.example === 'string' && program.example.trim();
+  const example = typeof program.example === "string" && program.example.trim();
   try {
     await createApp({
       appPath: resolvedProjectPath,
       useNpm: !!program.useNpm,
-      example: example && example !== 'default' ? example : undefined,
+      example: example && example !== "default" ? example : undefined,
       examplePath: program.examplePath,
       // typescript: program.typescript,
     });
@@ -108,11 +118,11 @@ async function run(): Promise<void> {
     }
 
     const res = await prompts({
-      type: 'confirm',
-      name: 'builtin',
+      type: "confirm",
+      name: "builtin",
       message:
         `Could not download "${example}" because of a connectivity issue between your machine and GitHub.\n` +
-        'Do you want to use the default template instead?',
+        "Do you want to use the default template instead?",
       initial: true,
     });
     if (!res.builtin) {
@@ -134,8 +144,14 @@ async function notifyUpdate(): Promise<void> {
     const res = await update;
     if (res?.latest) {
       console.log();
-      console.log(chalk.yellow.bold('A new version of `create-eventcatalog` is available!'));
-      console.log(`You can update by running: ${chalk.cyan('npm i -g create-eventcatalog')}`);
+      console.log(
+        chalk.yellow.bold(
+          "A new version of `create-eventcatalog` is available!",
+        ),
+      );
+      console.log(
+        `You can update by running: ${chalk.cyan("npm i -g create-eventcatalog")}`,
+      );
       console.log();
     }
     process.exit();
@@ -148,11 +164,11 @@ run()
   .then(notifyUpdate)
   .catch(async (reason) => {
     console.log();
-    console.log('Aborting installation.');
+    console.log("Aborting installation.");
     if (reason.command) {
       console.log(`  ${chalk.cyan(reason.command)} has failed.`);
     } else {
-      console.log(chalk.red('Unexpected error. Please report it as a bug:'));
+      console.log(chalk.red("Unexpected error. Please report it as a bug:"));
       console.log(reason);
     }
     console.log();

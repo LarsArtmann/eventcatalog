@@ -35,7 +35,7 @@ Name of the service.
 
 ```mdx title="Example"
 ---
-  name: Basket Service
+name: Basket Service
 ---
 ```
 
@@ -47,8 +47,8 @@ Short summary of your service, shown on service summary pages.
 
 ```mdx title="Example"
 ---
-  summary: |
-    CRUD based API to handle Basket interactions for users of the shopping website.
+summary: |
+  CRUD based API to handle Basket interactions for users of the shopping website.
 ---
 ```
 
@@ -58,14 +58,13 @@ The repository for the service.
 
 ```mdx title="Example"
 ---
-  repository:
-    language: JavaScript
-    url: https://github.com/boyney123/pretend-basket-service
+repository:
+  language: JavaScript
+  url: https://github.com/boyney123/pretend-basket-service
 ---
 ```
 
 You can specify the language and url for your service repository and EventCatalog will render these out.
-
 
 ### `owners` {#owners}
 
@@ -73,9 +72,9 @@ An array of user ids that own the service.
 
 ```mdx title="Example"
 ---
-  owners:
-    - dboyne
-    - mSmith
+owners:
+  - dboyne
+  - mSmith
 ---
 ```
 
@@ -95,8 +94,8 @@ List of URLs that can be used when people want to reference to external document
 
 ```mdx title="Example"
 ---
-  externalLinks: 
-    - label: AsyncAPI Specification
-      url: https://studio.asyncapi.com/#schema-lightMeasuredPayload
+externalLinks:
+  - label: AsyncAPI Specification
+    url: https://studio.asyncapi.com/#schema-lightMeasuredPayload
 ---
 ```

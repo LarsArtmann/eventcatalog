@@ -26,12 +26,12 @@ You can use EventCatalog to group your **events** and **services** using domains
 Adding domains can be done with some simple steps:
 
 1. Create your domain folder `/domains/{Your Domain}`
-    - example: `/domains/Orders`
+   - example: `/domains/Orders`
 2. Add details about your domain (title, summary, components)
-    - example: `/domains/Orders/index.md`
+   - example: `/domains/Orders/index.md`
 3. Add **events** or **services** to your domain
-    - event example: `/domains/Orders/events/OrderCreated/index.md`
-    - service example: `/domains/Orders/services/OrderCreated/index.md`
+   - event example: `/domains/Orders/events/OrderCreated/index.md`
+   - service example: `/domains/Orders/services/OrderCreated/index.md`
 
 EventCatalog uses markdown and the file system to help you encapsulate and document your domains.
 
@@ -52,6 +52,5 @@ The project community provided some great feedback and ideas on how we could sup
 Domains are a key core part of Event Architectures and we are super excited to now support them and help you document your event architectures.
 
 If you have any ideas or feedback feel free to raise an issue on [GitHub](https://github.com/boyney123/eventcatalog/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) or come join us on [Discord](https://discord.gg/3rjaZMmrAm).
-
 
 Enjoy!

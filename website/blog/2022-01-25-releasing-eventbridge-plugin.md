@@ -5,7 +5,6 @@ tags: [release, plugin]
 image: /img/blog/amazon-eventbridge-plugin/cover.png
 ---
 
-
 ![EventCatalog with Amazon EventBridge](/img/blog/amazon-eventbridge-plugin/cover.png)
 
 EventCatalog now supports integration and document generation from [Amazon EventBridge](https://aws.amazon.com/eventbridge/).
@@ -21,7 +20,6 @@ The new [amazon-eventbridge-plugin](/docs/api/plugins/@eventcatalog/plugin-doc-g
 - 🗄 JSONDraft4 and OpenAPI Schemas
 - 💅 Customise and add content to each event (capture information, and details)
 - ⚡️ Powered by markdown, setup in seconds.
-
 
 ## How plugins work with EventCatalog
 
@@ -49,7 +47,6 @@ When parsing your schemas EventCatalog will render documentation that has Graphs
 
 You can read more details on the [features and installation guide](/docs/api/plugins/@eventcatalog/plugin-doc-generator-amazon-eventbridge).
 
-
 ## How does your content stay up to date?
 
 Once you configure your plugin, every time you call `npm run generate` the new information is pulled down from AWS and transformed inside your catalog.
@@ -57,7 +54,6 @@ Once you configure your plugin, every time you call `npm run generate` the new i
 The EventBridge plugin will check for version changes and version your old events when it needs too.
 
 The core requirement for EventCatalog is to allow people to easily create and maintain documentation for their Event Architectures. You can add any meta information you want to your schema documentation and that information will be used for future events. This means you can add things like event context, team information or schema information once, and this will be persisted across your events (if you choose).
-
 
 ## Getting Started
 
@@ -69,7 +65,7 @@ This is the [second](/blog/2022/01/19/releasing-asyncapi-plugin) plugin to be of
 
 Amazon EventBridge is a great serverless offering that allows us to write Event Driven Applications and EventCatalog allows you to easily document your event schemas.
 
-Documenting your schemas/events for your teams can help your team discover what events are available in your architecture and understand why your events are created in the first place. 
+Documenting your schemas/events for your teams can help your team discover what events are available in your architecture and understand why your events are created in the first place.
 
 EventCatalog is powered by markdown, which means you can add as much context to your EventBridge schemas as you like and share them around with the static website that EventCatalog generates.
 

@@ -1,6 +1,6 @@
-import { isNode, Elements, Position } from 'react-flow-renderer';
-import dagre from 'dagre';
-import { DataSource } from './NodeGraph';
+import { isNode, Elements, Position } from "react-flow-renderer";
+import dagre from "dagre";
+import { DataSource } from "./NodeGraph";
 
 const nodeDefaultWidth = 150;
 const nodeDefaultHeight = 36;
@@ -8,14 +8,20 @@ const offset = 48;
 const verticalOffset = offset / 1.5;
 
 const getMaxWidthElementFromPreviousColumn = (elements, column) => {
-  const elementsInColumn = elements.filter((element) => element?.data?.renderInColumn === column);
+  const elementsInColumn = elements.filter(
+    (element) => element?.data?.renderInColumn === column,
+  );
 
   if (elementsInColumn.length === 0) return {};
   if (elementsInColumn.length === 1) return elementsInColumn[0];
 
   const maxWidthElement = elementsInColumn.reduce((currentElement, element) => {
-    const currentElementWidth = currentElement?.data?.maxWidth || currentElement?.data?.width || nodeDefaultWidth;
-    const elementWidth = element?.data?.maxWidth || element?.data.width || nodeDefaultWidth;
+    const currentElementWidth =
+      currentElement?.data?.maxWidth ||
+      currentElement?.data?.width ||
+      nodeDefaultWidth;
+    const elementWidth =
+      element?.data?.maxWidth || element?.data.width || nodeDefaultWidth;
     return elementWidth > currentElementWidth ? element : currentElement;
   }, elementsInColumn[0]);
 
@@ -28,16 +34,25 @@ const getXPositionFromElement = (elem) => {
   return currentXPositionOfElement + elementWidth;
 };
 
-export default function createGraphLayout(elements: Elements, isHorizontal: boolean): Elements {
+export default function createGraphLayout(
+  elements: Elements,
+  isHorizontal: boolean,
+): Elements {
   const dagreGraph = new dagre.graphlib.Graph();
 
   dagreGraph.setDefaultEdgeLabel(() => ({}));
-  dagreGraph.setGraph({ rankdir: 'LR', ranksep: offset * 2, nodesep: verticalOffset });
+  dagreGraph.setGraph({
+    rankdir: "LR",
+    ranksep: offset * 2,
+    nodesep: verticalOffset,
+  });
 
   elements.forEach((element) => {
     if (isNode(element)) {
       // eslint-disable-next-line no-underscore-dangle
-      const nodeWidth = element.__rf?.width ? element.__rf?.width : element.data?.width;
+      const nodeWidth = element.__rf?.width
+        ? element.__rf?.width
+        : element.data?.width;
       dagreGraph.setNode(element.id, {
         width: nodeWidth || nodeDefaultWidth,
         // eslint-disable-next-line no-underscore-dangle
@@ -56,7 +71,11 @@ export default function createGraphLayout(elements: Elements, isHorizontal: bool
 
   const sortedNodesByColumn = allNodes.sort((nodeA, nodeB) =>
     // eslint-disable-next-line no-nested-ternary
-    nodeA.data.renderInColumn > nodeB.data.renderInColumn ? 1 : nodeB.data.renderInColumn > nodeA.data.renderInColumn ? -1 : 0
+    nodeA.data.renderInColumn > nodeB.data.renderInColumn
+      ? 1
+      : nodeB.data.renderInColumn > nodeA.data.renderInColumn
+        ? -1
+        : 0,
   );
   const allData = [...sortedNodesByColumn, ...allEdges];
 
@@ -68,7 +87,11 @@ export default function createGraphLayout(elements: Elements, isHorizontal: bool
 
       const paddingBetweenNodes = element.data.renderInColumn > 1 ? 75 : 0;
       const currentColumnToRenderIn = element?.data?.renderInColumn;
-      const maxWidthElementFromPreviousColumn = getMaxWidthElementFromPreviousColumn(elements, currentColumnToRenderIn - 1);
+      const maxWidthElementFromPreviousColumn =
+        getMaxWidthElementFromPreviousColumn(
+          elements,
+          currentColumnToRenderIn - 1,
+        );
 
       const nodeX =
         Object.keys(maxWidthElementFromPreviousColumn).length > 0
@@ -98,12 +121,15 @@ export const calcCanvasHeight = ({ source, data }: DataSource): number => {
   const nodeSpacing = nodeDefaultHeight + verticalOffset;
   let nodesHeight = 0;
 
-  if (source === 'event') {
-    nodesHeight = Math.max(data.producerNames.length, data.consumerNames.length) * nodeSpacing;
+  if (source === "event") {
+    nodesHeight =
+      Math.max(data.producerNames.length, data.consumerNames.length) *
+      nodeSpacing;
   }
 
-  if (source === 'service') {
-    nodesHeight = Math.max(data.publishes.length, data.subscribes.length) * nodeSpacing;
+  if (source === "service") {
+    nodesHeight =
+      Math.max(data.publishes.length, data.subscribes.length) * nodeSpacing;
   }
 
   return Math.max(minHeight, nodesHeight);

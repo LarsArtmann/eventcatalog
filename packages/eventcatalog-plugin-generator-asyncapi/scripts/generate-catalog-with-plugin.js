@@ -1,5 +1,5 @@
-const plugin = require('../lib/index');
-const path = require('path');
+const plugin = require("../lib/index");
+const path = require("path");
 
 const run = async () => {
   const asyncAPIPlugin = plugin.default;
@@ -7,8 +7,8 @@ const run = async () => {
   await asyncAPIPlugin(
     {},
     {
-      spec: path.join(__dirname, '../src/examples/kafka.yml'),
-    }
+      spec: path.join(__dirname, "../src/examples/kafka.yml"),
+    },
   );
 };
 

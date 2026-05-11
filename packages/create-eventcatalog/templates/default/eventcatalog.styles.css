@@ -1,4 +1,3 @@
-
 /**
 
 Stylesheet overrides for EventCatalog. 
@@ -10,6 +9,6 @@ Note: Override based on custom selectors / hacks at your own risk. EventCatalog 
       use the styles marked with `ec-` for non breaking styling changes.
 
 */
-.ec-homepage{
-    background:black;
+.ec-homepage {
+  background: black;
 }

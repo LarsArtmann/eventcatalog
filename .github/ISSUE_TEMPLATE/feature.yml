@@ -1,6 +1,6 @@
 name: 💅 Feature idea
 description: Submit a detailed feature request
-labels: [feature, 'status: needs triage']
+labels: [feature, "status: needs triage"]
 body:
   - type: markdown
     attributes:

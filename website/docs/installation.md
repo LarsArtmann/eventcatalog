@@ -73,7 +73,6 @@ my-catalog
 - `/eventcatalog.config.js` - A config file containing the site configuration. Read the [API docs](/docs/api/eventcatalog-config)
 - `/package.json` - File required for your application to work.
 
-
 ## Running the development server {#running-the-development-server}
 
 To preview your changes as you edit the files, you can run a local development server that will serve your website and reflect the latest changes.

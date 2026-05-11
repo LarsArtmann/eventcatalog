@@ -1,20 +1,20 @@
-import Head from 'next/head';
-import { MDXRemote } from 'next-mdx-remote';
+import Head from "next/head";
+import { MDXRemote } from "next-mdx-remote";
 
-import { Domain } from '@eventcatalog/types';
-import ContentView from '@/components/ContentView';
-import { getDomainByName, getAllDomains } from '@/lib/domains';
+import { Domain } from "@eventcatalog/types";
+import ContentView from "@/components/ContentView";
+import { getDomainByName, getAllDomains } from "@/lib/domains";
 
-import Admonition from '@/components/Mdx/Admonition';
-import DomainSideBar from '@/components/Sidebars/DomainSidebar';
-import BreadCrumbs from '@/components/BreadCrumbs';
-import NotFound from '@/components/NotFound';
-import { useConfig, useUrl } from '@/hooks/EventCatalog';
+import Admonition from "@/components/Mdx/Admonition";
+import DomainSideBar from "@/components/Sidebars/DomainSidebar";
+import BreadCrumbs from "@/components/BreadCrumbs";
+import NotFound from "@/components/NotFound";
+import { useConfig, useUrl } from "@/hooks/EventCatalog";
 
-import getBackgroundColor from '@/utils/random-bg';
+import getBackgroundColor from "@/utils/random-bg";
 
-import { MarkdownFile } from '@/types/index';
-import NodeGraph from '@/components/Mdx/NodeGraph/NodeGraph';
+import { MarkdownFile } from "@/types/index";
+import NodeGraph from "@/components/Mdx/NodeGraph/NodeGraph";
 
 interface DomainsPageProps {
   domain: Domain;
@@ -44,7 +44,9 @@ const getComponents = (domain: Domain) => ({
     // isHorizontal?: boolean;
   }) => (
     <div className="mx-auto w-full">
-      {title && <h2 className="text-lg font-medium text-gray-900 underline">{title}</h2>}
+      {title && (
+        <h2 className="text-lg font-medium text-gray-900 underline">{title}</h2>
+      )}
       <NodeGraph
         source="domain"
         data={domain}
@@ -69,7 +71,13 @@ export default function Domains(props: DomainsPageProps) {
   if (notFound)
     return (
       // TODO: Allow domain not found
-      <NotFound type="domain" name={domain.name} editUrl={hasEditUrl ? getEditUrl(`/domains/${domain.name}/index.md`) : ''} />
+      <NotFound
+        type="domain"
+        name={domain.name}
+        editUrl={
+          hasEditUrl ? getEditUrl(`/domains/${domain.name}/index.md`) : ""
+        }
+      />
     );
 
   const { name, summary } = domain;
@@ -78,7 +86,7 @@ export default function Domains(props: DomainsPageProps) {
   const mdxComponents = getComponents(domain);
 
   const pages = [
-    { name: 'Domains', href: '/domains', current: false },
+    { name: "Domains", href: "/domains", current: false },
     { name, href: `/domains/${name}`, current: true },
   ];
 
@@ -91,7 +99,7 @@ export default function Domains(props: DomainsPageProps) {
       </Head>
       <ContentView
         title={name}
-        editUrl={hasEditUrl ? getEditUrl(`/domains/${name}/index.md`) : ''}
+        editUrl={hasEditUrl ? getEditUrl(`/domains/${name}/index.md`) : ""}
         subtitle={summary}
         lastModifiedDate={lastModifiedDate}
         breadCrumbs={<BreadCrumbs pages={pages} homePath="/domains" />}
@@ -106,7 +114,9 @@ export default function Domains(props: DomainsPageProps) {
 
 export async function getStaticProps({ params }) {
   try {
-    const { domain, markdown } = await getDomainByName({ domainName: params.domain });
+    const { domain, markdown } = await getDomainByName({
+      domainName: params.domain,
+    });
 
     return {
       props: {

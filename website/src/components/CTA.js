@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function Example() {
   return (
@@ -6,7 +6,8 @@ export default function Example() {
       <div className="max-w-7xl mx-auto text-center py-16 lg:py-12 px-4 sm:px-6 lg:py-24 lg:px-8">
         <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 md:text-5xl">
           <span className="block">
-            Ready to start using <span className="text-green-500">EventCatalog?</span>
+            Ready to start using{" "}
+            <span className="text-green-500">EventCatalog?</span>
           </span>
           <span className="block mt-4">Getting started within minutes.</span>
         </h2>

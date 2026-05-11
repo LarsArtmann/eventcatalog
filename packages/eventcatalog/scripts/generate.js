@@ -1,8 +1,10 @@
-const path = require('path');
-const chalk = require('chalk');
+const path = require("path");
+const chalk = require("chalk");
 
 const generate = async () => {
-  const config = require(path.join(process.env.PROJECT_DIR, 'eventcatalog.config.js'));
+  const config = require(
+    path.join(process.env.PROJECT_DIR, "eventcatalog.config.js"),
+  );
 
   const { generators = [] } = config;
 
@@ -19,7 +21,7 @@ const generate = async () => {
   await Promise.all(plugins);
 };
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== "test") {
   generate();
 }
 

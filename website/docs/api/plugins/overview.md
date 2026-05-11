@@ -1,9 +1,9 @@
 ---
 sidebar_position: 0
 id: plugins-overview
-title: 'EventCatalog plugins'
+title: "EventCatalog plugins"
 sidebar_label: Plugins overview
-slug: '/api/plugins'
+slug: "/api/plugins"
 ---
 
 ## Generator plugins {#generator-plugins}
@@ -26,9 +26,6 @@ Let's take a quick look at how the generation works...
 
 As we see in the diagram above, EventCatalog supports a `generation` phase. This means when you run `npm run generate` on your catalog it will go through all your [configured plugins](/docs/api/plugins/) and execute them.
 
-
-
-
 ## Want to build your own plugin?
 
 It is possible to build your own plugin for any third party system you may have.
@@ -38,8 +35,6 @@ It is possible to build your own plugin for any third party system you may have.
 For an example of how to write your own we recommened looking at the current plugins we have on GitHub.
 
 If you want to know more or need help we highly recommend you join us on [Discord](https://discord.gg/3rjaZMmrAm) where we can help.
-
-
 
 :::note
 We are currently working on Plugin API and Documentation.
@@ -51,4 +46,3 @@ These plugins can be used to generate documentation from third party solutions.
 
 - [@eventcatalog/plugin-doc-generator-asyncapi](plugins/@eventcatalog/plugin-doc-generator-asyncapi)
 - [@eventcatalog/plugin-doc-generator-amazon-eventbridge](plugins/@eventcatalog/plugin-doc-generator-amazon-eventbridge)
-

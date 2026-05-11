@@ -33,10 +33,9 @@ Name of the domain (needs to match the domain folder name)
 
 ```mdx title="Example"
 ---
-  name: Orders
+name: Orders
 ---
 ```
-
 
 ## Optional fields {#optional-fields}
 
@@ -46,8 +45,8 @@ Short summary of your domain, shown on domain summary pages.
 
 ```mdx title="Example"
 ---
-  summary: |
-    Domain that contains everything about orders
+summary: |
+  Domain that contains everything about orders
 ---
 ```
 
@@ -57,9 +56,9 @@ An array of user ids that own the domain.
 
 ```mdx title="Example"
 ---
-  owners:
-    - dboyne
-    - mSmith
+owners:
+  - dboyne
+  - mSmith
 ---
 ```
 
@@ -73,8 +72,8 @@ List of URLs that can be used when people want to reference to external document
 
 ```mdx title="Example"
 ---
-  externalLinks: 
-    - label: AsyncAPI Specification
-      url: https://studio.asyncapi.com/#schema-lightMeasuredPayload
+externalLinks:
+  - label: AsyncAPI Specification
+    url: https://studio.asyncapi.com/#schema-lightMeasuredPayload
 ---
 ```

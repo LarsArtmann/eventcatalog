@@ -5,7 +5,7 @@ sidebar_label: Managing Schemas
 slug: /events/adding-schemas
 ---
 
-Events are facts of data that are sent across our Architecture. 
+Events are facts of data that are sent across our Architecture.
 
 For developers to understand how to interact with the events they may be used to the **Schema Registry**.
 
@@ -14,7 +14,6 @@ Many brokers offer Schema Registries that allow you do document the details of y
 EventCatalog allows you to document your events and also add the schemas as part of your event documentation. This is a great way to help developers discover events and also understand the structure of your events.
 
 **Schemas are optional to EventCatalog and EventCatalog is not opinionated about the format of your schemas.** EventCatalog will just read the file and display it to your teams.
-
 
 **EventCatalog supports any schema format.**
 
@@ -30,7 +29,7 @@ EventCatalog supports any schema format and will render them to the screen along
 
 To add a Schema you will need to create a new file within your Event directory.
 
-- `/events/{Event Name}/schema.{any extension}` 
+- `/events/{Event Name}/schema.{any extension}`
   - (example `/events/UserSignedUp/schema.json`)
 
 :::tip
@@ -52,9 +51,9 @@ version: 0.0.1
 summary: |
   Tells us when the user has signed up
 consumers:
-    - Email Platform
+  - Email Platform
 producers:
-    - User Service
+  - User Service
 ---
 
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id
@@ -64,7 +63,6 @@ neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <Schema />
-
 ```
 
 Let's add the Schema for this Event in `/events/UserCreated/schema.json`

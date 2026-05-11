@@ -1,13 +1,13 @@
-import React from 'react';
-import { HomeIcon } from '@heroicons/react/solid';
-import Link from 'next/link';
+import React from "react";
+import { HomeIcon } from "@heroicons/react/solid";
+import Link from "next/link";
 
 interface BreadCrumbsProps {
   pages: { name: string; href: string; current: boolean }[];
   homePath?: string;
 }
 
-function BreadCrumbs({ pages, homePath = '/events' }: BreadCrumbsProps) {
+function BreadCrumbs({ pages, homePath = "/events" }: BreadCrumbsProps) {
   return (
     <nav className="flex" aria-label="Breadcrumb">
       <ol className="flex items-center space-x-4">
@@ -34,7 +34,7 @@ function BreadCrumbs({ pages, homePath = '/events' }: BreadCrumbsProps) {
               <Link href={page.href}>
                 <a
                   className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
-                  aria-current={page.current ? 'page' : undefined}
+                  aria-current={page.current ? "page" : undefined}
                 >
                   {page.name}
                 </a>

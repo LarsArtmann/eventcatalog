@@ -15,10 +15,10 @@ You will find all domains within the `/domains` directory.
 
 To add a new domain you will need to create a new folder within the `/domains` folder in your Catalog and then you will need to create a an `index.md` file inside that folder.
 
-- `/domains/{Domain Name}/index.md` 
+- `/domains/{Domain Name}/index.md`
   - (example `/domains/Orders/index.md`)
 
-Once you create your new file you will need to fill it with the domain front-matter data and markdown content. 
+Once you create your new file you will need to fill it with the domain front-matter data and markdown content.
 
 **There are two parts to the domain data**
 
@@ -37,14 +37,15 @@ Using **domains** in EventCatalog allows you to group your **services** and **ev
 
 To add events or services you will need to create an `/events/` or `/services/` directory inside your domain folder.
 
-- `/domains/{Domain Name}/events/{Event Name}/index.md` 
+- `/domains/{Domain Name}/events/{Event Name}/index.md`
   - (example `/domains/Orders/events/OrderCreated/index.md`)
-- `/domains/{Domain Name}/services/{Service Name}/index.md` 
+- `/domains/{Domain Name}/services/{Service Name}/index.md`
   - (example `/domains/Orders/services/OrderService/index.md`)
 
-The events and services format is exactly the same as the root level events and services folder structure you see in EventCatalog. 
+The events and services format is exactly the same as the root level events and services folder structure you see in EventCatalog.
 
 More reading:
+
 - [Learn how to add events](/docs/events/adding-event)
 - [Learn how to add services](/docs/services/adding-service)
 
@@ -83,7 +84,6 @@ Donec bibendum velit non nulla sollicitudin lacinia. Vestibulum imperdiet nunc e
 neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
-
 <NodeGraph />
 
 ---
@@ -91,7 +91,7 @@ Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 #### 2. Adding Event to our Orders Domain
 
-First let's create a new **events** folder within our new **domain** folder. 
+First let's create a new **events** folder within our new **domain** folder.
 
 Create a new folder called **events** `/domains/Orders/events`.
 
@@ -108,7 +108,7 @@ version: 0.0.1
 summary: |
   Tells us when the order has been created
 producers:
-    - Order Service
+  - Order Service
 ---
 
 Duis mollis quam enim, feugiat porta mi porta non. In lacus nulla, gravida nec sagittis vel, sagittis id
@@ -118,7 +118,6 @@ neque sagittis, eget volutpat purus ornare. Mauris malesuada finibus pretium.
 Vestibulum suscipit tortor sit amet dolor tempor cursus. Nunc ac felis accumsan.
 
 <NodeGraph />
-
 ```
 
 Once done, run the EventCatalog and navigate to your new domain [localhost:3000/domains/Orders](http://localhost:3000/domains/Orders)
@@ -131,12 +130,12 @@ You should now see your new domain with the event!
 
 ### What's Next?
 
-With **domains**, **services** and **events** you can write any Markdown you want and it will render on your  page. 
+With **domains**, **services** and **events** you can write any Markdown you want and it will render on your page.
 
 :::tip
 Think about writing a blog. EventCatalog is just markdown. Write and use it how you like, and the website will render your content!
 :::
 
-The great thing about EventCatalog is it uses [MDX](https://mdxjs.com/) to enchange your Markdown files, which means you can add [EventCatalog components](/docs/components/overview) to your page. 
+The great thing about EventCatalog is it uses [MDX](https://mdxjs.com/) to enchange your Markdown files, which means you can add [EventCatalog components](/docs/components/overview) to your page.
 
 To find out more read the [MDX components guide](/docs/components/overview).

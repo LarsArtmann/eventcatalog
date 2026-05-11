@@ -1,6 +1,6 @@
 name: 📚 Documentation
 description: Report an issue related to documentation
-labels: [documentation, 'status: needs triage']
+labels: [documentation, "status: needs triage"]
 body:
   - type: markdown
     attributes:

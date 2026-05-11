@@ -10,5 +10,3 @@ slug: /domains/introduction
 EventCatalog allows you to group your [events](/docs/events/introduction) and [services](/docs/services/introduction) by your application domains.
 
 Using **domains** in EventCatalog gives you a better way to manage your events and services and define their bounded context.
-
-
