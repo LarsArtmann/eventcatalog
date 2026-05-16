@@ -18,8 +18,8 @@
     "watch": "tsc --watch"
   },
   "dependencies": {
-    "@aws-sdk/client-eventbridge": "^3.1046.0",
-    "@aws-sdk/client-schemas": "^3.1046.0",
+    "@aws-sdk/client-eventbridge": "^3.1048.0",
+    "@aws-sdk/client-schemas": "^3.1048.0",
     "@eventcatalog/utils": "^0.2.2",
     "aws-cdk-lib": "^2.254.0",
     "chalk": "^5.6.2",
